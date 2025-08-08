@@ -1,6 +1,6 @@
 # SVG Guitar Chord Diagram Generator
 
-This script ([code/generate_chord_as_svg.py](code/generate_chord_as_svg.py)) generates SVG-based HTML chord diagrams for guitar from a text file containing chord definitions.
+This script ([Svg/Chords/code/generate_chord_as_svg.py](Svg/Chords/code/generate_chord_as_svg.py)) generates SVG-based HTML chord diagrams for guitar from a text file containing chord definitions.
 
 ## Features
 
