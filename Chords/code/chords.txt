@@ -1,0 +1,50 @@
+X02220 | A Major | stuff 1
+X02110 | Am(maj7)
+X02210 | A sus2 | stuff 4   
+X022XX | A5
+X02420 | Aadd9 | A Hard Day's Night, xAEBC#E
+0X222X | A/E | Hey Jude
+2X222X | A/F# | Hey Jude
+4X222X | A/G# | Hey Jude
+X32010 | C | stuff 2
+X02222 | A6 | Help!
+X02223 | A7 v2
+X02200 | Asus2 | Help!
+X24432 | B minor | stuff 9
+X21202 | B7 
+X32030 | Cadd9 | A Hard Day's Night
+XX3221 | Caug | All my loving
+X35555 | C6
+X32210 | C6 v2 | stuff 3
+XX0232 | D Major | stuff 5
+XX0231 | D Minor | stuff 5
+XX0211 | Dm7 | stuff 5
+X57777 | D6
+X5453X | D7 v2 | A Hard Day's Night
+XX3121 | E v2 | All my loving
+022000 | E minor | stuff 6
+020100 | E7 (dominant) v1 | Can't take my eyes off you
+022130 | E7 (dominant) v2 | Can't take my eyes off you, Hey Jude
+XX0100 | E7 (dominant) v3 | fly me to the moon
+020000 | Em7 version 1 | stuff 12 
+022030 | Em7 version 2 | stuff 13
+021100 | Emajor 7
+XX3211 | F* | stuff 11
+XX3213 | Fadd9 | A Hard Day's Night
+XX5443 | Gaug
+320000 | G6 | She loves you
+320001 | G7 | A Hard Day's Night
+353533 | G7 sus4 | A Hard Day's Night
+
+Beatles Songs:
+I want to hold your hand - 0 - 
+A Hard Day's Night - G7sus4, D7 v2, Cadd9, Fadd9 - p8
+All my loving - E v2, Caug, A7 v2 - p14
+Can't buy me love -  0 - p46
+Eight days a week - Dadd9, E7 v2? - needs to go down a semitone - review - P76
+From me to you - D7 v2, Gaug, Am(maj7) - P90
+Help! - Asus2, A6 - P114
+Hey Jude - E7 v2, A/E, A/G#, A/F# - P128
+I want to hold your hand - 0 - P150
+She loves you - G6 - P290
+

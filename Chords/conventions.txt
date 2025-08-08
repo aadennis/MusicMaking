@@ -1,0 +1,9 @@
+ 3. Naming Convention Principles
+| Element | Class Prefix | Example | Purpose | 
+| String | .string- | .string-line | Visual styling of strings | 
+| Fret | .fret- | .fret-bar | Control over fret width and color | 
+| Position Marker | .dot- | .dot-active | Fret dots or barre indication | 
+| Text Labels | .fret-label | .string-muted | Fret numbers, muted strings, etc. | 
+
+
+These can expand as needed—e.g., .dot-root, .fret-highlighted, .string-bass—for semantic clarity and automation hooks later.

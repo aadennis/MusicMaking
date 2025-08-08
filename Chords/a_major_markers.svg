@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="250" viewBox="0 0 240 250">
+  <defs>
+    <g id="a-major">
+        <desc>
+            Chord: A Major
+            E - X
+            A - 0
+            D - 2
+            G - 2
+            B - 2
+            e - 0
+        </desc>
+
+        <!-- Above nut markers (y = 10) -->
+        <text x="20" y="10" font-size="12" fill="white" text-anchor="middle">X</text>   <!-- string 6 (E) -->
+        <text x="60" y="10" font-size="12" fill="white" text-anchor="middle">O</text>   <!-- string 5 (A) -->
+        <text x="100" y="10" font-size="12" fill="white" text-anchor="middle">●</text>  <!-- string 4 (D) -->
+        <text x="140" y="10" font-size="12" fill="white" text-anchor="middle">●</text>  <!-- string 3 (G) -->
+        <text x="180" y="10" font-size="12" fill="white" text-anchor="middle">●</text>  <!-- string 2 (B) -->
+        <text x="220" y="10" font-size="12" fill="white" text-anchor="middle">O</text>   <!-- string 1 (e) -->
+
+        <!-- Finger markers (fret 2 = y = 130) -->
+        <circle cx="100" cy="100" r="6" fill="red" />  <!-- string 4 (D) -->
+        <circle cx="140" cy="100" r="6" fill="red" />  <!-- string 3 (G) -->
+        <circle cx="180" cy="100" r="6" fill="red" />  <!-- string 2 (B) -->
+    </g>
+  </defs>
+
+  <!-- Instantiate the marker group -->
+  <use href="#a-major" />
+</svg>
+
