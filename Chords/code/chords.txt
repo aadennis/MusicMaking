@@ -11,6 +11,7 @@ X02222 | A6 | Help!
 X02223 | A7 v2
 X02200 | Asus2 | Help!
 X24432 | B minor | stuff 9
+XX0332 | BbAug | All My Loving [omit string 5 - stretch is too hard]
 X21202 | B7 
 X32030 | Cadd9 | A Hard Day's Night
 XX3221 | Caug | All my loving
@@ -39,7 +40,7 @@ XX5443 | Gaug
 Beatles Songs:
 I want to hold your hand - 0 - 
 A Hard Day's Night - G7sus4, D7 v2, Cadd9, Fadd9 - p8
-All my loving - E v2, Caug, A7 v2 - p14
+All my loving - E v2, Caug, BbAug, A7 v2 - p14
 Can't buy me love -  0 - p46
 Eight days a week - Dadd9, E7 v2? - needs to go down a semitone - review - P76
 From me to you - D7 v2, Gaug, Am(maj7) - P90
