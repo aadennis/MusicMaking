@@ -33,10 +33,11 @@ XX0100 | E7 (dominant) v3 | fly me to the moon
 XX3211 | F* | stuff 11
 XX3213 | Fadd9 | A Hard Day's Night
 XX5443 | Gaug
-320000 | G6 | She loves you
+320000 | G6 | She loves you; Can't Buy me Love - replace G13 with this, plus C Major
 320001 | G7 | A Hard Day's Night
 353533 | G7 sus4 | A Hard Day's Night
 354433 | Gmaj7 | La Vie en Rose
+353453 | G13 | Can't Buy Me Love - see G6
 
 
 Beatles Songs:
