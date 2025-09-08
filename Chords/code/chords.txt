@@ -36,6 +36,8 @@ XX5443 | Gaug
 320000 | G6 | She loves you
 320001 | G7 | A Hard Day's Night
 353533 | G7 sus4 | A Hard Day's Night
+354433 | Gmaj7 | La Vie en Rose
+
 
 Beatles Songs:
 I want to hold your hand - 0 - 
