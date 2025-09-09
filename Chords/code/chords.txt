@@ -17,6 +17,7 @@ X32030 | Cadd9 | A Hard Day's Night
 XX3221 | Caug | All my loving
 X35555 | C6
 X32210 | C6 v2 | stuff 3
+335453 | Cmaj7 | Come Fly with Me
 XX0232 | D Major | stuff 5
 XX0231 | D Minor | stuff 5
 XX0211 | Dm7 | stuff 5
@@ -32,6 +33,7 @@ XX0100 | E7 (dominant) v3 | fly me to the moon
 021100 | Emajor 7
 XX3211 | F* | stuff 11
 XX3213 | Fadd9 | A Hard Day's Night
+202210 | F#m7b5 | Can't take my eyes off you
 XX5443 | Gaug
 320000 | G6 | She loves you; Can't Buy me Love - replace G13 with this, plus C Major
 320001 | G7 | A Hard Day's Night
