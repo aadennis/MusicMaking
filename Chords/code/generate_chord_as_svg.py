@@ -1,12 +1,10 @@
 # Generate SVG chord diagrams from a text file containing chord definitions.
-# Example of a chord definition line:
+# Example of a chord definition line - the header is not included.
+# chord_code is a string of fret numbers and 'X' for muted strings
+# chord_code | chord_name | comment (optional)
 # X32010 | C Major | well known fingering for C major chord
 # Entry point is the function `batch_generate_html`.
 
-# This script generates SVG chord diagrams from a text file containing chord definitions.
-# The text file should contain lines formatted as:
-# chord_code | chord_name | comment (optional)
-# where chord_code is a string of fret numbers and 'X' for muted strings.
 
 import re
 import html
