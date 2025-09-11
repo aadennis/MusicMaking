@@ -10,12 +10,12 @@ const blackKeyX = {
   Csharp2: 700
 };
 
-function getFingeringX(note) {
+function getFingeringPosition(note) {
   if (whiteKeyX[note] !== undefined) {
-    return whiteKeyX[note] + 30; // center of 60px white key
+    return { x: whiteKeyX[note] + 30, anchor: '#fingering-anchor' };
   }
   if (blackKeyX[note] !== undefined) {
-    return blackKeyX[note] + 20; // center of 40px black key
+    return { x: blackKeyX[note] + 20, anchor: '#fingering-anchor-black' };
   }
   return null;
 }
@@ -30,11 +30,11 @@ function renderFingering(chordName, svgGroupId) {
   group.innerHTML = ''; // Clear previous dots
 
   chords[chordName].forEach(note => {
-    const x = getFingeringX(note);
-    if (x !== null) {
+    const pos = getFingeringPosition(note);
+    if (pos) {
       const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-      use.setAttributeNS(null, 'href', '#fingering-anchor');
-      use.setAttributeNS(null, 'x', x);
+      use.setAttributeNS(null, 'href', pos.anchor);
+      use.setAttributeNS(null, 'x', pos.x);
       group.appendChild(use);
     }
   });
