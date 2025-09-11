@@ -23,15 +23,21 @@
 
 <body>
   <svg width="720" height="200" viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg">
-    <title>Layered Piano Keyboard</title>
-    <desc>White background, black dividers, and black key overlays.</desc>
+    <defs>
+      <!-- Base dot definition -->
+      <circle id="fingering-dot" r="10" fill="blue" />
 
-    <!-- Layer 1: Single white background -->
+      <!-- Anchor group with fixed vertical position -->
+      <g id="fingering-anchor">
+        <use href="#fingering-dot" y="180" />
+      </g>
+    </defs>
+
+    <!-- Layer 1: White background -->
     <rect x="0" y="0" width="720" height="200" fill="white" />
 
-    <!-- Layer 2: Black lines between white keys -->
-    <g id="dividers" stroke="black" stroke-width="2">
-      <!-- 11 lines between 12 keys -->
+    <!-- Layer 2: Black dividers -->
+    <g stroke="black" stroke-width="2">
       <line x1="60" y1="0" x2="60" y2="200" />
       <line x1="120" y1="0" x2="120" y2="200" />
       <line x1="180" y1="0" x2="180" y2="200" />
@@ -45,46 +51,34 @@
       <line x1="660" y1="0" x2="660" y2="200" />
     </g>
 
-    <!-- Layer 3: Black keys over white keys (F to E) -->
+    <!-- Layer 3: Black keys -->
     <g id="black-keys">
-      <!-- First octave -->
-      <rect x="45" y="0" width="40" height="120" fill="black" /> <!-- F# -->
-      <rect x="105" y="0" width="40" height="120" fill="black" /> <!-- G# -->
-      <rect x="165" y="0" width="40" height="120" fill="black" /> <!-- A# -->
-      <!-- Skip B–C -->
-      <rect x="285" y="0" width="40" height="120" fill="black" /> <!-- C# -->
-      <rect x="345" y="0" width="40" height="120" fill="black" /> <!-- D# -->
-      <!-- Skip E–F -->
-
-      <!-- Second octave -->
-      <rect x="465" y="0" width="40" height="120" fill="black" /> <!-- F# -->
-      <rect x="525" y="0" width="40" height="120" fill="black" /> <!-- G# -->
-      <rect x="585" y="0" width="40" height="120" fill="black" /> <!-- A# -->
-      <!-- Skip B–C -->
-      <rect x="705" y="0" width="40" height="120" fill="black" /> <!-- C# -->
-      <!-- D# would be at x=765, but we're capped at 720px width -->
-
+      <rect x="45" y="0" width="40" height="120" fill="black" />
+      <rect x="105" y="0" width="40" height="120" fill="black" />
+      <rect x="165" y="0" width="40" height="120" fill="black" />
+      <rect x="285" y="0" width="40" height="120" fill="black" />
+      <rect x="345" y="0" width="40" height="120" fill="black" />
+      <rect x="465" y="0" width="40" height="120" fill="black" />
+      <rect x="525" y="0" width="40" height="120" fill="black" />
+      <rect x="585" y="0" width="40" height="120" fill="black" />
+      <rect x="705" y="0" width="40" height="120" fill="black" />
     </g>
 
-    <defs>
-      <defs>
-        <!-- Base dot definition -->
-        <circle id="fingering-dot" r="10" fill="blue" />
+    <!-- Layer 4: Fingering overlays -->
 
-        <!-- Anchor group with fixed vertical position -->
-        <g id="fingering-anchor">
-          <use href="#fingering-dot" y="180" />
-        </g>
-      </defs>
+    <!-- C Major: C, E, G -->
+    <g id="fingering-C-major" visibility="visible">
+      <use href="#fingering-anchor" x="270" /> <!-- C -->
+      <use href="#fingering-anchor" x="390" /> <!-- E -->
+      <use href="#fingering-anchor" x="510" /> <!-- G -->
+    </g>
 
-      <!-- Layer 4: Fingering dots for C major -->
-      <g id="fingering-C-major">
-        <use href="#fingering-anchor" x="270" />
-        <use href="#fingering-anchor" x="390" />
-        <use href="#fingering-anchor" x="510" />
-      </g>
-
-
+    <!-- C7: C, E, Bb -->
+    <g id="fingering-C7" visibility="hidden">
+      <use href="#fingering-anchor" x="270" /> <!-- C -->
+      <use href="#fingering-anchor" x="390" /> <!-- E -->
+      <use href="#fingering-anchor" x="675" /> <!-- Bb -->
+    </g>
   </svg>
 </body>
 
