@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>12-Key Piano Keyboard</title>
+  <title>Modular Piano Keyboard</title>
   <style>
     body {
       margin: 40px;
@@ -13,8 +13,8 @@
       height: 100vh;
     }
     svg {
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
       background-color: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
     }
     .white-key {
       fill: white;
@@ -26,21 +26,27 @@
 <body>
   <svg width="720" height="200" viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg">
     <title>12-Key Piano Keyboard</title>
-    <desc>Basic layout of 12 white piano keys, evenly spaced and ready for overlay.</desc>
+    <desc>White keys defined once and reused via <use> for modular layout.</desc>
 
+    <!-- Define a reusable white key -->
+    <defs>
+      <rect id="white-key" class="white-key" x="0" y="0" width="60" height="200" />
+    </defs>
+
+    <!-- Instantiate 12 white keys using <use> -->
     <g id="white-keys">
-      <rect class="white-key" x="0"   y="0" width="60" height="200" />
-      <rect class="white-key" x="60"  y="0" width="60" height="200" />
-      <rect class="white-key" x="120" y="0" width="60" height="200" />
-      <rect class="white-key" x="180" y="0" width="60" height="200" />
-      <rect class="white-key" x="240" y="0" width="60" height="200" />
-      <rect class="white-key" x="300" y="0" width="60" height="200" />
-      <rect class="white-key" x="360" y="0" width="60" height="200" />
-      <rect class="white-key" x="420" y="0" width="60" height="200" />
-      <rect class="white-key" x="480" y="0" width="60" height="200" />
-      <rect class="white-key" x="540" y="0" width="60" height="200" />
-      <rect class="white-key" x="600" y="0" width="60" height="200" />
-      <rect class="white-key" x="660" y="0" width="60" height="200" />
+      <use href="#white-key" x="0"   y="0" />
+      <use href="#white-key" x="60"  y="0" />
+      <use href="#white-key" x="120" y="0" />
+      <use href="#white-key" x="180" y="0" />
+      <use href="#white-key" x="240" y="0" />
+      <use href="#white-key" x="300" y="0" />
+      <use href="#white-key" x="360" y="0" />
+      <use href="#white-key" x="420" y="0" />
+      <use href="#white-key" x="480" y="0" />
+      <use href="#white-key" x="540" y="0" />
+      <use href="#white-key" x="600" y="0" />
+      <use href="#white-key" x="660" y="0" />
     </g>
   </svg>
 </body>
