@@ -36,11 +36,6 @@ function getFingeringPosition(note) {
 }
 
 function renderFingering(chordName, svgGroupId) {
-  const chords = {
-    C_major: ['C-3', 'E-3', 'G-3'],
-    C7: ['C-3', 'E-3', 'A#-3']
-    // Add more chords as needed
-  };
 
   const group = document.getElementById(svgGroupId);
   group.innerHTML = ''; // Clear previous dots
