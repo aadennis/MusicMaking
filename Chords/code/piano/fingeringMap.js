@@ -1,10 +1,8 @@
-// White keys: spaced every 60px, starting from F at x=0
 const whiteKeyX = {
   F: 0, G: 60, A: 120, B: 180, C: 240, D: 300, E: 360,
   F2: 420, G2: 480, A2: 540, B2: 600, C2: 660
 };
 
-// Black keys: 40px wide, centered between white keys, nudged 5px left
 const blackKeyX = {
   Fsharp: 40, Gsharp: 100, Asharp: 160,
   Csharp: 280, Dsharp: 340,
@@ -12,9 +10,27 @@ const blackKeyX = {
   Csharp2: 700
 };
 
-// Fingering dot center = keyX + 30 (half of white key width)
 function getFingeringX(note) {
   const x = whiteKeyX[note] ?? blackKeyX[note];
   return x !== undefined ? x + 30 : null;
 }
 
+function renderFingering(chordName, svgGroupId) {
+  const chords = {
+    C_major: ['C', 'E', 'G'],
+    C7: ['C', 'E', 'Asharp']
+  };
+
+  const group = document.getElementById(svgGroupId);
+  group.innerHTML = ''; // Clear previous dots
+
+  chords[chordName].forEach(note => {
+    const x = getFingeringX(note);
+    if (x !== null) {
+      const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+      use.setAttributeNS(null, 'href', '#fingering-anchor');
+      use.setAttributeNS(null, 'x', x);
+      group.appendChild(use);
+    }
+  });
+}

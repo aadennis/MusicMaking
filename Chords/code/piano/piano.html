@@ -19,7 +19,15 @@
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     }
   </style>
+
   <script src="fingeringMap.js"></script>
+  <script>
+    // Wait until DOM is ready
+    window.addEventListener('DOMContentLoaded', () => {
+      renderFingering('C_major', 'fingering-overlay');
+      // To switch: renderFingering('C7', 'fingering-overlay');
+    });
+  </script>
 
 </head>
 
@@ -54,37 +62,38 @@
     </g>
 
     <!-- Layer 3: Black keys -->
+
     <g id="black-keys">
-      <g id="black-keys">
-        <rect x="40" y="0" width="40" height="120" fill="black" /> <!-- F# -->
-        <rect x="100" y="0" width="40" height="120" fill="black" /> <!-- G# -->
-        <rect x="160" y="0" width="40" height="120" fill="black" /> <!-- A# -->
-        <!-- Skip B–C -->
-        <rect x="280" y="0" width="40" height="120" fill="black" /> <!-- C# -->
-        <rect x="340" y="0" width="40" height="120" fill="black" /> <!-- D# -->
-        <!-- Skip E–F -->
-        <rect x="460" y="0" width="40" height="120" fill="black" /> <!-- F# -->
-        <rect x="520" y="0" width="40" height="120" fill="black" /> <!-- G# -->
-        <rect x="580" y="0" width="40" height="120" fill="black" /> <!-- A# -->
-        <!-- Skip B–C -->
-        <rect x="700" y="0" width="40" height="120" fill="black" /> <!-- C# -->
-      </g>
+      <rect x="40" y="0" width="40" height="120" fill="black" /> <!-- F# -->
+      <rect x="100" y="0" width="40" height="120" fill="black" /> <!-- G# -->
+      <rect x="160" y="0" width="40" height="120" fill="black" /> <!-- A# -->
+      <!-- Skip B–C -->
+      <rect x="280" y="0" width="40" height="120" fill="black" /> <!-- C# -->
+      <rect x="340" y="0" width="40" height="120" fill="black" /> <!-- D# -->
+      <!-- Skip E–F -->
+      <rect x="460" y="0" width="40" height="120" fill="black" /> <!-- F# -->
+      <rect x="520" y="0" width="40" height="120" fill="black" /> <!-- G# -->
+      <rect x="580" y="0" width="40" height="120" fill="black" /> <!-- A# -->
+      <!-- Skip B–C -->
+      <rect x="700" y="0" width="40" height="120" fill="black" /> <!-- C# -->
+    </g>
 
-      <!-- Layer 4: Fingering overlays -->
+    <!-- Layer 4: Fingering overlays -->
 
-      <!-- C Major: C, E, G -->
-      <g id="fingering-C-major" visibility="hidden">
-        <use href="#fingering-anchor" x="270" /> <!-- C -->
-        <use href="#fingering-anchor" x="390" /> <!-- E -->
-        <use href="#fingering-anchor" x="510" /> <!-- G -->
-      </g>
+    <!-- C Major: C, E, G -->
+    <g id="fingering-C-major" visibility="hidden">
+      <use href="#fingering-anchor" x="270" /> <!-- C -->
+      <use href="#fingering-anchor" x="390" /> <!-- E -->
+      <use href="#fingering-anchor" x="510" /> <!-- G -->
+    </g>
 
-      <!-- C7: C, E, Bb -->
-      <g id="fingering-C7" visibility="visible">
-        <use href="#fingering-anchor" x="270" /> <!-- C -->
-        <use href="#fingering-anchor" x="390" /> <!-- E -->
-        <use href="#fingering-anchor" x="600" /> <!-- Bb -->
-      </g>
+    <!-- C7: C, E, Bb -->
+    <g id="fingering-C7" visibility="visible">
+      <use href="#fingering-anchor" x="270" /> <!-- C -->
+      <use href="#fingering-anchor" x="390" /> <!-- E -->
+      <use href="#fingering-anchor" x="600" /> <!-- Bb -->
+    </g>
+    <g id="fingering-overlay"></g>
   </svg>
 </body>
 
