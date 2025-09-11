@@ -1,13 +1,28 @@
 const whiteKeyX = {
-  F: 0, G: 60, A: 120, B: 180, C: 240, D: 300, E: 360,
-  F2: 420, G2: 480, A2: 540, B2: 600, C2: 660
+  'F-2': 0,
+  'G-2': 60,
+  'A-2': 120,
+  'B-2': 180,
+  'C-3': 240,
+  'D-3': 300,
+  'E-3': 360,
+  'F-3': 420,
+  'G-3': 480,
+  'A-3': 540,
+  'B-3': 600,
+  'C-4': 660
 };
 
 const blackKeyX = {
-  Fsharp: 40, Gsharp: 100, Asharp: 160,
-  Csharp: 280, Dsharp: 340,
-  Fsharp2: 460, Gsharp2: 520, Asharp2: 580,
-  Csharp2: 700
+  'F#-2': 40,
+  'G#-2': 100,
+  'A#-2': 160,
+  'C#-3': 280,
+  'D#-3': 340,
+  'F#-3': 460,
+  'G#-3': 520,
+  'A#-3': 580,
+  'C#-4': 700
 };
 
 function getFingeringPosition(note) {
@@ -20,10 +35,11 @@ function getFingeringPosition(note) {
   return null;
 }
 
+
 function renderFingering(chordName, svgGroupId) {
   const chords = {
-    C_major: ['C', 'E', 'G'],
-    C7: ['C', 'E', 'Asharp']
+    C_major: ['C-3', 'E-3', 'G-3'],
+    C7: ['C-3', 'E-3', 'A#-3']
   };
 
   const group = document.getElementById(svgGroupId);
