@@ -11,8 +11,13 @@ const blackKeyX = {
 };
 
 function getFingeringX(note) {
-  const x = whiteKeyX[note] ?? blackKeyX[note];
-  return x !== undefined ? x + 30 : null;
+  if (whiteKeyX[note] !== undefined) {
+    return whiteKeyX[note] + 30; // center of 60px white key
+  }
+  if (blackKeyX[note] !== undefined) {
+    return blackKeyX[note] + 20; // center of 40px black key
+  }
+  return null;
 }
 
 function renderFingering(chordName, svgGroupId) {
