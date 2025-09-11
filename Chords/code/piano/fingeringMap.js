@@ -35,17 +35,18 @@ function getFingeringPosition(note) {
   return null;
 }
 
-
 function renderFingering(chordName, svgGroupId) {
   const chords = {
     C_major: ['C-3', 'E-3', 'G-3'],
     C7: ['C-3', 'E-3', 'A#-3']
+    // Add more chords as needed
   };
 
   const group = document.getElementById(svgGroupId);
   group.innerHTML = ''; // Clear previous dots
 
-  chords[chordName].forEach(note => {
+  const notes = chords[chordName];
+  notes.forEach(note => {
     const pos = getFingeringPosition(note);
     if (pos) {
       const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
@@ -54,4 +55,8 @@ function renderFingering(chordName, svgGroupId) {
       group.appendChild(use);
     }
   });
+
+  // Update caption with chord name and notes
+  const caption = document.getElementById('chord-caption');
+  caption.textContent = `${chordName}: ${notes.join(', ')}`;
 }
