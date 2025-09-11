@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Layered Piano Keyboard</title>
@@ -12,12 +13,14 @@
       align-items: center;
       height: 100vh;
     }
+
     svg {
       background-color: #fff;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     }
   </style>
 </head>
+
 <body>
   <svg width="720" height="200" viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg">
     <title>Layered Piano Keyboard</title>
@@ -29,7 +32,7 @@
     <!-- Layer 2: Black lines between white keys -->
     <g id="dividers" stroke="black" stroke-width="2">
       <!-- 11 lines between 12 keys -->
-      <line x1="60"  y1="0" x2="60"  y2="200" />
+      <line x1="60" y1="0" x2="60" y2="200" />
       <line x1="120" y1="0" x2="120" y2="200" />
       <line x1="180" y1="0" x2="180" y2="200" />
       <line x1="240" y1="0" x2="240" y2="200" />
@@ -42,19 +45,28 @@
       <line x1="660" y1="0" x2="660" y2="200" />
     </g>
 
-    <!-- Layer 3: Black keys (skip E–F and B–C gaps) -->
+    <!-- Layer 3: Black keys over white keys (F to E) -->
     <g id="black-keys">
-      <!-- Each black key is 40px wide, 120px tall -->
-      <rect x="45"  y="0" width="40" height="120" fill="black" />
-      <rect x="105" y="0" width="40" height="120" fill="black" />
-      <rect x="225" y="0" width="40" height="120" fill="black" />
-      <rect x="285" y="0" width="40" height="120" fill="black" />
-      <rect x="345" y="0" width="40" height="120" fill="black" />
-      <rect x="465" y="0" width="40" height="120" fill="black" />
-      <rect x="525" y="0" width="40" height="120" fill="black" />
-      <rect x="645" y="0" width="40" height="120" fill="black" />
-      <rect x="705" y="0" width="40" height="120" fill="black" />
+      <!-- First octave -->
+      <rect x="45" y="0" width="40" height="120" fill="black" /> <!-- F# -->
+      <rect x="105" y="0" width="40" height="120" fill="black" /> <!-- G# -->
+      <rect x="165" y="0" width="40" height="120" fill="black" /> <!-- A# -->
+      <!-- Skip B–C -->
+      <rect x="285" y="0" width="40" height="120" fill="black" /> <!-- C# -->
+      <rect x="345" y="0" width="40" height="120" fill="black" /> <!-- D# -->
+      <!-- Skip E–F -->
+
+      <!-- Second octave -->
+      <rect x="465" y="0" width="40" height="120" fill="black" /> <!-- F# -->
+      <rect x="525" y="0" width="40" height="120" fill="black" /> <!-- G# -->
+      <rect x="585" y="0" width="40" height="120" fill="black" /> <!-- A# -->
+      <!-- Skip B–C -->
+      <rect x="705" y="0" width="40" height="120" fill="black" /> <!-- C# -->
+      <!-- D# would be at x=765, but we're capped at 720px width -->
+
     </g>
+
   </svg>
 </body>
+
 </html>
