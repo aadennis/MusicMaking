@@ -26,6 +26,13 @@ const chords = {
 
 
     C_minor: ['C-3', 'D#-3'],
+    D_minor: ['D-3', 'F-3'],
+    E_minor: ['E-3', 'G-3'],
+    F_minor: ['F-2', 'G#-2'],
+    G_minor: ['G-2', 'A#-2'],
+    A_minor: ['A-2', 'C-3'],
+    B_minor: ['B-2', 'D-3'],
+
     C_minor_7: ['A#', 'C-3', 'D#-3'],
 
     C_add2: ['C-3', 'D-3', 'E-3'],
