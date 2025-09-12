@@ -4,10 +4,18 @@ const chords = {
     E_major: ['E-3', 'G#-3'],
     F_major: ['F-3', 'A-3'],
     G_major: ['G-3', 'B-3'],
-    A_major: ['A-3', 'C#-3'],
-    B_major: ['B-3', 'D#-3'],
+    A_major: ['A-3', 'C#-4'],
+    B_major: ['B-3', 'D#-4'],
 
     C_major_7: ['C-3', 'E-3', 'B-2'],
+    D_major_7: ['D-3', 'F#-3', 'C#-3'],
+    E_major_7: ['E-3', 'G#-3', 'D#-4'],
+    F_major_7: ['F-3', 'A-3', 'E-4'],
+    G_major_7: ['G-3', 'B-3', 'F#-4'],
+    A_major_7: ['A-3', 'C#-4', 'G#-4'],
+    B_major_7: ['B-2', 'D#-3', 'A#-3']
+
+
     C7: ['C-3', 'E-3', 'A#-3'],
 
     C_minor: ['C-3', 'D#-3'],
