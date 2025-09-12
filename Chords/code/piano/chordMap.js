@@ -8,11 +8,11 @@ const chords = {
     B_major: ['B-3', 'D#-4'],
 
     C_major_7: ['C-3', 'E-3', 'B-2'],
-    D_major_7: ['D-3', 'F#-3', 'C#-3'],
-    E_major_7: ['E-3', 'G#-3', 'D#-4'],
-    F_major_7: ['F-3', 'A-3', 'E-4'],
-    G_major_7: ['G-3', 'B-3', 'F#-4'],
-    A_major_7: ['A-3', 'C#-4', 'G#-4'],
+    D_major_7: ['D-3', 'F#-3', 'C#-4'], //cannot go to D-2: CC key
+    E_major_7: ['E-2', 'G#-2', 'D#-3'],
+    F_major_7: ['F-2', 'A-2', 'E-3'],
+    G_major_7: ['G-2', 'B-2', 'F#-3'],
+    A_major_7: ['A-2', 'C#-3', 'G#-3'],
     B_major_7: ['B-2', 'D#-3', 'A#-3']
 
 
