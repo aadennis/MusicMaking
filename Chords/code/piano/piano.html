@@ -20,12 +20,12 @@
     }
   </style>
 
-<script src="chordMap.js"></script>
-<script src="fingeringMap.js"></script>
+  <script src="chordMap.js"></script>
+  <script src="fingeringMap.js"></script>
   <script>
     // Wait until DOM is ready
     window.addEventListener('DOMContentLoaded', () => {
-      renderFingering('G_major', 'fingering-overlay');
+      renderFingering('B_major', 'fingering-overlay');
       // see js - fingeringMap.renderFingering() for available chords
     });
   </script>
@@ -56,34 +56,31 @@
 
       <!-- Layer 2: Black dividers -->
       <g stroke="black" stroke-width="2">
-        <line x1="60" y1="0" x2="60" y2="200" />
-        <line x1="120" y1="0" x2="120" y2="200" />
-        <line x1="180" y1="0" x2="180" y2="200" />
-        <line x1="240" y1="0" x2="240" y2="200" />
-        <line x1="300" y1="0" x2="300" y2="200" />
-        <line x1="360" y1="0" x2="360" y2="200" />
+        <line x1="42" y1="0" x2="42" y2="200" />
+        <line x1="84" y1="0" x2="84" y2="200" />
+        <line x1="126" y1="0" x2="126" y2="200" />
+        <line x1="168" y1="0" x2="168" y2="200" />
+        <line x1="210" y1="0" x2="210" y2="200" />
+        <line x1="252" y1="0" x2="252" y2="200" />
+        <line x1="294" y1="0" x2="294" y2="200" />
+        <line x1="336" y1="0" x2="336" y2="200" />
+        <line x1="378" y1="0" x2="378" y2="200" />
         <line x1="420" y1="0" x2="420" y2="200" />
-        <line x1="480" y1="0" x2="480" y2="200" />
-        <line x1="540" y1="0" x2="540" y2="200" />
-        <line x1="600" y1="0" x2="600" y2="200" />
-        <line x1="660" y1="0" x2="660" y2="200" />
+        <line x1="462" y1="0" x2="462" y2="200" />
       </g>
 
       <!-- Layer 3: Black keys -->
 
       <g id="black-keys">
-        <rect x="40" y="0" width="40" height="120" fill="black" /> <!-- F# -->
-        <rect x="100" y="0" width="40" height="120" fill="black" /> <!-- G# -->
-        <rect x="160" y="0" width="40" height="120" fill="black" /> <!-- A# -->
-        <!-- Skip B–C -->
-        <rect x="280" y="0" width="40" height="120" fill="black" /> <!-- C# -->
-        <rect x="340" y="0" width="40" height="120" fill="black" /> <!-- D# -->
-        <!-- Skip E–F -->
-        <rect x="460" y="0" width="40" height="120" fill="black" /> <!-- F# -->
-        <rect x="520" y="0" width="40" height="120" fill="black" /> <!-- G# -->
-        <rect x="580" y="0" width="40" height="120" fill="black" /> <!-- A# / Bb -->
-        <!-- Skip B–C -->
-        <rect x="700" y="0" width="40" height="120" fill="black" /> <!-- C# -->
+        <rect x="28.0" y="0" width="28" height="120" fill="black" />
+        <rect x="70.0" y="0" width="28" height="120" fill="black" />
+        <rect x="112.0" y="0" width="28" height="120" fill="black" />
+        <rect x="196.0" y="0" width="28" height="120" fill="black" />
+        <rect x="238.0" y="0" width="28" height="120" fill="black" />
+        <rect x="322.0" y="0" width="28" height="120" fill="black" />
+        <rect x="364.0" y="0" width="28" height="120" fill="black" />
+        <rect x="406.0" y="0" width="28" height="120" fill="black" />
+        <rect x="490.0" y="0" width="28" height="120" fill="black" />
       </g>
 
       <!-- Layer 4: Fingering overlays -->
