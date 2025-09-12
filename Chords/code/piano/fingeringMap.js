@@ -11,6 +11,13 @@ const whiteKeyX = {
   'A-3': 378,
   'B-3': 420,
   'C-4': 462,
+  'D-4': 702,
+  'E-4': 744,
+  'F-4': 786,
+  'G-4': 828,
+  'A-4': 870,
+  'B-4': 912,
+  'C-5': 954,
 };
 
 const blackKeyX = {
@@ -23,6 +30,12 @@ const blackKeyX = {
   'G#-3': 364,
   'A#-3': 406,
   'C#-4': 490,
+  'D#-4': 726,  // between D-4 (702) and E-4 (744)
+  'F#-4': 810,  // between F-4 (786) and G-4 (828)
+  'G#-4': 852,  // between G-4 (828) and A-4 (870)
+  'A#-4': 894,  // between A-4 (870) and B-4 (912)
+  'C#-5': 936,  // between B-4 (912) and C-5 (954)
+
 };
 
 const WHITE_KEY_WIDTH = 42;
