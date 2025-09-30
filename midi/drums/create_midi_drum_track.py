@@ -1,5 +1,6 @@
 import random
 from mido import Message, MidiFile, MidiTrack, MetaMessage, bpm2tempo
+from drum_constants import KICK, SIDE_STICK, RIDE  
 
 def create_cant_help_falling_midi(filename="drums/midi_drum_tracks/cant_help_drums.mid"):
     mid = MidiFile(type=1)
@@ -9,11 +10,6 @@ def create_cant_help_falling_midi(filename="drums/midi_drum_tracks/cant_help_dru
     bpm = 68
     tempo = bpm2tempo(bpm)
     track.append(MetaMessage('set_tempo', tempo=tempo))
-
-    # Drum note numbers
-    KICK = 36
-    SNARE = 37  # side-stick
-    RIDE = 51   # ride cymbal (42 = closed hi-hat alternative)
 
     ticks_per_beat = mid.ticks_per_beat  # usually 480
     eighth = ticks_per_beat // 2
@@ -37,8 +33,8 @@ def create_cant_help_falling_midi(filename="drums/midi_drum_tracks/cant_help_dru
             if step == 6:
                 events.append(('on', tick_time, KICK, 40))
                 events.append(('off', tick_time + eighth//2, KICK, 0))
-                events.append(('on', tick_time, SNARE, 25))
-                events.append(('off', tick_time + eighth//2, SNARE, 0))
+                events.append(('on', tick_time, SIDE_STICK, 25))
+                events.append(('off', tick_time + eighth//2, SIDE_STICK, 0))
 
             # Ride every 8th note
             ride_vel = max(20, min(40, 30 + random.randint(-3, 3)))
