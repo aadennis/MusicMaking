@@ -52,9 +52,11 @@ The generated file will be saved at `drums/midi_drum_tracks/cant_help_drums.mid`
 
 ## Example Output
 
-The generated MIDI file can be opened in any MIDI editor or played using a MIDI player to hear the drum pattern.
+Whilst the generated MIDI file can be opened in any MIDI editor, it would be more typically dragged into a DAW (in
+my case Ableton Live), for further tweaking.
 
 ## License
 
 
 This script is provided as-is under the MIT License.
+
