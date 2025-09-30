@@ -1,26 +1,31 @@
-import mido
+import pretty_midi
+import os
 
-mid = mido.MidiFile('drums/test_data/baiao1.mid')
+# Input and output filenames
+input_file = 'drums/test_data/baiao1.mid'
+output_file = 'midi_features_output.txt'
 
-notes = []
-velocities = []
-time_signatures = []
-tempo = None
+# Load and analyze MIDI
+pm = pretty_midi.PrettyMIDI(input_file)
 
-for track in mid.tracks:
-    for msg in track:
-        if msg.type == 'note_on' and msg.velocity > 0:
-            notes.append(msg.note)
-            velocities.append(msg.velocity)
-        elif msg.type == 'time_signature':
-            time_signatures.append((msg.numerator, msg.denominator))
-        elif msg.type == 'set_tempo':
-            tempo = msg.tempo  # microseconds per beat
+note_numbers = [note.pitch for instrument in pm.instruments for note in instrument.notes]
+velocities = [note.velocity for instrument in pm.instruments for note in instrument.notes]
+bpm = pm.estimate_tempo()
+time_signature_changes = [(ts.numerator, ts.denominator) for ts in pm.time_signature_changes]
 
-# Convert tempo to BPM
-bpm = mido.tempo2bpm(tempo) if tempo else None
+# Prepare output text
+output_text = f"""🎼 MIDI Feature Summary
+Input File: {input_file}
+Output File: {output_file}
 
-print(f"Notes played: {sorted(set(notes))}")
-print(f"Velocity range: {min(velocities)}–{max(velocities)}")
-print(f"BPM: {bpm}")
-print(f"Time Signatures: {time_signatures}")
+Notes Played: {sorted(set(note_numbers))}
+Velocity Range: {min(velocities)}–{max(velocities)}
+Estimated BPM: {round(bpm, 2)}
+Time Signatures: {time_signature_changes}
+"""
+
+# Write to file
+with open(output_file, 'w') as f:
+    f.write(output_text)
+
+print(f"Features written to {output_file}")
