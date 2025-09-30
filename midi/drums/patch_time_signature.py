@@ -1,34 +1,60 @@
-from mido import MidiFile, MidiTrack, MetaMessage
 import os
 import random
-import sys
+from mido import MidiFile, MidiTrack, MetaMessage, tempo2bpm
 
-def patch_time_signature(input_path, numerator=6, denominator=8):
-    # Load the MIDI file
-    mid = MidiFile(input_path)
-
-    # Convert to type 1 to allow multiple tracks
-    mid.type = 1
-
-  # Remove existing time_signature events from all tracks
+def extract_metadata(mid):
+    bpm = None
+    ts = None
     for track in mid.tracks:
-        track[:] = [msg for msg in track if not (msg.type == 'time_signature')]
+        for msg in track:
+            if msg.type == 'set_tempo' and bpm is None:
+                bpm = round(tempo2bpm(msg.tempo))
+            elif msg.type == 'time_signature' and ts is None:
+                ts = (msg.numerator, msg.denominator)
+            if bpm and ts:
+                break
+    return bpm or 120, ts or (4, 4)
 
-    # Create a new track with your desired time signature
+def patch_and_rename(input_path, override_bpm=None, override_ts=None):
+    mid = MidiFile(input_path)
+    mid.type = 1  # Ensure multi-track format
+
+    # Extract original metadata
+    bpm, (numerator, denominator) = extract_metadata(mid)
+
+    # Apply overrides if provided
+    if override_bpm is not None:
+        bpm = override_bpm
+    if override_ts is not None:
+        numerator, denominator = override_ts
+
+    # Strip existing time_signature events
+    for track in mid.tracks:
+        track[:] = [msg for msg in track if msg.type != 'time_signature']
+
+    # Inject clean time signature at tick 0
     ts_track = MidiTrack()
     ts_track.append(MetaMessage('time_signature', numerator=numerator, denominator=denominator, time=0))
     mid.tracks.insert(0, ts_track)
 
-    # Save with randomized suffix
-    base, ext = os.path.splitext(input_path)
+    # Build output filename
+    base, ext = os.path.splitext(os.path.basename(input_path))
     suffix = random.randint(10000, 99999)
-    output_path = f"{base}_patched_{suffix}{ext}"
+    output_name = f"{base}_{bpm}_{numerator}-{denominator}_{suffix}{ext}"
+    output_path = os.path.join(os.path.dirname(input_path), output_name)
+
     mid.save(output_path)
-    print(f"Saved patched MIDI to: {output_path}")
+    print(f"Saved: {output_path}")
 
 def main():
     input_file = 'drums/test_data/erkwel2.mid'
-    patch_time_signature(input_file)
+
+    # Optional overrides
+    override_bpm = None           # e.g. 100 or None
+    override_ts = (6,8)           # e.g. (6, 8) or None
+
+    patch_and_rename(input_file, override_bpm, override_ts)
 
 if __name__ == "__main__":
     main()
+

@@ -1,7 +1,7 @@
 import mido
 from collections import defaultdict
 
-input_file = 'drums/test_data/baiao1.mid'
+input_file = 'drums/test_data/erkwel2_100_6-8_36189.mid'
 output_file = 'mido_note_velocity_summary.txt'
 
 mid = mido.MidiFile(input_file)
