@@ -1,0 +1,11 @@
+MIDI Summary (via mido)
+Input File: drums/test_data/baiao1.mid
+Output File: mido_note_velocity_summary.txt
+
+Estimated BPM: 110.0
+Time Signatures: [(4, 4)]
+
+Note Velocity Ranges:
+  Note 36: min=85, max=90
+  Note 38: min=45, max=90
+  Note 61: min=55, max=95
