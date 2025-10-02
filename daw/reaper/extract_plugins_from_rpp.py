@@ -8,6 +8,8 @@ def extract_plugins_from_rpp(rpp_path):
     current_track = None
     current_plugins = []
     inside_fxchain = False
+    inside_vst_block = False
+    vst_name = None
 
     for line in lines:
         line = line.strip()
@@ -19,6 +21,8 @@ def extract_plugins_from_rpp(rpp_path):
             current_track = "Unnamed Track"
             current_plugins = []
             inside_fxchain = False
+            inside_vst_block = False
+            vst_name = None
 
         # Extract track name
         elif line.startswith("NAME") and current_track == "Unnamed Track":
@@ -30,14 +34,22 @@ def extract_plugins_from_rpp(rpp_path):
         elif line.startswith("<FXCHAIN"):
             inside_fxchain = True
 
-        elif line.startswith(">") and inside_fxchain:
+        elif line.startswith(">") and inside_fxchain and not inside_vst_block:
             inside_fxchain = False
 
-        # Extract plugin name inside FXCHAIN
+        # Detect start of VST block
         elif inside_fxchain and line.startswith("<VST"):
-            match = re.match(r'<VST\s+"([^"]+)"', line)
-            if match:
-                current_plugins.append(match.group(1))
+            vst_match = re.match(r'<VST\s+"([^"]+)"', line)
+            if vst_match:
+                vst_name = vst_match.group(1)
+                inside_vst_block = True
+
+        # Detect end of VST block
+        elif inside_vst_block and line == ">":
+            if vst_name:
+                current_plugins.append(vst_name)
+            vst_name = None
+            inside_vst_block = False
 
     # Append last track
     if current_track:
@@ -53,5 +65,4 @@ plugin_summary = extract_plugins_from_rpp(rpp_file)
 for track_name, plugins in plugin_summary:
     print(f"\nTrack name: [{track_name}]")
     for plugin in plugins:
-        print(f"  - {plugin if plugin else '(No plugins found)'}")
-        
+        print(f"  - {plugin}")
