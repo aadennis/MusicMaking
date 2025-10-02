@@ -2,23 +2,46 @@ import re
 
 def extract_plugins_from_rpp(rpp_path):
     with open(rpp_path, 'r', encoding='utf-8', errors='ignore') as file:
-        content = file.read()
-
-    # Split into track blocks
-    track_blocks = re.findall(r'<TRACK.*?>.*?<FXCHAIN.*?>.*?</FXCHAIN>.*?</TRACK>', content, re.DOTALL)
+        lines = file.readlines()
 
     results = []
+    current_track = None
+    current_plugins = []
+    inside_fxchain = False
 
-    for i, block in enumerate(track_blocks, start=1):
+    for line in lines:
+        line = line.strip()
+
+        # Detect start of a new track
+        if line.startswith("<TRACK"):
+            if current_track:
+                results.append((current_track, current_plugins))
+            current_track = "Unnamed Track"
+            current_plugins = []
+            inside_fxchain = False
+
         # Extract track name
-        name_match = re.search(r'NAME\s+"([^"]+)"', block)
-        track_name = name_match.group(1) if name_match else f"Track {i}"
+        elif line.startswith("NAME") and current_track == "Unnamed Track":
+            match = re.match(r'NAME\s+"(.+)"', line)
+            if match:
+                current_track = match.group(1)
 
-        # Extract plugin lines
-        plugin_matches = re.findall(r'<VST\s+"([^"]+)"', block)
-        plugins = plugin_matches if plugin_matches else ["(No plugins found)"]
+        # Detect FXCHAIN block
+        elif line.startswith("<FXCHAIN"):
+            inside_fxchain = True
 
-        results.append((track_name, plugins))
+        elif line.startswith(">") and inside_fxchain:
+            inside_fxchain = False
+
+        # Extract plugin name inside FXCHAIN
+        elif inside_fxchain and line.startswith("<VST"):
+            match = re.match(r'<VST\s+"([^"]+)"', line)
+            if match:
+                current_plugins.append(match.group(1))
+
+    # Append last track
+    if current_track:
+        results.append((current_track, current_plugins))
 
     return results
 
@@ -28,7 +51,7 @@ plugin_summary = extract_plugins_from_rpp(rpp_file)
 
 # Print results
 for track_name, plugins in plugin_summary:
-    print(f"\n🎛️ {track_name}")
+    print(f"\nTrack name: [{track_name}]")
     for plugin in plugins:
-        print(f"  - {plugin}")
-
+        print(f"  - {plugin if plugin else '(No plugins found)'}")
+        
