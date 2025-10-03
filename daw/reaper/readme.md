@@ -1,4 +1,13 @@
-# extract_plugins_from_rpp.py
+# Reaper Management
+
+#### tested on Reaper 7.x
+
+# Scripts
+
+
+## Python
+
+### extract_plugins_from_rpp.py
 
 ## Overview
 
@@ -49,10 +58,20 @@ Track name: [Track 2]
 - The script assumes the `.rpp` file is properly formatted.
 - Only VST plugins are currently supported.
 
-## License
+todo...
 
-This script is provided as-is under the [Apache License 2.0](../LICENSE).
+Lua scripting
+
+insertKontaktMidiReady.lua
+
+InsertLeanKontakt.lua
+
+
+## License for the DAW/Reaper project
+
+These scripts are provided as-is under the [Apache License 2.0](../LICENSE).
 
 ## Author
 
 This script is part of the `MusicMaking` project.
+
