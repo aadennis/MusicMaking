@@ -199,7 +199,7 @@ def get_song_metadata(song):
             "capo": 0,
             "tempo": 88,
             "scroll_speed": 2.7,
-            "output_folder": "ChordPro"
+            "output_folder": "ChordPro_Output"
         }
         with open(metadata_path, 'w', encoding='utf-8') as f:
             json.dump(default_metadata, f, indent=2)
@@ -266,7 +266,7 @@ def process_all_songs():
             song = os.path.splitext(filename)[0]
             process_song(song)
 
-def zip_chordpro_files(zip_name="AllChordProFiles.zip", root_folder="ChordPro"):
+def zip_chordpro_files(zip_name="AllChordProFiles.zip", root_folder="ChordPro_Output"):
     """
     Zips all .chordpro files into a single archive for easy transfer.
 
@@ -287,10 +287,10 @@ def zip_chordpro_files(zip_name="AllChordProFiles.zip", root_folder="ChordPro"):
 # Example usage:
 if __name__ == "__main__":
     # Uncomment the following line to process a single song
-    # process_song("TakeMeHomeCountryRoads")
+    process_song("TakeMeHomeCountryRoads")
     
     # Process all songs and zip them
-    process_all_songs()
-    zip_chordpro_files()
+    #process_all_songs()
+    #zip_chordpro_files()
 
 

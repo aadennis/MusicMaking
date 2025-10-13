@@ -7,7 +7,7 @@
         "capo":0,
         "tempo":88,
         "scroll_speed":2.7,
-        "output_folder":"ChordPro\/Eatles",
+        "output_folder":"ChordPro_Output\/Eatles",
         "key":null,
         "tested":null,
         "complex_chords":[
@@ -27,7 +27,7 @@
         "capo":0,
         "tempo":88,
         "scroll_speed":2.7,
-        "output_folder":"ChordPro\/Eatles",
+        "output_folder":"ChordPro_Output\/Eatles",
         "key":null,
         "tested":null,
         "complex_chords":[
@@ -47,7 +47,7 @@
         "capo":0,
         "tempo":88,
         "scroll_speed":2.7,
-        "output_folder":"ChordPro",
+        "output_folder":"ChordPro_Output",
         "key":null,
         "tested":null,
         "complex_chords":[
@@ -67,7 +67,7 @@
         "capo":0,
         "tempo":88,
         "scroll_speed":2.7,
-        "output_folder":"ChordPro",
+        "output_folder":"ChordPro_Output",
         "key":"C",
         "tested":null,
         "complex_chords":[
@@ -87,7 +87,7 @@
         "capo":0,
         "tempo":88,
         "scroll_speed":2.7,
-        "output_folder":"ChordPro\/Eatles",
+        "output_folder":"ChordPro_Output\/Eatles",
         "key":"C",
         "tested":null,
         "complex_chords":[
@@ -107,7 +107,7 @@
         "capo":2,
         "tempo":88,
         "scroll_speed":2.7,
-        "output_folder":"ChordPro",
+        "output_folder":"ChordPro_Output",
         "key":null,
         "tested":null,
         "complex_chords":[
@@ -127,7 +127,7 @@
         "capo":0,
         "tempo":88,
         "scroll_speed":2.7,
-        "output_folder":"ChordPro",
+        "output_folder":"ChordPro_Output",
         "key":"E",
         "tested":null,
         "complex_chords":[
@@ -147,7 +147,7 @@
         "capo":0,
         "tempo":88,
         "scroll_speed":2.7,
-        "output_folder":"ChordPro",
+        "output_folder":"ChordPro_Output",
         "key":"C",
         "tested":null,
         "complex_chords":[
@@ -167,7 +167,7 @@
         "capo":0,
         "tempo":88,
         "scroll_speed":2.7,
-        "output_folder":"ChordPro",
+        "output_folder":"ChordPro_Output",
         "key":null,
         "tested":null,
         "complex_chords":[
@@ -187,7 +187,7 @@
         "capo":0,
         "tempo":88,
         "scroll_speed":2.7,
-        "output_folder":"ChordPro\/Eatles",
+        "output_folder":"ChordPro_Output\/Eatles",
         "key":null,
         "tested":null,
         "complex_chords":[
@@ -207,7 +207,7 @@
         "capo":0,
         "tempo":88,
         "scroll_speed":2.7,
-        "output_folder":"ChordPro",
+        "output_folder":"ChordPro_Output",
         "key":"Am",
         "tested":null,
         "complex_chords":[
@@ -227,7 +227,7 @@
         "capo":0,
         "tempo":88,
         "scroll_speed":2.7,
-        "output_folder":"ChordPro\/Eatles",
+        "output_folder":"ChordPro_Output\/Eatles",
         "key":null,
         "tested":null,
         "complex_chords":[
@@ -247,7 +247,7 @@
         "capo":0,
         "tempo":88,
         "scroll_speed":2.7,
-        "output_folder":"ChordPro\/Eatles",
+        "output_folder":"ChordPro_Output\/Eatles",
         "key":null,
         "tested":null,
         "complex_chords":[
@@ -267,7 +267,7 @@
         "capo":0,
         "tempo":88,
         "scroll_speed":2.7,
-        "output_folder":"ChordPro",
+        "output_folder":"ChordPro_Output",
         "key":"G",
         "tested":null,
         "complex_chords":[
@@ -287,7 +287,7 @@
         "capo":0,
         "tempo":88,
         "scroll_speed":2.7,
-        "output_folder":"ChordPro\/Eatles",
+        "output_folder":"ChordPro_Output\/Eatles",
         "key":"C",
         "tested":null,
         "complex_chords":[
@@ -307,7 +307,7 @@
         "capo":0,
         "tempo":88,
         "scroll_speed":2.7,
-        "output_folder":"ChordPro\/Eatles",
+        "output_folder":"ChordPro_Output\/Eatles",
         "key":null,
         "tested":null,
         "complex_chords":[
@@ -327,7 +327,7 @@
         "capo":0,
         "tempo":88,
         "scroll_speed":2.7,
-        "output_folder":"ChordPro",
+        "output_folder":"ChordPro_Output",
         "key":"C",
         "tested":null,
         "complex_chords":[
@@ -347,7 +347,7 @@
         "capo":0,
         "tempo":88,
         "scroll_speed":2.7,
-        "output_folder":"ChordPro",
+        "output_folder":"ChordPro_Output",
         "key":"A",
         "tested":null,
         "complex_chords":[
@@ -367,7 +367,7 @@
         "capo":0,
         "tempo":88,
         "scroll_speed":2.7,
-        "output_folder":"ChordPro",
+        "output_folder":"ChordPro_Output",
         "key":"D",
         "tested":null,
         "complex_chords":[
@@ -387,7 +387,7 @@
         "capo":3,
         "tempo":88,
         "scroll_speed":2.7,
-        "output_folder":"ChordPro",
+        "output_folder":"ChordPro_Output",
         "key":null,
         "tested":null,
         "complex_chords":[
@@ -407,7 +407,7 @@
         "capo":0,
         "tempo":88,
         "scroll_speed":2.7,
-        "output_folder":"ChordPro",
+        "output_folder":"ChordPro_Output",
         "key":"C",
         "tested":null,
         "complex_chords":[
@@ -427,7 +427,7 @@
         "capo":0,
         "tempo":88,
         "scroll_speed":2.7,
-        "output_folder":"ChordPro",
+        "output_folder":"ChordPro_Output",
         "key":"C",
         "tested":null,
         "complex_chords":[
@@ -447,7 +447,7 @@
         "capo":2,
         "tempo":88,
         "scroll_speed":2.7,
-        "output_folder":"ChordPro",
+        "output_folder":"ChordPro_Output",
         "key":null,
         "tested":null,
         "complex_chords":[
@@ -467,7 +467,7 @@
         "capo":0,
         "tempo":88,
         "scroll_speed":3.0,
-        "output_folder":"ChordPro",
+        "output_folder":"ChordPro_Output",
         "key":null,
         "tested":"Yes",
         "complex_chords":[
@@ -487,7 +487,7 @@
         "capo":3,
         "tempo":88,
         "scroll_speed":2.7,
-        "output_folder":"ChordPro",
+        "output_folder":"ChordPro_Output",
         "key":null,
         "tested":null,
         "complex_chords":[
@@ -507,7 +507,7 @@
         "capo":0,
         "tempo":88,
         "scroll_speed":2.7,
-        "output_folder":"ChordPro",
+        "output_folder":"ChordPro_Output",
         "key":null,
         "tested":null,
         "complex_chords":[
@@ -527,7 +527,7 @@
         "capo":0,
         "tempo":88,
         "scroll_speed":4.15,
-        "output_folder":"ChordPro\/Eatles",
+        "output_folder":"ChordPro_Output\/Eatles",
         "key":null,
         "tested":null,
         "complex_chords":[
