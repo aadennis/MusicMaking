@@ -1,0 +1,10 @@
+{
+  "title": "Your Song",
+  "artist": "Elton John",
+  "key-original": "Eb",
+  "key-me": "Eb",
+  "capo": 1,
+  "tempo": 88,
+  "scroll_speed": 2.7,
+  "output_folder": "ChordPro_Output"
+}
