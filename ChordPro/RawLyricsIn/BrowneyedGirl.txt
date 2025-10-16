@@ -27,7 +27,7 @@ Slippin’ and a- slidin’  all along the  waterfall
 [Chorus]
      C   D              G    Em
 With you  My brown-eyed girl,
-C   D                 G    D
+C   D                 G    
 you’re my brown-eyed girl
 
 [Bridge]
@@ -52,5 +52,17 @@ Makin’ love in the green grass, behind the stadium
 [Chorus]
      C   D              G    Em
 With you  My brown-eyed girl,
-C   D                 G    D
+C   D                 G    
 you’re my brown-eyed girl
+
+[Bridge]
+
+D7
+Do you remember when we used to sing
+G                      C            G      D
+Sha la la la la la la  la la la la  te da  (just like that)
+G                      C            G                D
+Sha la la la la la la  la la la la  te da, la te da
+
+C         G 
+la la,    la.....
