@@ -59,7 +59,7 @@ def main():
     # if len(sys.argv) != 2:
     #     print("Usage: python gen_drum_midi_book.py <pattern_name>")
     #     sys.exit(1)
-    pattern_name = 'drumpattern05' #sys.argv[1]
+    pattern_name = 'drumpattern39.1' #sys.argv[1]
     json_path = os.path.join(os.path.dirname(__file__), 'drum_patterns.json')
     pattern = load_pattern(pattern_name, json_path)
 
@@ -81,8 +81,10 @@ def main():
     # Simple drum note mapping (General MIDI percussion):
     # - 36: Bass Drum 1 (kick)
     # - 38: Acoustic Snare
+    # - 53: Ride Bell  / Ride (cup)
     kick = 36
     snare = 38
+    ridecup = 53
     velocity = 100  # how hard the drum is hit (0-127)
 
     def append_hit(note: int, vel: int, duration_ticks: int):
@@ -97,6 +99,9 @@ def main():
                 append_hit(kick, velocity, time)
             elif i in measure.get('snare', []):
                 append_hit(snare, velocity, time)
+            elif i in measure.get('ridecup', []):
+                append_hit(ridecup, velocity, time)
+                
             else:
                 track.append(Message('note_off', note=0, velocity=0, time=time))
 
