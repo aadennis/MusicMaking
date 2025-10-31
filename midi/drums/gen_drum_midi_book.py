@@ -40,7 +40,19 @@ def load_pattern(pattern_name, json_path):
         patterns = json.load(f)
     if pattern_name not in patterns:
         raise ValueError(f"Pattern '{pattern_name}' not found in {json_path}. Available: {list(patterns.keys())}")
-    return patterns[pattern_name]
+    # Convert all from 1-based to 0-based
+    pattern = patterns[pattern_name]
+    converted = []
+    for measure in pattern:
+        new_measure = {}
+        for drum, hits in measure.items():
+            # Only process lists, just in case
+            if isinstance(hits, list):
+                new_measure[drum] = [i-1 for i in hits]
+            else:
+                new_measure[drum] = hits
+        converted.append(new_measure)
+    return converted
 
 
 def main():
