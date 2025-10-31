@@ -59,7 +59,7 @@ def main():
     # if len(sys.argv) != 2:
     #     print("Usage: python gen_drum_midi_book.py <pattern_name>")
     #     sys.exit(1)
-    pattern_name = 'drumpattern03' #sys.argv[1]
+    pattern_name = 'drumpattern05' #sys.argv[1]
     json_path = os.path.join(os.path.dirname(__file__), 'drum_patterns.json')
     pattern = load_pattern(pattern_name, json_path)
 
