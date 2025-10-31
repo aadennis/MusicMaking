@@ -94,16 +94,25 @@ def main():
     # Build MIDI events from the pattern
     for measure in pattern:
         for i in range(subdivisions):
-            time = ticks_per_subdivision
+            hits = []
+
             if i in measure.get('kick', []):
-                append_hit(kick, velocity, time)
-            elif i in measure.get('snare', []):
-                append_hit(snare, velocity, time)
-            elif i in measure.get('ridecup', []):
-                append_hit(ridecup, velocity, time)
-                
+                hits.append(kick)
+            if i in measure.get('snare', []):
+                hits.append(snare)
+            if i in measure.get('ridecup', []):
+                hits.append(ridecup)
+
+            if hits:
+                for note in hits:
+                    track.append(Message('note_on', note=note, velocity=velocity, time=0))
+                    track.append(Message('note_off', note=note, velocity=0, time=0))
+                # Advance time after all hits
+                track.append(Message('note_off', note=0, velocity=0, time=ticks_per_subdivision))
             else:
-                track.append(Message('note_off', note=0, velocity=0, time=time))
+                track.append(Message('note_off', note=0, velocity=0, time=ticks_per_subdivision))
+
+
 
     # Write the constructed MIDI file to disk
     out_name = f"{pattern_name}.mid"
