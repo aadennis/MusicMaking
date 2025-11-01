@@ -76,7 +76,7 @@ def main():
     # Timing constants
     ticks_per_beat = mid.ticks_per_beat
     subdivisions = 16  # 16th notes per measure
-    ticks_per_subdivision = ticks_per_beat // 4
+    ticks_per_subdivision = ticks_per_beat // subdivisions
 
     # Simple drum note mapping (General MIDI percussion):
     # - 36: Bass Drum 1 (kick)
@@ -86,10 +86,6 @@ def main():
     snare = 38
     ridecup = 53
     velocity = 100  # how hard the drum is hit (0-127)
-
-    def append_hit(note: int, vel: int, duration_ticks: int):
-        track.append(Message('note_on', note=note, velocity=vel, time=0))
-        track.append(Message('note_off', note=note, velocity=0, time=duration_ticks))
 
     # Build MIDI events from the pattern
     for measure in pattern:
@@ -104,13 +100,20 @@ def main():
                 hits.append(ridecup)
 
             if hits:
+                # Emit all note_on events at time=0
                 for note in hits:
                     track.append(Message('note_on', note=note, velocity=velocity, time=0))
-                    track.append(Message('note_off', note=note, velocity=0, time=0))
-                # Advance time after all hits
-                track.append(Message('note_off', note=0, velocity=0, time=ticks_per_subdivision))
-            else:
-                track.append(Message('note_off', note=0, velocity=0, time=ticks_per_subdivision))
+                # Emit all note_off events at time=0
+                for j, note in enumerate(hits):
+                # Only the first note_off advances time
+                    duration = ticks_per_beat if j == 0 else 0
+                    track.append(Message('note_off', note=note, velocity=0, time=duration))
+                else:
+                    # Advance time by 1 beat if no hits
+                    track.append(Message('note_off', note=0, velocity=0, time=16))
+
+
+
 
 
 

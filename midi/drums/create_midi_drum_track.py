@@ -17,7 +17,7 @@ def vel(base, instrument):
     scale = VEL_SCALE * INSTRUMENT_SCALE.get(instrument, 1.0)
     return max(1, min(127, int(base * scale)))
 
-def create_cant_help_falling_midi(filename="drums/midi_drum_tracks/cant_help_drums.mid"):
+def create_cant_help_falling_midi(filename="midi_drum_tracks/cant_help_drums.mid"):
     mid = MidiFile(type=1)
     track = MidiTrack()
     mid.tracks.append(track)

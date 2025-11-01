@@ -68,7 +68,8 @@
     "drumpattern_test01": [ 
         {
             "kick": [ 1,3,7],
-            "snare": [ 1,3,7]
+            "snare": [ 1,3,7],
+            "ridecup": [ 1,3,7]
         },
         {
             "kick": [3, 7, 9],
