@@ -67,4 +67,4 @@ for i in range(8):  # Example 01
 # Write to MIDI file (and optionally MusicXML) using helper that only writes
 # Pass the Part directly; the writer will wrap it into a Score internally.
 from write_example import build_and_write_example
-midi_file = build_and_write_example(part, example=example, out_dir=r"c:/temp", write_musicxml=False)
+midi_file = build_and_write_example(part, example=example)
