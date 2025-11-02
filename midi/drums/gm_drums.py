@@ -88,3 +88,7 @@ BASIC_KIT = ["BD1", "ASN", "CHH", "OHH"]  # Basic rock kit
 TOMS = ["LFT", "HFT", "LTM", "LMT", "HMT", "HTM"]  # All toms
 CYMBALS = ["CC1", "RC1", "CHC", "CC2", "RC2"]  # Main cymbals
 LATIN = ["CWB", "HBO", "LBO", "MHC", "OHC", "LCO", "HTI", "LTI"]  # Latin percussion
+KICK_OHH = ["BD1", "OHH"]
+SNARE_OHH = ["ASN", "OHH"]
+KICK_CHH = ["BD1", "CHH"]
+SNARE_CHH = ["ASN", "CHH"]
