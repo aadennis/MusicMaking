@@ -15,6 +15,10 @@ from music21 import *
 import copy
 from gm_drums import GM_DRUMS, KICK_OHH # Import drum mappings
 
+# As this is specifically for drums, duration of a note will always be
+# a quarter of a quarter, ie semantically 16th or 0.25
+SIXTEENTH = duration.Duration('16th')
+
 # Helper function to convert semantic drum codes into music21 Chord objects
 # Args:
 #   *codes: Variable number of drum codes (e.g., "BD1", "ASN")
@@ -23,7 +27,14 @@ from gm_drums import GM_DRUMS, KICK_OHH # Import drum mappings
 # Example:
 #   drum_chord("BD1", "ASN") creates a chord with MIDI notes [36, 38] (kick + snare)
 def drum_chord(*codes):
-    return chord.Chord([GM_DRUMS[code] for code in codes])
+    c = chord.Chord([GM_DRUMS[code] for code in codes])
+    c.duration = SIXTEENTH
+    return c
+
+def drum_rest():
+    r = note.Rest()
+    r.duration = SIXTEENTH
+    return r
 
 # Create and configure the percussion part:
 # 1. Create a Part to hold our drum sequence
@@ -50,7 +61,7 @@ ohh = drum_chord("OHH")
 part.append(copy.deepcopy(kick_ohh)) 
 part.append(copy.deepcopy(ohh))  
 part.append(copy.deepcopy(kick_ohh)) 
-part.append(note.Rest())        
+part.append(drum_rest())        
 part.append(copy.deepcopy(kick_ohh)) 
 # Create a Score (container for all parts) and add our drum part
 score = stream.Score()
