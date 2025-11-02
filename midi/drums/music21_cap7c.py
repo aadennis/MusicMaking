@@ -120,18 +120,24 @@
 from music21 import *
 import copy
 
-stream1 = stream.Stream()
-chord1 = chord.Chord([38,41]) # kick, snare, tom
-chord2 = chord.Chord([36])   # kick
+part = stream.Part()                       # Use a Part for clear instrument assignment
+perc = instrument.Percussion()             # Create percussion instrument
+perc.midiChannel = 9                       # Set to channel 10 (0-indexed)
+part.insert(0, perc)                       # Add instrument to part
 
-stream1.append(copy.deepcopy(chord1))
+chord1 = chord.Chord([38, 41])  # snare (38), low floor tom (41)
+chord2 = chord.Chord([36])      # kick (36)
 
-stream1.append(copy.deepcopy(chord2))
+# append independent copies
+part.append(copy.deepcopy(chord1))
+part.append(copy.deepcopy(chord2))
+part.append(copy.deepcopy(chord1))
+part.append(note.Rest())
+part.append(copy.deepcopy(chord1))
 
-stream1.append(copy.deepcopy(chord1))
+# create score and add part
+score = stream.Score()
+score.insert(0, part)
+score.show()
 
-r = note.Rest()
-stream1.append(r)
-stream1.append(copy.deepcopy(chord1))
-
-stream1.write('midi', fp="c:/temp/x2.mid")
+# score.write('midi', fp=r"c:/temp/x2.mid")
