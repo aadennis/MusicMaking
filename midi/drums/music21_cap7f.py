@@ -57,23 +57,14 @@ kick_ohh = drum_chord(*KICK_OHH) # see gm_drums.py for decode
 kick = drum_chord(*KICK)
 ohh = drum_chord("OHH")       
 
-# Build the sequence (each event is a quarter note by default):
-# Note: deepcopy ensures each hit is an independent object
+# Build the sequence and write files using the helper in write_example.py
+# Restore case-specific pattern-building here (keeps write_example.py generic)
 example = "01"
-for i in range(8): # Example 01
-    part.append(copy.deepcopy(kick)) 
+for i in range(8):  # Example 01
+    part.append(copy.deepcopy(kick))
     part.append(drum_rest(3))
-midi_file = f"c:/temp/drum_example_{example}.mid"
 
-# Create a Score (container for all parts) and add our drum part
-score = stream.Score()
-score.insert(0, part)
-
-# Write to MIDI file:
-# - Events will be on MIDI channel 10 (GM drum channel)
-# - Each note number will trigger the corresponding GM drum sound
-# - To hear: Open in a DAW or player that supports GM drum sounds
-score.write('midi', fp=midi_file)
-
-# Optional: You can also write to MusicXML to see proper drum notation:
-# score.write('musicxml', fp=r"c:/temp/x4.musicxml")
+# Write to MIDI file (and optionally MusicXML) using helper that only writes
+# Pass the Part directly; the writer will wrap it into a Score internally.
+from write_example import build_and_write_example
+midi_file = build_and_write_example(part, example=example, out_dir=r"c:/temp", write_musicxml=False)
