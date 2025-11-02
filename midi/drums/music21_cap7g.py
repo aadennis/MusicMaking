@@ -101,23 +101,15 @@ example = "01"
 part = stream.Part()
 part.insert(0, perc)  # Position 0 = start of part
 # Bar 1
-part.append(copy.deepcopy(kick))
-part.append(drum_rest(3))
-part.append(copy.deepcopy(snare))
-part.append(drum_rest(3))
-part.append(copy.deepcopy(kick))
-part.append(drum_rest(3))
-part.append(copy.deepcopy(snare))
-part.append(drum_rest(3))
+add_chord_with_rest_tail(part, kick, 3)  # Kick + 3 sixteenth rests
+add_chord_with_rest_tail(part, snare, 3)  # Kick + 3 sixteenth rests
+add_chord_with_rest_tail(part, kick, 3) 
+add_chord_with_rest_tail(part, snare, 3) 
 # Bar 2
-part.append(copy.deepcopy(kick))
-part.append(drum_rest(3))
-part.append(copy.deepcopy(snare))
-part.append(drum_rest(3))
-part.append(copy.deepcopy(kick))
-part.append(drum_rest(3))
-part.append(copy.deepcopy(snare))
-part.append(drum_rest(3))
+add_chord_with_rest_tail(part, kick, 3)  # Kick + 3 sixteenth rests
+add_chord_with_rest_tail(part, snare, 3)  # Kick + 3 sixteenth rests
+add_chord_with_rest_tail(part, kick, 3) 
+add_chord_with_rest_tail(part, snare, 3) 
 
 # Write to MIDI file (and optionally MusicXML) using helper that only writes
 # Pass the Part directly; the writer will wrap it into a Score internally.
