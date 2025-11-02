@@ -69,6 +69,22 @@ def insert_at_slot(part: stream.Part, slot_index: int, element: Music21Object):
 
     part.insert(offset, element)
 
+"""
+Append a chord followed by an optional rest to a music21 Part.
+
+Parameters:
+    part (stream.Part): The target part to append to (modified in place)
+    chord_obj (Music21Object): The chord to append. Will be deep copied before appending
+    rest_count (int): Number of sixteenth-note rests to add after the chord. Default: 0 (no rest)
+
+This function is designed for building rhythmic patterns by combining chords with
+trailing rests. It's particularly useful for drum patterns where you want a hit
+followed by a specific number of silent sixteenth notes.
+
+Example:
+    # Add a kick drum with 3 sixteenth rests after it (total duration = 1 quarter note)
+    add_chord_with_rest_tail(part, kick, 3)
+"""
 def add_chord_with_rest_tail(part: stream.Part, chord_obj: Music21Object, rest_count: int = 0):
     part.append(copy.deepcopy(chord_obj))
     if rest_count > 0:
