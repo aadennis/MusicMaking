@@ -120,22 +120,34 @@ example = "02"
 part = stream.Part()
 part.insert(0, perc)  # Position 0 = start of part
 # Bar 1
-part.append(copy.deepcopy(kick))
-part.append(drum_rest(3))
-part.append(copy.deepcopy(snare))
-part.append(drum_rest(3))
-part.append(copy.deepcopy(kick))
-part.append(drum_rest(3))
-part.append(copy.deepcopy(snare))
-part.append(drum_rest(3))
+add_chord_with_rest_tail(part, kick, 3)  
+add_chord_with_rest_tail(part, snare, 3) 
+add_chord_with_rest_tail(part, kick, 3) 
+add_chord_with_rest_tail(part, snare, 3) 
 # Bar 2
-part.append(copy.deepcopy(kick))
-part.append(drum_rest(3))
-part.append(copy.deepcopy(snare))
-part.append(drum_rest(3))
-part.append(copy.deepcopy(kick))
-part.append(drum_rest(3))
-part.append(copy.deepcopy(snare))
-part.append(drum_rest(3))
+add_chord_with_rest_tail(part, kick, 3) 
+add_chord_with_rest_tail(part, snare, 3) 
+add_chord_with_rest_tail(part, kick, 1) 
+add_chord_with_rest_tail(part, kick, 1) 
+add_chord_with_rest_tail(part, snare, 0) 
+add_chord_with_rest_tail(part, kick, 2) 
+
+midi_file = build_and_write_example(part, example=example)
+#---
+example = "03"
+part = stream.Part()
+part.insert(0, perc)  # Position 0 = start of part
+# Bar 1
+add_chord_with_rest_tail(part, kick, 3)  
+add_chord_with_rest_tail(part, snare, 3) 
+add_chord_with_rest_tail(part, kick, 1)
+add_chord_with_rest_tail(part, kick, 1)
+add_chord_with_rest_tail(part, snare, 3) 
+# Bar 2
+add_chord_with_rest_tail(part, kick, 3) 
+add_chord_with_rest_tail(part, snare, 1) 
+add_chord_with_rest_tail(part, kick, 3) 
+add_chord_with_rest_tail(part, kick, 1) 
+add_chord_with_rest_tail(part, snare, 3) 
 
 midi_file = build_and_write_example(part, example=example)
