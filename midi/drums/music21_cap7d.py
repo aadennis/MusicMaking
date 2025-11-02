@@ -13,19 +13,7 @@ Key Features:
 
 from music21 import *
 import copy
-
-# GM drum map with ergonomic codes - this maps readable codes to MIDI note numbers
-# Example: "BD1" (Bass Drum 1) = MIDI note 36, "ASN" (Acoustic Snare) = MIDI note 38
-GM_DRUMS = {
-    "ABD": 35, "BD1": 36, "SSK": 37, "ASN": 38, "HCP": 39, "ESN": 40,
-    "LFT": 41, "CHH": 42, "HFT": 43, "PHH": 44, "LTM": 45, "OHH": 46,
-    "LMT": 47, "HMT": 48, "CC1": 49, "HTM": 50, "RC1": 51, "CHC": 52,
-    "RBL": 53, "TMB": 54, "SPC": 55, "CWB": 56, "CC2": 57, "VBS": 58,
-    "RC2": 59, "HBO": 60, "LBO": 61, "MHC": 62, "OHC": 63, "LCO": 64,
-    "HTI": 65, "LTI": 66, "HAG": 67, "LAG": 68, "CAB": 69, "MAR": 70,
-    "SWH": 71, "LWH": 72, "SGU": 73, "LGU": 74, "CLV": 75, "HWB": 76,
-    "LWB": 77, "MCU": 78, "OCU": 79, "MTG": 80, "OTG": 81
-}
+from gm_drums import GM_DRUMS, BASIC_KIT, TOMS, CYMBALS, LATIN  # Import drum mappings
 
 # Helper function to convert semantic drum codes into music21 Chord objects
 # Args:
@@ -74,7 +62,7 @@ score.insert(0, part)
 # - Events will be on MIDI channel 10 (GM drum channel)
 # - Each note number will trigger the corresponding GM drum sound
 # - To hear: Open in a DAW or player that supports GM drum sounds
-score.write('midi', fp=r"c:/temp/x4.mid")
+score.write('midi', fp=r"c:/temp/x5.mid")
 
 # Optional: You can also write to MusicXML to see proper drum notation:
 # score.write('musicxml', fp=r"c:/temp/x4.musicxml")
