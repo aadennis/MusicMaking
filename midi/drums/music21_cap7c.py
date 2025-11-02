@@ -121,9 +121,10 @@ from music21 import *
 import copy
 
 part = stream.Part()                       # Use a Part for clear instrument assignment
-perc = instrument.Percussion()             # Create percussion instrument
+perc = instrument.UnpitchedPercussion()             # Create percussion instrument
 perc.midiChannel = 9                       # Set to channel 10 (0-indexed)
 part.insert(0, perc)                       # Add instrument to part
+# part.insert(0, clef.PercussionClef())
 
 chord1 = chord.Chord([38, 41])  # snare (38), low floor tom (41)
 chord2 = chord.Chord([36])      # kick (36)
@@ -138,6 +139,6 @@ part.append(copy.deepcopy(chord1))
 # create score and add part
 score = stream.Score()
 score.insert(0, part)
-score.show()
+# score.show()
 
-# score.write('midi', fp=r"c:/temp/x2.mid")
+score.write('midi', fp=r"c:/temp/x3.mid")
