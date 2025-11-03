@@ -6,7 +6,7 @@ It demonstrates how to:
 3. Ensure correct playback on MIDI channel 10 (GM drum kit channel)
 
 Key Features:
-- Uses semantic codes (e.g., "BD1" for Bass Drum) instead of MIDI numbers
+- Uses semantic codes (e.g., "KB" for Bass Drum) instead of MIDI numbers
 - Maps to standard GM drum note numbers (35-81)
 - Automatically sets up proper percussion staff and MIDI channel
 """
@@ -23,11 +23,11 @@ SIXTEENTH = duration.Duration('16th')
 
 # Helper function to convert semantic drum codes into music21 Chord objects
 # Args:
-#   *codes: Variable number of drum codes (e.g., "BD1", "ASN")
+#   *codes: Variable number of drum codes (e.g., "KB", "ASN")
 # Returns:
 #   music21.chord.Chord object with the corresponding MIDI note numbers
 # Example:
-#   drum_chord("BD1", "ASN") creates a chord with MIDI notes [36, 38] (kick + snare)
+#   drum_chord("KB", "ASN") creates a chord with MIDI notes [36, 38] (kick + snare)
 def drum_chord(*codes):
     c = chord.Chord([GM_DRUMS[code] for code in codes])
     c.duration = SIXTEENTH
@@ -101,7 +101,7 @@ perc.midiChannel = 9  # MIDI channel 10 (0-based index)
 
 # Create the drum patterns using semantic codes:
 # - chord1: Combines Acoustic Snare ("ASN"=38) and Low Floor Tom ("LFT"=41)
-# - chord2: Single Bass Drum hit ("BD1"=36)
+# - chord2: Single Bass Drum hit ("KB"=36)
 # other usage examples:
 # basic_pattern = drum_chord(*BASIC_KIT)  # All basic kit sounds
 # tom_fill = drum_chord(*TOMS[:3])  # First three toms

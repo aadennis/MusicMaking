@@ -5,7 +5,7 @@ This module provides a mapping between readable drum codes and their correspondi
 MIDI note numbers according to the GM Level 1 Percussion Key Map.
 
 Example codes:
-    "BD1": 36  # Bass Drum 1
+    "KB": 36  # Bass Drum 1
     "ASN": 38  # Acoustic Snare
     "LFT": 41  # Low Floor Tom
     "CHH": 42  # Closed Hi-Hat
@@ -23,7 +23,7 @@ Full GM Drum Map Reference:
 GM_DRUMS = {
     # Kick and Snare Family
     "ABD": 35,  # Acoustic Bass Drum
-    "BD1": 36,  # Bass Drum 1
+    "KB": 36,  # Bass Drum 1
     "SSK": 37,  # Side Stick
     "ASN": 38,  # Acoustic Snare
     "HCP": 39,  # Hand Clap
@@ -84,13 +84,13 @@ GM_DRUMS = {
 }
 
 # Common drum groups for easy reference
-BASIC_KIT = ["BD1", "ASN", "CHH", "OHH"]  # Basic rock kit
+BASIC_KIT = ["KB", "ASN", "CHH", "OHH"]  # Basic rock kit
 TOMS = ["LFT", "HFT", "LTM", "LMT", "HMT", "HTM"]  # All toms
 CYMBALS = ["CC1", "RC1", "CHC", "CC2", "RC2"]  # Main cymbals
 LATIN = ["CWB", "HBO", "LBO", "MHC", "OHC", "LCO", "HTI", "LTI"]  # Latin percussion
-KICK_OHH = ["BD1", "OHH"]
+KICK_OHH = ["KB", "OHH"]
 SNARE_OHH = ["ASN", "OHH"]
-KICK_CHH = ["BD1", "CHH"]
+KICK_CHH = ["KB", "CHH"]
 SNARE_CHH = ["ASN", "CHH"]
-KICK = ["BD1"]
+KICK = ["KB"]
 SNARE = ["ASN"]
