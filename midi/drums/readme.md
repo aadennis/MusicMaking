@@ -53,12 +53,133 @@ append_sequence(stream1, pattern)
 stream1.write('midi', fp="output.mid")
 ```
 
-## Velocity Guidelines
+## Common MIDI Drum Numbers
 
-- 40-50: Very soft hits
-- 64: Medium volume (default)
-- 80-90: Strong accents
-- 100-127: Very strong hits
+General MIDI (GM) standard drum map for key percussion elements:
+
+### Basic Kit
+- 36: Bass Drum 1 (BD1)
+- 35: Bass Drum 2 (BD2)
+- 38: Acoustic Snare (ASN)
+- 40: Electric Snare (ESN)
+- 42: Closed Hi-Hat (CHH)
+- 46: Open Hi-Hat (OHH)
+- 51: Ride Cymbal 1 (RD1)
+- 49: Crash Cymbal 1 (CR1)
+
+### Toms
+- 41: Low Floor Tom (LFT)
+- 43: High Floor Tom (HFT)
+- 45: Low Tom (LTM)
+- 47: Low-Mid Tom (LMT)
+- 48: Hi-Mid Tom (HMT)
+- 50: High Tom (HTM)
+
+### Latin/Percussion
+- 44: Pedal Hi-Hat (PHH)
+- 54: Tambourine (TMB)
+- 56: Cowbell (CWB)
+- 60: High Bongo (HBG)
+- 61: Low Bongo (LBG)
+- 62: Mute High Conga (MHC)
+- 63: Open High Conga (OHC)
+- 64: Low Conga (LCG)
+
+## Example Patterns
+
+### Basic Rock Beat
+```python
+kick = create_note_with_velocity(36, velocity=80)
+snare = create_note_with_velocity(38, velocity=70)
+hihat = create_note_with_velocity(42, velocity=50)
+pattern = [kick, hihat, snare, hihat] * 2  # Repeat basic pattern
+```
+
+### Latin Groove
+```python
+conga_h = create_note_with_velocity(63, velocity=60)
+conga_l = create_note_with_velocity(64, velocity=70)
+cowbell = create_note_with_velocity(56, velocity=50)
+pattern = [conga_h, cowbell, conga_l, cowbell, conga_h, conga_h, conga_l, cowbell]
+```
+
+### Jazz Pattern with Ghost Notes
+```python
+kick = create_note_with_velocity(36, velocity=75)
+snare_ghost = create_note_with_velocity(38, velocity=30)  # Very soft "ghost" note
+snare_accent = create_note_with_velocity(38, velocity=80)
+ride = create_note_with_velocity(51, velocity=60)
+pattern = [kick, ride, snare_ghost, ride, snare_accent, ride, snare_ghost, ride]
+```
+
+### Tom Fill
+```python
+tom_h = create_note_with_velocity(50, velocity=70)
+tom_m = create_note_with_velocity(47, velocity=75)
+tom_l = create_note_with_velocity(41, velocity=80)
+crash = create_note_with_velocity(49, velocity=90)
+pattern = [tom_h, tom_h, tom_m, tom_m, tom_l, tom_l, crash]
+```
+
+## Expanded Velocity Guidelines
+
+### Standard Velocities
+- 30-40: Ghost notes, very subtle hits
+- 40-50: Soft background elements (e.g., hi-hat patterns)
+- 50-60: Regular background elements
+- 60-70: Normal hits, typical snare backbeats
+- 70-80: Slightly accented notes
+- 80-90: Strong accents, main beats
+- 90-100: Power accents
+- 100-127: Maximum impact (use sparingly)
+
+### Usage Tips
+1. **Dynamic Range**: Use a mix of velocities to create more realistic and dynamic patterns
+2. **Ghost Notes**: Use very low velocities (30-40) for ghost notes on snare
+3. **Hi-Hat Pattern**: Typically use lower velocities (40-60) for sustained hi-hat patterns
+4. **Kick and Snare**: Main beats typically use 70-90 velocity range
+5. **Accents**: Use higher velocities (90+) sparingly for climactic moments
+
+## Troubleshooting Tips
+
+### Common Issues and Solutions
+
+1. **No Sound Output**
+   - Verify MIDI channel is set to 9 (10 in 1-based counting)
+   - Check if your playback device supports GM drum map
+   - Ensure MIDI note numbers are within GM drum range (35-81)
+
+2. **Wrong Drum Sounds**
+   - Confirm you're using correct MIDI note numbers from GM drum map
+   - Verify your synth/DAW is set to GM drum mode
+   - Check if the instrument is properly configured for drum sounds
+
+3. **Pattern Timing Issues**
+   - Verify all notes have correct duration settings
+   - Check for overlapping notes in the pattern
+   - Ensure rests are properly placed and sized
+
+4. **Velocity Not Working**
+   - Confirm your playback device supports velocity
+   - Check if velocities are within valid range (1-127)
+   - Verify your DAW's velocity scaling settings
+
+### Best Practices
+
+1. **Pattern Creation**
+   - Start with basic patterns and gradually add complexity
+   - Use consistent velocity ranges for similar elements
+   - Include appropriate rests for groove
+
+2. **Performance**
+   - Keep patterns in 4/4 time unless specifically needed
+   - Use velocity to create natural-sounding dynamics
+   - Consider using pattern variations for interest
+
+3. **File Management**
+   - Use clear naming conventions for patterns
+   - Save different versions of complex patterns
+   - Document any special velocity mappings used
 
 ---
 
