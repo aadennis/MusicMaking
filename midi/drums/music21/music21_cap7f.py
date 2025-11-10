@@ -15,7 +15,7 @@ from music21 import *
 from music21.base import Music21Object
 import copy
 from gm_drums import GM_DRUMS, KICK_OHH, KICK, SNARE # Import drum mappings
-from write_example import build_and_write_example
+from music21.write_example import build_and_write_example
 
 # As this is specifically for drums, duration of a note will always be
 # a quarter of a quarter, ie semantically 16th or 0.25
