@@ -30,7 +30,7 @@ Hang on - where are the intervals? For songs where time signature and bpm remain
     "quarterLength": 0.5
 }
 ```
-The music21 library seems to centre around the quarterLength variable, for controlling intervals. So if my notes are all `U+00BC` 1/8, and the default is 1/4, then I need a value of 0.5 for this case. 
+The music21 library seems to centre around the quarterLength variable, for controlling intervals. So if my notes are all U+00BC 1/8, and the default is 1/4, then I need a value of 0.5 for this case. 
 
 
 # Velocity-Controlled Pattern Generator
