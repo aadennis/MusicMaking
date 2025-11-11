@@ -67,8 +67,19 @@ for i, row in midi_data.iterrows():
     print(f"Note: {row['Note']}, Velocity: {row['Velocity']}")  
 ```
 
-Now add in a stream - I use insert, not append, as former is absolute, latter messes up if anything earlier is wrong
+Now add in a stream - I use insert, not append, as former is absolute, latter messes up if anything earlier is wrong  
+At this point set the time signature (e.g. 4/4, and the bpm e.g. 120)
+``` python
+from music21 import meter, tempo, stream, note
+#...
+drum_stream = stream.Stream()
+...
+ts = meter.TimeSignature(ts_config)
+mm = tempo.MetronomeMark(number=bpm_config)
+drum_stream.insert(0.0, ts)
+drum_stream.insert(0.0, mm)
 
+```
 
 # Velocity-Controlled Pattern Generator
 
