@@ -126,6 +126,52 @@ for i, row in midi_data_snare.iterrows():
     insert_note(drum_stream, row['Note'], row['Velocity'], quarterLength_config, i * quarterLength_config)
 ```
 
+And another refactor with no functional changes. But this does mean that when I add in the hi-hat later, it should
+be quite simple
+
+``` python
+from json import load
+from music21 import meter, tempo, stream, note
+from pandas import read_csv
+
+def get_config_data():
+    with open('music21/demo_for_md/read_config_01.json','r') as f:
+        config = load(f)
+    return config["bpm"], config["quarterLength"], config["TimeSignature"]
+
+
+def insert_note(stream_obj, midi_data_row, quarterLength, index):
+    offset = quarterLength * index
+    n = note.Note()
+    n.pitch.midi = midi_data_row['Note']
+    n.quarterLength = quarterLength
+    n.volume.velocity = midi_data_row['Velocity']
+    stream_obj.insert(offset, n)
+
+def insert_note_set(midi_data, stream_obj):
+    for i, row in midi_data.iterrows():
+        insert_note(stream_obj, row, quarterLength_config, i)
+
+# main()...
+
+bpm_config, quarterLength_config, ts_config = get_config_data()
+ts = meter.TimeSignature(ts_config)
+mm = tempo.MetronomeMark(number=bpm_config)
+
+drum_stream = stream.Stream()
+drum_stream.insert(0.0, ts)
+drum_stream.insert(0.0, mm)
+
+midi_data_kick = read_csv('music21/demo_for_md/demo_kick.csv')
+insert_note_set(midi_data_kick, drum_stream)
+
+midi_data_snare = read_csv('music21/demo_for_md/demo_snare.csv')
+insert_note_set(midi_data_snare, drum_stream)
+
+drum_stream.write('midi', fp="c:/temp/demo_07.mid")
+    
+
+```
 
 
 # Velocity-Controlled Pattern Generator
