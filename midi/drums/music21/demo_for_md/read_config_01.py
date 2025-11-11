@@ -1,5 +1,6 @@
 from json import load
 from music21 import meter, tempo
+from pandas import read_csv
 
 with open('music21/demo_for_md/read_config_01.json','r') as f:
     configData = load(f)
@@ -10,5 +11,8 @@ ts_config = configData.get("TimeSignature")
 
 ts = meter.TimeSignature(ts_config)
 mm = tempo.MetronomeMark(number=bpm_config)
-print(f"Time Signature: {ts_config}, BPM: {bpm_config}, quarterLength: {quarterLength_config}")
 
+midi_data = read_csv('music21/demo_for_md/demo_kick.csv')
+for i, row in midi_data.iterrows():
+    print(f"Note: {row['Note']}, Velocity: {row['Velocity']}")  
+    
