@@ -9,11 +9,17 @@ def get_config_data():
 
 
 def insert_note(stream_obj, midi_data_row, quarterLength, index):
-    offset = quarterLength * index
+    velocity = midi_data_row['Velocity']
+    if velocity == 0:
+        return  # Skip inserting notes with zero velocity
     n = note.Note()
+    n.volume.velocity = velocity
+    
     n.pitch.midi = midi_data_row['Note']
     n.quarterLength = quarterLength
     n.volume.velocity = midi_data_row['Velocity']
+
+    offset = quarterLength * index
     stream_obj.insert(offset, n)
 
 def insert_note_set(midi_data, stream_obj):
@@ -36,5 +42,5 @@ insert_note_set(midi_data_kick, drum_stream)
 midi_data_snare = read_csv('music21/demo_for_md/demo_snare.csv')
 insert_note_set(midi_data_snare, drum_stream)
 
-drum_stream.write('midi', fp="c:/temp/demo_07.mid")
+drum_stream.write('midi', fp="c:/temp/demo_10.mid")
     

@@ -173,6 +173,41 @@ drum_stream.write('midi', fp="c:/temp/demo_07.mid")
 
 ```
 
+So far, all the beats are contiguous. But say a kick might be 'beat/rest/beat/rest' etc. 
+I use this convention, where a zero value for velocity means rest for the defined quarternote.
+
+``` cs
+Note,Velocity
+36,56
+36,00
+36,56
+36,00
+36,56
+36,00
+36,56
+36,00
+```
+
+That will give kick/rest/kick etc. Want to rest longer? Add as many sequences of Zero as you need.
+The code to handle this is in the part of the def that handles velocity:
+``` python
+def insert_note(stream_obj, midi_data_row, quarterLength, index):
+    velocity = midi_data_row['Velocity']
+    if velocity == 0:
+        return  # Skip inserting notes with zero velocity
+    n = note.Note()
+    n.volume.velocity = velocity
+    
+    n.pitch.midi = midi_data_row['Note']
+    n.quarterLength = quarterLength
+    n.volume.velocity = midi_data_row['Velocity']
+
+    offset = quarterLength * index
+    stream_obj.insert(offset, n)
+```
+
+I need to come up with something elegant that avoids repetition of the drum type. This is denormalised, which makes things simple but inefficient.
+
 
 # Velocity-Controlled Pattern Generator
 
