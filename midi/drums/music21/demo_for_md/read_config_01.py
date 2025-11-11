@@ -2,6 +2,12 @@ from json import load
 from music21 import meter, tempo, stream, note
 from pandas import read_csv
 
+def get_config_data():
+    with open('music21/demo_for_md/read_config_01.json','r') as f:
+        config = load(f)
+    return config["bpm"], config["quarterLength"], config["TimeSignature"]
+
+
 def insert_note(stream_obj, midi_data_row, quarterLength, index):
     offset = quarterLength * index
     n = note.Note()
@@ -10,28 +16,25 @@ def insert_note(stream_obj, midi_data_row, quarterLength, index):
     n.volume.velocity = midi_data_row['Velocity']
     stream_obj.insert(offset, n)
 
-drum_stream = stream.Stream()
+def insert_note_set(midi_data, stream_obj):
+    for i, row in midi_data.iterrows():
+        insert_note(stream_obj, row, quarterLength_config, i)
 
-with open('music21/demo_for_md/read_config_01.json','r') as f:
-    configData = load(f)
+# main()...
 
-bpm_config = configData.get("bpm")
-quarterLength_config = configData.get("quarterLength")
-ts_config = configData.get("TimeSignature")
-
+bpm_config, quarterLength_config, ts_config = get_config_data()
 ts = meter.TimeSignature(ts_config)
 mm = tempo.MetronomeMark(number=bpm_config)
+
+drum_stream = stream.Stream()
 drum_stream.insert(0.0, ts)
 drum_stream.insert(0.0, mm)
 
 midi_data_kick = read_csv('music21/demo_for_md/demo_kick.csv')
-for i, row in midi_data_kick.iterrows():
-    insert_note(drum_stream, row, quarterLength_config, i)
+insert_note_set(midi_data_kick, drum_stream)
 
-# that was kick. Do it all again for the snare...
 midi_data_snare = read_csv('music21/demo_for_md/demo_snare.csv')
-for i, row in midi_data_snare.iterrows():
-    insert_note(drum_stream, row, quarterLength_config, i)
+insert_note_set(midi_data_snare, drum_stream)
 
-drum_stream.write('midi', fp="c:/temp/demo_05.mid")
+drum_stream.write('midi', fp="c:/temp/demo_07.mid")
     
