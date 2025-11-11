@@ -2,13 +2,12 @@ from json import load
 from music21 import meter, tempo, stream, note
 from pandas import read_csv
 
-def insert_note(stream_obj, midi_note, velocity, quarterLength, offset):
-    origin = 0.0
+def insert_note(stream_obj, midi_note, velocity, quarterLength, index):
     n = note.Note()
     n.pitch.midi = midi_note
     n.quarterLength = quarterLength
     n.volume.velocity = velocity
-    stream_obj.insert(origin + (offset), n)
+    stream_obj.insert(index, n)
 
 drum_stream = stream.Stream()
 
@@ -33,5 +32,5 @@ midi_data_snare = read_csv('music21/demo_for_md/demo_snare.csv')
 for i, row in midi_data_snare.iterrows():
     insert_note(drum_stream, row['Note'], row['Velocity'], quarterLength_config, i * quarterLength_config)
 
-drum_stream.write('midi', fp="c:/temp/demo_02.mid")
+drum_stream.write('midi', fp="c:/temp/demo_03.mid")
     
