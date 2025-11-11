@@ -26,15 +26,12 @@ drum_stream.insert(0.0, mm)
 
 midi_data_kick = read_csv('music21/demo_for_md/demo_kick.csv')
 for i, row in midi_data_kick.iterrows():
-    print(f"Note: {row['Note']}, Velocity: {row['Velocity']}")  
     insert_note(drum_stream, row['Note'], row['Velocity'], quarterLength_config, i * quarterLength_config)
 
 # that was kick. Do it all again for the snare...
 midi_data_snare = read_csv('music21/demo_for_md/demo_snare.csv')
 for i, row in midi_data_snare.iterrows():
-    print(f"Note: {row['Note']}, Velocity: {row['Velocity']}")  
     insert_note(drum_stream, row['Note'], row['Velocity'], quarterLength_config, i * quarterLength_config)
-
 
 drum_stream.write('midi', fp="c:/temp/demo_02.mid")
     

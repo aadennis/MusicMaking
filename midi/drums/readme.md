@@ -109,15 +109,22 @@ mm = tempo.MetronomeMark(number=bpm_config)
 drum_stream.insert(0.0, ts)
 drum_stream.insert(0.0, mm)
 
-midi_data = read_csv('music21/demo_for_md/demo_kick.csv')
+midi_data = read_csv('music21/demo_for_md/demo_kick.csv') #a
 for i, row in midi_data.iterrows():
     print(f"Note: {row['Note']}, Velocity: {row['Velocity']}")  
-    insert_note(drum_stream, row['Note'], row['Velocity'], quarterLength_config, i * quarterLength_config)
-
+    insert_note(drum_stream, row['Note'], row['Velocity'], quarterLength_config, i * quarterLength_config) #b
+#c
 drum_stream.write('midi', fp="c:/temp/demo_01.mid")
            
 ```
 ![alt text](image-1.png)
+
+Adding in the snare means basically copying and adjusting the lines from #a to #b above, and pasting at #c.
+This is that snippet, everything else remains as is (I've remoted the print/debug from this one):
+``` python
+for i, row in midi_data_snare.iterrows():
+    insert_note(drum_stream, row['Note'], row['Velocity'], quarterLength_config, i * quarterLength_config)
+```
 
 
 
