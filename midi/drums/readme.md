@@ -14,7 +14,7 @@ Say I have a song (lowercase will mean `song` in a generic sense) which has 4 ba
 - snare (38) - 1.3, 1.7, 2.3, 2.7, 3.3, 3.7, 4.3, 4.7  
 - hihat (42) - every 1/8th note 
 
-The content of the source .csv for the kick pattern starts thus:  
+The content of the source .csv for the kick pattern starts thus:   
 ``` python
 Note,Velocity  
 36,56  
@@ -30,7 +30,7 @@ Hang on - where are the intervals? For songs where time signature and bpm remain
     "quarterLength": 0.5
 }
 ```
-The music21 library seems to centre around the quarterLength variable, for controlling intervals. So if my notes are all `U+215B` 1/8, and the default is 1/4, then I need a value of 0.5 for this case. 
+The music21 library seems to centre around the quarterLength variable, for controlling intervals. So if my notes are all `U+00BC` 1/8, and the default is 1/4, then I need a value of 0.5 for this case. 
 
 
 # Velocity-Controlled Pattern Generator
