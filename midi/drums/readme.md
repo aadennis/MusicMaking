@@ -205,8 +205,11 @@ def insert_note(stream_obj, midi_data_row, quarterLength, index):
     offset = quarterLength * index
     stream_obj.insert(offset, n)
 ```
+ATM, this is how the kick (36 - alternate hits) and snare (38 - every hit) look when rendered in Reaper:
+![alt text](image-2.png)
 
 I need to come up with something elegant that avoids repetition of the drum type. This is denormalised, which makes things simple but inefficient.
+
 
 
 # Velocity-Controlled Pattern Generator
