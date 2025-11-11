@@ -119,6 +119,8 @@ drum_stream.write('midi', fp="c:/temp/demo_01.mid")
 ```
 ![alt text](image-1.png)
 
+
+
 # Velocity-Controlled Pattern Generator
 
 A Python toolkit for creating MIDI drum patterns with precise velocity control using `music21`. This tool provides utilities for creating dynamic drum patterns with control over timing, velocity, and pattern sequencing.
