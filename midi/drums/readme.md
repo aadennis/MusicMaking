@@ -5,6 +5,34 @@ This repository contains multiple tools for creating MIDI drum patterns:
 1. [Create MIDI Drum Track](#create-midi-drum-track)
 2. [Velocity-Controlled Pattern Generator](#velocity-controlled-pattern-generator)
 
+# How to express drum patterns?
+
+After some playing around with input text data formats for drum patterns, right now this works best for me:  
+For a given Score (let's use a term that occurs in Music21, which I prefer over the Mido library, right now), give each drum its own pattern.  
+Say I have a song (lowercase will mean `song` in a generic sense) which has 4 bars (sure, you would not get a song that is that short), each with 8 * 1/8 notes. Drums are:  
+- kick (midi note 36)  - 1.1, 1.5, 2.1, 2.5, 3.1, 3.5, 4.1, 4.5
+- snare (38) - 1.3, 1.7, 2.3, 2.7, 3.3, 3.7, 4.3, 4.7  
+- hihat (42) - every 1/8th note 
+
+The content of the source .csv for the kick pattern starts thus:  
+``` python
+Note,Velocity  
+36,56  
+36,30
+...  
+```
+
+Hang on - where are the intervals? For songs where time signature and bpm remain constant throughout a song, I prefer to use a global config file to store all that. For example, in json format:
+``` json
+{
+    "TimeSignature": "4/4",
+    "bpm": 120,
+    "quarterLength": 0.5
+}
+```
+The music21 library seems to centre around the quarterLength variable, for controlling intervals. So if my notes are all `U+215B` 1/8, and the default is 1/4, then I need a value of 0.5 for this case. 
+
+
 # Velocity-Controlled Pattern Generator
 
 A Python toolkit for creating MIDI drum patterns with precise velocity control using `music21`. This tool provides utilities for creating dynamic drum patterns with control over timing, velocity, and pattern sequencing.
