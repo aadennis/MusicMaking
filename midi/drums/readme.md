@@ -112,12 +112,12 @@ drum_stream.insert(0.0, mm)
 midi_data = read_csv('music21/demo_for_md/demo_kick.csv')
 for i, row in midi_data.iterrows():
     print(f"Note: {row['Note']}, Velocity: {row['Velocity']}")  
-    insert_note(drum_stream, row['Note'], row['Velocity'], quarterLength_config, i)
+    insert_note(drum_stream, row['Note'], row['Velocity'], quarterLength_config, i * quarterLength_config)
 
 drum_stream.write('midi', fp="c:/temp/demo_01.mid")
-    
+           
 ```
-![alt text](image.png)
+![alt text](image-1.png)
 
 # Velocity-Controlled Pattern Generator
 
