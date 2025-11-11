@@ -60,6 +60,16 @@ mm = tempo.MetronomeMark(number=bpm_config)
 print(f"Time Signature: {ts_config}, BPM: {bpm_config}, quarterLength: {quarterLength_config}")
 ```
 
+Get the data from the kick csv...
+``` python
+midi_data = read_csv('music21/demo_for_md/demo_kick.csv')
+for i, row in midi_data.iterrows():
+    print(f"Note: {row['Note']}, Velocity: {row['Velocity']}")  
+```
+
+Now add in a stream - I use insert, not append, as former is absolute, latter messes up if anything earlier is wrong
+
+
 # Velocity-Controlled Pattern Generator
 
 A Python toolkit for creating MIDI drum patterns with precise velocity control using `music21`. This tool provides utilities for creating dynamic drum patterns with control over timing, velocity, and pattern sequencing.
