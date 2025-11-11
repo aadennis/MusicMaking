@@ -30,7 +30,18 @@ Hang on - where are the intervals? For songs where time signature and bpm remain
     "quarterLength": 0.5
 }
 ```
-The music21 library seems to centre around the quarterLength variable, for controlling intervals. So if my notes are all ⅛ values, and the default is ¼, then I need quarterLength to have a value of 0.5.
+The music21 library seems to centre around the quarterLength variable, for controlling intervals. So if my notes are all ⅛ values, and the default is ¼, then I need quarterLength to have a value of 0.5.  
+This is how you might grab those values: 
+``` python
+from json import load
+
+with open('music21/demo_for_md/read_config_01.json','r') as f:
+    configData = load(f)
+
+bpm = configData.get("bpm")
+quarterLength = configData.get("quarterLength")
+ts = configData.get("TimeSignature")
+```
 
 
 # Velocity-Controlled Pattern Generator
