@@ -28,7 +28,7 @@ s1.insert(0.0, ts)
 s1.insert(0.0, mm)
 
 # Load pattern data from CSV files
-midi_set = pd.read_csv('stream_insert05.csv')
+midi_set = pd.read_csv('midi_in_plain_text/stream_insert05.csv')
 hihat_midi_set = pd.read_csv('hihat_144beats.csv')
 
 # Debug print of main pattern notes
