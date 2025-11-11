@@ -117,7 +117,7 @@ for i, row in midi_data.iterrows():
 drum_stream.write('midi', fp="c:/temp/demo_01.mid")
     
 ```
-
+![alt text](image.png)
 
 # Velocity-Controlled Pattern Generator
 
