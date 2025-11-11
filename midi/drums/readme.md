@@ -42,6 +42,7 @@ bpm = configData.get("bpm")
 quarterLength = configData.get("quarterLength")
 ts = configData.get("TimeSignature")
 ```
+
 And then stick the values into music21 objects: 
 ``` python
 from json import load
