@@ -205,12 +205,28 @@ def insert_note(stream_obj, midi_data_row, quarterLength, index):
     offset = quarterLength * index
     stream_obj.insert(offset, n)
 ```
-ATM, this is how the kick (36 - alternate hits) and snare (38 - every hit) look when rendered in Reaper:
+ATM, this is how the kick (36/C2 - alternate hits) and snare (38 - every hit) look when rendered in Reaper:
 ![alt text](image-2.png)
 
 I need to come up with something elegant that avoids repetition of the drum type. This is denormalised, which makes things simple but inefficient.
 
+### *Later*...
+For a single-drum (e.g. kick) element in a multi-drum track, it is crazy to repeat that same Note value on every row, e.g. 36. I will make the DrumClip be drum-agnostic (DrumClip: "a clip to be used by a single drum instrument, e.g. kick, e.g. snare, as part of a DrumTrack holding 1 or more DrumClips").
+That now gives DrumClip this structure, adapting the csv example above:
+``` cs
+Velocity
+56
+00
+56
+00
+56
+00
+56
+00
+```
+As with the original, the duration of the note remains dictated outside this structure. But with a total of 8 rows in this example, that means 8 notes, of whatever duration, but a defined velocity for each note. However, '00' is a magic number, meaning 'this is a rest (of the dictated-outside duration). Sure, it is smelly, but it's just me. But to emphasise, the only thing that has changed is that the midi note is no longer included.
 
+If I want to give this particular example a name, well, I should first say these can probably be considered templates. This one might be ''note-rest-times-4.csv''
 
 # Velocity-Controlled Pattern Generator
 
