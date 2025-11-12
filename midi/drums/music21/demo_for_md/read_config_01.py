@@ -17,6 +17,7 @@ reused in other scripts or tests.
 from json import load
 from music21 import meter, tempo, stream, note
 from pandas import read_csv
+import drum_constants as dc
 
 def get_config_data():
     """
@@ -43,14 +44,14 @@ def get_config_data():
     return config["bpm"], config["quarterLength"], config["TimeSignature"]
 
 
-def insert_note(stream_obj, midi_data_row, quarterLength, index):
+def insert_note(stream_obj, midi_note, midi_data_row, quarterLength, index):
     """
     Insert a single note into the provided music21 stream.
 
     Parameters:
         stream_obj (music21.stream.Stream): Stream to insert the generated note into.
-        midi_data_row (pandas.Series): A row from a CSV with at least the keys
-            'Note' (MIDI pitch number) and 'Velocity' (0-127).
+        midi_data_row (pandas.Series): A row from a CSV with the key and single value
+             'Velocity' (0-127).
         quarterLength (float): Duration to assign to the created note (in
             music21 quarterLength units).
         index (int): Grid index; the function computes the insertion offset as
@@ -75,14 +76,14 @@ def insert_note(stream_obj, midi_data_row, quarterLength, index):
     n = note.Note()
     n.volume.velocity = velocity
     
-    n.pitch.midi = midi_data_row['Note']
+    n.pitch.midi = midi_note
     n.quarterLength = quarterLength
     n.volume.velocity = midi_data_row['Velocity']
 
     offset = quarterLength * index
     stream_obj.insert(offset, n)
 
-def insert_note_set(midi_data, stream_obj):
+def insert_note_set(midi_note, midi_data, stream_obj):
     """
     Insert a sequence of notes (from a pandas DataFrame) into a stream.
 
@@ -101,10 +102,10 @@ def insert_note_set(midi_data, stream_obj):
         None. The provided stream is modified in-place.
 
     Example:
-        >>> insert_note_set(midi_df, drum_stream)
+        >>> insert_note_set(midi_note, midi_df, drum_stream)
     """
     for i, row in midi_data.iterrows():
-        insert_note(stream_obj, row, quarterLength_config, i)
+        insert_note(stream_obj, midi_note, row, quarterLength_config, i)
 
 # main()...
 
@@ -116,11 +117,11 @@ drum_stream = stream.Stream()
 drum_stream.insert(0.0, ts)
 drum_stream.insert(0.0, mm)
 
-midi_data_kick = read_csv('music21/demo_for_md/demo_kick.csv')
-insert_note_set(midi_data_kick, drum_stream)
+midi_data_kick = read_csv('music21/demo_for_md/8note-altrest-template01.csv')
+insert_note_set(dc.KICK, midi_data_kick, drum_stream)
 
-midi_data_snare = read_csv('music21/demo_for_md/demo_snare.csv')
-insert_note_set(midi_data_snare, drum_stream)
+midi_data_snare = read_csv('music21/demo_for_md/8note-template01.csv')
+insert_note_set(dc.SNARE, midi_data_snare, drum_stream)
 
 drum_stream.write('midi', fp="c:/temp/demo_10.mid")
     
