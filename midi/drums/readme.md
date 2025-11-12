@@ -226,7 +226,7 @@ Velocity
 ```
 As with the original, the duration of the note remains dictated outside this structure. But with a total of 8 rows in this example, that means 8 notes, of whatever duration, but a defined velocity for each note. However, '00' is a magic number, meaning 'this is a rest (of the dictated-outside duration). Sure, it is smelly, but it's just me. But to emphasise, the only thing that has changed is that the midi note is no longer included.
 
-If I want to give this particular example a name, well, I should first say these can probably be considered templates. This one might be ''note-rest-times-4.csv''
+If I want to give this particular example a name, well, I should first say these can probably be considered templates. This one might be ''8note-altrest-template01.csv''
 
 # Velocity-Controlled Pattern Generator
 
