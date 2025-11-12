@@ -228,6 +228,14 @@ As with the original, the duration of the note remains dictated outside this str
 
 If I want to give this particular example a name, well, I should first say these can probably be considered templates. This one might be ''8note-altrest-template01.csv''
 
+I have now implemented that structure.   
+The call...
+
+
+This is the .mp3 from Reaper, rendered using Toontrack EZDrummer 2 Modern Basic drumset:
+
+
+
 # Velocity-Controlled Pattern Generator
 
 A Python toolkit for creating MIDI drum patterns with precise velocity control using `music21`. This tool provides utilities for creating dynamic drum patterns with control over timing, velocity, and pattern sequencing.
