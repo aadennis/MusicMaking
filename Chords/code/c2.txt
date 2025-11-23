@@ -1,0 +1,25 @@
+X02220 | A Major | stuff 1
+X32010 | C Major | stuff 2
+XX3213 | Fadd9 | stuff 3
+X02210 | A sus2 | stuff 4   
+XX0232 | D Major | stuff 5
+022000 | E minor | stuff 6
+353533 | G7 sus4 | stuff 7
+X5453X | D7 version 2 | stuff 8
+X24432 | B minor | stuff 9
+X32030 | C add9 | stuff 10
+XX3211 | F* | stuff 11
+020000 | Em7 version 1 | stuff 12 
+022030 | Em7 version 2 | stuff 13
+X21202 | B7 
+X02223 | A7 version 2
+X35555 | C6
+X57777 | D6
+XX5443 | G aug
+X022XX | A5
+020100 | E7 (dominant) version 1 | Can't take my eyes off you
+022130 | E7 (dominant) version 2 | Can't take my eyes off you
+021100 | Emajor 7
+
+sort -t'|' -k2 code/c2.txt > code/c3.txt
+

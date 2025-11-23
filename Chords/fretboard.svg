@@ -1,0 +1,46 @@
+<svg width="240" height="270" viewBox="0 0 240 270" xmlns="http://www.w3.org/2000/svg">
+    <title>Fretboard Diagram</title>
+    <desc>A simple SVG representation of a guitar fretboard with strings and a nut.</desc>
+    
+    <!-- Style for the SVG elements -->
+    <style>
+        rect {
+        fill: #333;
+        }
+        line {
+        stroke: #FEE000;
+        stroke-width: 1;
+        }
+    </style>    
+ <!-- Background -->
+  <rect x="0" y="0" width="240" height="250" fill="black" />
+
+  <!-- Nut: wider than string set -->
+  <rect x="10" y="20" width="220" height="10" fill="white" />
+
+  <!-- String lines definition -->
+<defs>
+    <g id="string-set" stroke-width="1">
+      <line x1="20" y1="10" x2="20" y2="250" stroke="green" />
+      <line x1="60" y1="10" x2="60" y2="250" />
+      <line x1="100" y1="10" x2="100" y2="250" />
+      <line x1="140" y1="10" x2="140" y2="250" />
+      <line x1="180" y1="10" x2="180" y2="250" />
+      <line x1="220" y1="10" x2="220" y2="250" />
+    </g>
+
+    <g id="fret-set" stroke="#EEDD40" stroke-width="5">
+      <line x1="20" y1="70" x2="220" y2="70" />
+      <line x1="20" y1="110" x2="220" y2="110" />
+      <line x1="20" y1="150" x2="220" y2="150" />
+      <line x1="20" y1="190" x2="220" y2="190" />
+      <line x1="20" y1="230" x2="220" y2="230" />
+    </g>
+  </defs>
+
+
+  <!-- Apply string and fret sets -->
+  <use href="#string-set" />
+  <use href="#fret-set" />
+
+</svg>

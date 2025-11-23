@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gaug – Fretboard Diagram</title>
+  <link rel="stylesheet" href="../../css/fretboard.css">
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg"
+       width="600" height="600"
+       viewBox="-10 -20 500 500"
+       preserveAspectRatio="xMidYMid meet"
+       class="fretboard">
+
+    <!-- inject:strings -->
+<line class="string-line" x1="10" y1="30" x2="10" y2="250" />
+<line class="string-line" x1="40" y1="30" x2="40" y2="250" />
+<line class="string-line" x1="70" y1="30" x2="70" y2="250" />
+<line class="string-line" x1="100" y1="30" x2="100" y2="250" />
+<line class="string-line" x1="130" y1="30" x2="130" y2="250" />
+<line class="string-line" x1="160" y1="30" x2="160" y2="250" />
+    <!-- END strings -->
+
+    <!-- inject:frets -->
+<line class="fret-bar" x1="8" y1="30" x2="162" y2="30" />
+<line class="fret-bar" x1="10" y1="70" x2="160" y2="70" />
+<line class="fret-bar" x1="10" y1="110" x2="160" y2="110" />
+<line class="fret-bar" x1="10" y1="150" x2="160" y2="150" />
+<line class="fret-bar" x1="10" y1="190" x2="160" y2="190" />
+<line class="fret-bar" x1="10" y1="230" x2="160" y2="230" />
+    <!-- END frets -->
+
+    <!-- inject:positions -->
+<text class="fret-label" x="85" y="-2">Gaug</text>
+<text class="string-muted" x="10" y="25">X</text>
+<text class="string-muted" x="40" y="25">X</text>
+<circle class="dot-active" cx="70" cy="219" r="6" />
+<rect class="note-box" x="62" y="197" width="16" height="16" rx="2" />
+<text class="note-label" x="70" y="209">G</text>
+<circle class="dot-active" cx="100" cy="179" r="6" />
+<rect class="note-box" x="92" y="157" width="16" height="16" rx="2" />
+<text class="note-label" x="100" y="169">B</text>
+<circle class="dot-active" cx="130" cy="179" r="6" />
+<rect class="note-box" x="122" y="157" width="16" height="16" rx="2" />
+<text class="note-label" x="130" y="169">D#</text>
+<circle class="dot-active" cx="160" cy="139" r="6" />
+<rect class="note-box" x="152" y="117" width="16" height="16" rx="2" />
+<text class="note-label" x="160" y="129">G</text>
+    <!-- END positions -->
+  </svg>
+</body>
+</html>
