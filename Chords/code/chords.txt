@@ -23,17 +23,20 @@ XX0231 | D Minor | stuff 5
 XX0211 | Dm7 | stuff 5
 X57777 | D6
 X5453X | D7 v2 | A Hard Day's Night
+022100 | E major - common usage
 XX3121 | E v2 | All my loving
 022000 | E minor | stuff 6
+0210xx | E major 7 | Can't take my eyes off you
 020100 | E7 (dominant) v1 | Can't take my eyes off you
-022130 | E7 (dominant) v2 | Can't take my eyes off you, Hey Jude
+022130 | E7 (dominant) v2 | Hey Jude
 XX0100 | E7 (dominant) v3 | fly me to the moon
-020000 | Em7 version 1 | stuff 12 
+020000 | Em7 version 1 | Can't take my eyes off you
 022030 | Em7 version 2 | stuff 13
 021100 | Emajor 7
 XX3211 | F* | stuff 11
 XX3213 | Fadd9 | A Hard Day's Night
-202210 | F#m7b5 | Can't take my eyes off you
+242222 | F#m7 | Can't take my eyes off you
+2322XX | F#m7b5 | Can't take my eyes off you
 XX3210 | Fmaj7 | Let It Be
 XX3231 | F6 | Let It Be
 XX5443 | Gaug

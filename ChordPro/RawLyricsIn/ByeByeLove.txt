@@ -2,11 +2,6 @@
 Capo:
 no capo
 
-[Intro]
-
-A      C  D * 2
-
-
 [Chorus]
 
 D       A     D       A          D     A

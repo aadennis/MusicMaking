@@ -4,7 +4,7 @@
  
              Em    Am   Em  Am
 Can't buy me love,      love,
-             Dm7  G6  C
+             Dm7  G  C
 Can't buy me love
  
  
@@ -32,7 +32,7 @@ I don't care too much for money, money can't buy me love
  
              Em  Am   C
 Can't buy me love,    everybody tells me so
-             Em  Am  Dm      Dm7 G6  C
+             Em  Am  Dm      Dm7 G  
 Can't buy me love,   no, no, no, no
  
  
@@ -51,7 +51,7 @@ I don't care too much for money, money can't buy me love
  
              Em  Am   C
 Can't buy me love,    everybody tells me so
-             Em  Am  Dm      Dm7 G6  C
+             Em  Am  Dm      Dm7 G
 Can't buy me love,   no, no, no, no
  
  
@@ -69,6 +69,6 @@ I don't care too much for money, money can't buy me love
  
              Em  Am    Em Am
 Can't buy me love,     love,
-             G6   | C | C
+             Dm   | G | C
 Can't buy me love,      oh
 
