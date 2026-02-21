@@ -159,7 +159,7 @@ The parser and reveal engine are stable and modular.
 
 ---
 
-# 🎵 **2. Musician‑Friendly README (simple, practical)**  
+# 🎵 **2.Basic Usage **  
 ### `README.md`
 
 ```markdown
@@ -253,6 +253,7 @@ ChordReveal is designed for musicians who want:
 - No clutter
 - No complicated formats
 - Just chords, sections, and a simple tap‑to‑advance flow
+
 
 
 
