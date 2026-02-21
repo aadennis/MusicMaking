@@ -8,6 +8,7 @@ const tapArea = document.getElementById("tapArea");
 let revealQueue = [];
 let revealIndex = 0;
 let waitingForTap = false;
+let leadingWordsMode = true;
 
 function parseChordPro(text) {
   const lines = text.split(/\r?\n/);
@@ -77,13 +78,23 @@ function parseChordPro(text) {
     if (currentSection && isChordLine(rawLine)) {
       const trimmed = rawLine.replace(/^\s+/, "");
       const chords = trimmed.split(/\s+/).filter(Boolean);
-      sectionsWithLines[currentSection].push(chords);
+
+      sectionsWithLines[currentSection].push({
+        chords,
+        lyric: null
+      });
+
       continue;
     }
 
-    // --- LYRICS ---
-    // Lyrics are ignored but DO NOT affect chord detection
-    // No toggling, no state machine
+// --- LYRICS ---
+if (currentSection && !isChordLine(rawLine) && line.length > 0) {
+  const last = sectionsWithLines[currentSection][sectionsWithLines[currentSection].length - 1];
+  if (last && last.lyric === null) {
+    last.lyric = line;   // store the lyric line
+  }
+  continue;
+}
   }
 
   return { meta, sections, sectionsWithLines };
@@ -94,8 +105,8 @@ function prepareRevealQueue(data) {
 
   for (const sec of data.sections) {
     revealQueue.push({ type: "section", name: sec });
-    for (const chordLine of data.sectionsWithLines[sec]) {
-      revealQueue.push({ type: "line", chords: chordLine });
+    for (const entry of data.sectionsWithLines[sec]) {
+      revealQueue.push({ type: "line", entry });
     }
     revealQueue.push({ type: "blank" }); // blank between sections
   }
@@ -118,7 +129,7 @@ function showNext() {
   }
 
   if (item.type === "line") {
-    display.textContent = item.chords.join("   ");
+    display.textContent = formatLine(item.entry);
     return;
   }
 
@@ -182,6 +193,19 @@ function displayMetadata(meta) {
     m.textContent = info.join("   ");
     titleDisplay.appendChild(m);
   }
+}
+
+function formatLine(item) {
+  if (!leadingWordsMode) {
+    return item.chords.join("   ");
+  }
+
+  if (!item.lyric) {
+    return item.chords.join("   ");
+  }
+
+  const words = item.lyric.split(/\s+/).slice(0, 2).join(" ");
+  return `${words} : ${item.chords.join("   ")}`;
 }
 
 // INITIAL STATE
