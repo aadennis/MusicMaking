@@ -12,38 +12,36 @@ let waitingForTap = false;
 function parseChordPro(text) {
   const lines = text.split(/\r?\n/);
 
-  let title = null; // JSON will fill this later
+  let title = null;
   const sections = [];
   const sectionsWithLines = {};
 
   let currentSection = null;
+  let skipSection = false;
   let expectChordLine = false;
-  let skipSection = false; // NEW RULE
 
-  // A chord token in your format: Em, A7, Bbaug, G#dim, %, |
   function isChordToken(token) {
-    return (
-      token === "|" ||
-      token === "%" ||
-      /^[A-G][#b]?(m|M|maj|min|dim|aug|sus|add)?\d*$/.test(token)
-    );
+    // Accepts: Em, A7, Bbaug, G#dim, F#m7, Cadd9, %, |
+    if (token === "|" || token === "%") return true;
+    return /^[A-G][#b]?(m|M|maj|min|dim|aug|sus|add)?\d*$/.test(token);
   }
 
   function isChordLine(rawLine) {
-    const tokens = rawLine.trim().split(/\s+/);
-    if (tokens.length === 0) return false;
-    return tokens.every(t => isChordToken(t));
+    const trimmed = rawLine.trim();
+    if (trimmed.length === 0) return false;
+
+    const tokens = trimmed.split(/\s+/);
+    return tokens.every(isChordToken);
   }
 
   for (const rawLine of lines) {
     const line = rawLine.trim();
 
-    // SECTION HEADER: [Verse 1], [Chorus], [Solo], etc.
-    const sectionMatch = line.match(/^\[(.+?)\]$/);
-    if (sectionMatch) {
-      currentSection = sectionMatch[1];
+    // SECTION HEADER
+    if (line.startsWith("[") && line.endsWith("]")) {
+      currentSection = line.slice(1, -1);
 
-      // NEW RULE: skip Solo section entirely
+      // NEW RULE: skip Solo entirely
       skipSection = currentSection.toLowerCase() === "solo";
 
       if (!skipSection) {
@@ -55,20 +53,23 @@ function parseChordPro(text) {
       continue;
     }
 
-    // If we're in a skipped section, ignore everything
+    // If skipping (Solo), ignore everything
     if (skipSection) continue;
 
     // CHORD LINE
     if (currentSection && expectChordLine && isChordLine(rawLine)) {
-      const chords = rawLine
+
+        console.log("CHORD LINE:", rawLine);   // ← correct place
+
+        const chords = rawLine
         .trim()
         .split(/\s+/)
         .filter(x => x.length > 0);
 
-      sectionsWithLines[currentSection].push(chords);
-      expectChordLine = false; // next line is lyrics
-      continue;
-    }
+        sectionsWithLines[currentSection].push(chords);
+        expectChordLine = false;
+        continue;
+}
 
     // LYRIC LINE (ignored)
     if (currentSection && !expectChordLine) {
@@ -95,27 +96,27 @@ function prepareRevealQueue(data) {
 }
 
 function showNext() {
-  if (revealIndex >= revealQueue.length) return;
+  if (revealIndex >= revealQueue.length) {
+    display.textContent = ""; // nothing left
+    return;
+  }
 
   const item = revealQueue[revealIndex];
   revealIndex++;
 
-  display.innerHTML = "";
-  sectionDisplay.textContent = "";
-
   if (item.type === "section") {
-    sectionDisplay.textContent = item.name;
+    display.textContent = item.name;
+    return;
   }
 
   if (item.type === "line") {
-    const div = document.createElement("div");
-    div.className = "lineBox";
-    div.textContent = item.chords.join("   ");
-    display.appendChild(div);
+    display.textContent = item.chords.join("   ");
+    return;
   }
 
   if (item.type === "blank") {
     display.textContent = "";
+    return;
   }
 }
 
@@ -138,8 +139,10 @@ fileInput.addEventListener("change", function () {
     const data = parseChordPro(text);
 
     titleDisplay.textContent = data.title;
-
+    
     prepareRevealQueue(data);
+    console.log("REVEAL QUEUE:", revealQueue);
+
     showNext();
   };
   reader.readAsText(file);
