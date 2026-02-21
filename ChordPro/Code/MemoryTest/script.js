@@ -10,52 +10,56 @@ let revealIndex = 0;
 let waitingForTap = false;
 
 function parseChordPro(text) {
-  let meta = {};
-  let inMetadata = true;
   const lines = text.split(/\r?\n/);
 
+  // --- METADATA ---
+  const meta = {};
+  let inMetadata = true;
+
+  // --- SONG STRUCTURE ---
   const sections = [];
   const sectionsWithLines = {};
-
   let currentSection = null;
   let skipSection = false;
 
-  function isChordToken(token) {
-    // Accepts: Em, A7, Bbaug, G#dim, F#m7, Cadd9, %, |
-    if (token === "|" || token === "%") return true;
-    return /^[A-G][#b]?(m|M|maj|min|dim|aug|sus|add)?\d*$/.test(token);
+  // --- CHORD DETECTION ---
+  function isChordToken(tok) {
+    return /^[A-G][#b]?(m|M|maj|min|dim|aug|sus|add)?\d*$/.test(tok);
   }
 
   function isChordLine(rawLine) {
-    const trimmed = rawLine.replace(/^\s+/, "");  // remove leading spaces only
+    // Remove leading spaces only (indentation allowed)
+    const trimmed = rawLine.replace(/^\s+/, "");
     if (trimmed.length === 0) return false;
 
     const tokens = trimmed.split(/\s+/);
-    return tokens.length > 0 && tokens.every(isChordToken);
+    if (tokens.length === 0) return false;
+
+    return tokens.every(isChordToken);
   }
 
+  // --- MAIN LOOP ---
   for (const rawLine of lines) {
     const line = rawLine.trim();
 
-    // METADATA BLOCK
+    // --- METADATA BLOCK ---
     if (inMetadata) {
-        if (line.startsWith("#")) {
+      if (line.startsWith("#")) {
         const [tag, ...rest] = line.slice(1).split(":");
         meta[tag.trim()] = rest.join(":").trim();
         continue;
-        }
+      }
 
-        // First non-metadata line ends the metadata block
-        if (line.length === 0) continue; // allow blank line after metadata
-        inMetadata = false;
+      if (line.length === 0) continue; // allow blank line after metadata
+
+      // First non-metadata line ends metadata block
+      inMetadata = false;
     }
 
-
-    // SECTION HEADER
+    // --- SECTION HEADER ---
     if (line.startsWith("[") && line.endsWith("]")) {
-      currentSection = line.slice(1, -1);
+      currentSection = line.slice(1, -1).trim();
 
-      // NEW RULE: skip Solo entirely
       skipSection = currentSection.toLowerCase() === "solo";
 
       if (!skipSection) {
@@ -66,23 +70,20 @@ function parseChordPro(text) {
       continue;
     }
 
-    // If skipping (Solo), ignore everything
+    // Skip Solo section entirely
     if (skipSection) continue;
 
-    // CHORD LINE
+    // --- CHORD LINE DETECTION ---
     if (currentSection && isChordLine(rawLine)) {
+      const trimmed = rawLine.replace(/^\s+/, "");
+      const chords = trimmed.split(/\s+/).filter(Boolean);
+      sectionsWithLines[currentSection].push(chords);
+      continue;
+    }
 
-        console.log("CHORD LINE:", rawLine);   // ← correct place
-
-        const chords = rawLine
-        .trim()
-        .split(/\s+/)
-        .filter(x => x.length > 0);
-
-        sectionsWithLines[currentSection].push(chords);
-        continue;
-}
-
+    // --- LYRICS ---
+    // Lyrics are ignored but DO NOT affect chord detection
+    // No toggling, no state machine
   }
 
   return { meta, sections, sectionsWithLines };
@@ -216,11 +217,4 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-document.addEventListener("click", (e) => {
-  // Ignore clicks on buttons or file input
-  if (e.target === fileInput || e.target === resetButton) return;
-
-  console.log("WINDOW CLICK");
-  showNext();
-});
 
