@@ -96,11 +96,18 @@ function showNext() {
   }
 }
 
+// INITIAL STATE
+tapArea.classList.add("disabled");
+
 fileInput.addEventListener("change", function () {
   const file = this.files[0];
   if (!file) return;
 
+  // Hide file input
   fileInput.style.display = "none";
+
+  // ENABLE TAP AREA NOW THAT A FILE IS LOADED
+  tapArea.classList.remove("disabled");
 
   const reader = new FileReader();
   reader.onload = function (e) {
@@ -115,10 +122,6 @@ fileInput.addEventListener("change", function () {
   reader.readAsText(file);
 });
 
-tapArea.addEventListener("click", () => {
-  showNext();
-});
-
 resetButton.addEventListener("click", () => {
   titleDisplay.textContent = "";
   sectionDisplay.textContent = "";
@@ -128,4 +131,8 @@ resetButton.addEventListener("click", () => {
   fileInput.style.display = "block";
 
   resetButton.style.display = "none";
+
+  // DISABLE TAP AREA AGAIN
+  tapArea.classList.add("disabled");
 });
+d
