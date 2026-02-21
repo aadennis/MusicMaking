@@ -128,6 +128,29 @@ function showNext() {
   }
 }
 
+function showPrevious() {
+  // Step back one item
+  revealIndex = Math.max(0, revealIndex - 1);
+
+  const item = revealQueue[revealIndex];
+
+  if (item.type === "section") {
+    sectionDisplay.textContent = item.name;
+    display.textContent = "";
+    return;
+  }
+
+  if (item.type === "line") {
+    display.textContent = item.chords.join("   ");
+    return;
+  }
+
+  if (item.type === "blank") {
+    display.textContent = "";
+    return;
+  }
+}
+
 function displayMetadata(meta) {
   titleDisplay.innerHTML = "";
 
@@ -217,4 +240,11 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
+document.addEventListener("keydown", (e) => {
+  if (e.code === "ArrowLeft" || e.code === "Backspace") {
+    e.preventDefault();
+    console.log("KEY BACK:", e.code);
+    showPrevious();
+  }
+});
 
