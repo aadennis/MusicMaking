@@ -1,6 +1,7 @@
 const titleDisplay = document.getElementById("titleDisplay");
 const display = document.getElementById("display");
 const fileInput = document.getElementById("fileInput");
+const resetButton = document.getElementById("resetButton");
 
 function showForSeconds(text, seconds) {
   return new Promise(resolve => {
@@ -69,6 +70,10 @@ async function runTest(data) {
   }
 
   display.textContent = "";
+
+  // Show reset button after test completes
+  resetButton.style.display = "block";
+
   console.log("Extracted chords:", data.sectionsWithChords);
 }
 
@@ -86,4 +91,18 @@ fileInput.addEventListener("change", function() {
     runTest(data);
   };
   reader.readAsText(file);
+});
+
+// Reset button logic
+resetButton.addEventListener("click", () => {
+  // Clear displays
+  titleDisplay.textContent = "";
+  display.textContent = "";
+
+  // Show file input again
+  fileInput.value = "";
+  fileInput.style.display = "block";
+
+  // Hide reset button
+  resetButton.style.display = "none";
 });
