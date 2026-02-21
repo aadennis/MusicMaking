@@ -105,7 +105,7 @@ function showNext() {
   revealIndex++;
 
   if (item.type === "section") {
-    display.textContent = item.name;
+    sectionDisplay.textContent = item.name;
     return;
   }
 
@@ -160,4 +160,9 @@ resetButton.addEventListener("click", () => {
 
   // DISABLE TAP AREA AGAIN
   tapArea.classList.add("disabled");
+});
+
+tapArea.addEventListener("click", () => {
+  console.log("TAP!");
+  showNext();
 });
