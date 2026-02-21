@@ -12,45 +12,68 @@ let waitingForTap = false;
 function parseChordPro(text) {
   const lines = text.split(/\r?\n/);
 
-  let title = null;
+  let title = null; // JSON will fill this later
   const sections = [];
-  const sectionNames = ["verse", "chorus", "bridge", "intro", "outro"];
-
   const sectionsWithLines = {};
+
   let currentSection = null;
+  let expectChordLine = false;
+  let skipSection = false; // NEW RULE
+
+  // A chord token in your format: Em, A7, Bbaug, G#dim, %, |
+  function isChordToken(token) {
+    return (
+      token === "|" ||
+      token === "%" ||
+      /^[A-G][#b]?(m|M|maj|min|dim|aug|sus|add)?\d*$/.test(token)
+    );
+  }
+
+  function isChordLine(rawLine) {
+    const tokens = rawLine.trim().split(/\s+/);
+    if (tokens.length === 0) return false;
+    return tokens.every(t => isChordToken(t));
+  }
 
   for (const rawLine of lines) {
     const line = rawLine.trim();
 
-    // Title
-    const titleMatch = line.match(/\{title:\s*(.+?)\s*\}/i);
-    if (titleMatch) title = titleMatch[1];
-
-    // Section markers
-    const sectionMatch = line.match(/\{(\w+)\s*:?\s*\}/);
+    // SECTION HEADER: [Verse 1], [Chorus], [Solo], etc.
+    const sectionMatch = line.match(/^\[(.+?)\]$/);
     if (sectionMatch) {
-      const sec = sectionMatch[1].toLowerCase();
-      if (sectionNames.includes(sec)) {
-        const proper = sec.charAt(0).toUpperCase() + sec.slice(1);
+      currentSection = sectionMatch[1];
 
-        if (!sections.includes(proper)) {
-          sections.push(proper);
-        }
+      // NEW RULE: skip Solo section entirely
+      skipSection = currentSection.toLowerCase() === "solo";
 
-        currentSection = proper;
-        if (!sectionsWithLines[currentSection]) {
-          sectionsWithLines[currentSection] = [];
-        }
-        continue;
+      if (!skipSection) {
+        sections.push(currentSection);
+        sectionsWithLines[currentSection] = [];
+        expectChordLine = true;
       }
+
+      continue;
     }
 
-    // Chord lines inside a section
-    if (currentSection && line.length > 0) {
-      const chords = [...line.matchAll(/\[([^\]]+)\]/g)].map(m => m[1].trim());
-      if (chords.length > 0) {
-        sectionsWithLines[currentSection].push(chords);
-      }
+    // If we're in a skipped section, ignore everything
+    if (skipSection) continue;
+
+    // CHORD LINE
+    if (currentSection && expectChordLine && isChordLine(rawLine)) {
+      const chords = rawLine
+        .trim()
+        .split(/\s+/)
+        .filter(x => x.length > 0);
+
+      sectionsWithLines[currentSection].push(chords);
+      expectChordLine = false; // next line is lyrics
+      continue;
+    }
+
+    // LYRIC LINE (ignored)
+    if (currentSection && !expectChordLine) {
+      expectChordLine = true; // next line should be chord line
+      continue;
     }
   }
 
@@ -135,4 +158,3 @@ resetButton.addEventListener("click", () => {
   // DISABLE TAP AREA AGAIN
   tapArea.classList.add("disabled");
 });
-d
