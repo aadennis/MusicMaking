@@ -41,13 +41,21 @@
 
     let title = null;
     const sections = [];
+    const sectionNames = ["verse", "chorus", "bridge", "intro", "outro"];
 
     for (const line of lines) {
+      // Title
       const titleMatch = line.match(/\{title:\s*(.+?)\s*\}/i);
       if (titleMatch) title = titleMatch[1];
 
-      const sectionMatch = line.match(/\{(Verse|Chorus|Bridge|Intro|Outro)\}/i);
-      if (sectionMatch) sections.push(sectionMatch[1]);
+      // Section markers
+      const sectionMatch = line.match(/\{(\w+)\s*:?\s*\}/);
+      if (sectionMatch) {
+        const sec = sectionMatch[1].toLowerCase();
+        if (sectionNames.includes(sec) && !sections.includes(sec)) {
+          sections.push(sec.charAt(0).toUpperCase() + sec.slice(1));
+        }
+      }
     }
 
     return { title, sections };
