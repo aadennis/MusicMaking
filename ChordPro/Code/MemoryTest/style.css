@@ -49,3 +49,19 @@ body {
 #tapArea.disabled {
   pointer-events: none;
 }
+
+.songTitle {
+  font-size: 1.6em;
+  font-weight: bold;
+}
+
+.songArtist {
+  font-size: 1.2em;
+  opacity: 0.85;
+}
+
+.songMeta {
+  font-size: 1em;
+  margin-top: 5px;
+  opacity: 0.7;
+}

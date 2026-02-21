@@ -19,7 +19,6 @@ function parseChordPro(text) {
 
   let currentSection = null;
   let skipSection = false;
-  let expectChordLine = false;
 
   function isChordToken(token) {
     // Accepts: Em, A7, Bbaug, G#dim, F#m7, Cadd9, %, |
@@ -28,11 +27,11 @@ function parseChordPro(text) {
   }
 
   function isChordLine(rawLine) {
-    const trimmed = rawLine.trim();
+    const trimmed = rawLine.replace(/^\s+/, "");  // remove leading spaces only
     if (trimmed.length === 0) return false;
 
     const tokens = trimmed.split(/\s+/);
-    return tokens.every(isChordToken);
+    return tokens.length > 0 && tokens.every(isChordToken);
   }
 
   for (const rawLine of lines) {
@@ -62,7 +61,6 @@ function parseChordPro(text) {
       if (!skipSection) {
         sections.push(currentSection);
         sectionsWithLines[currentSection] = [];
-        expectChordLine = true;
       }
 
       continue;
@@ -72,7 +70,7 @@ function parseChordPro(text) {
     if (skipSection) continue;
 
     // CHORD LINE
-    if (currentSection && expectChordLine && isChordLine(rawLine)) {
+    if (currentSection && isChordLine(rawLine)) {
 
         console.log("CHORD LINE:", rawLine);   // ← correct place
 
@@ -82,15 +80,9 @@ function parseChordPro(text) {
         .filter(x => x.length > 0);
 
         sectionsWithLines[currentSection].push(chords);
-        expectChordLine = false;
         continue;
 }
 
-    // LYRIC LINE (ignored)
-    if (currentSection && !expectChordLine) {
-      expectChordLine = true; // next line should be chord line
-      continue;
-    }
   }
 
   return { meta, sections, sectionsWithLines };
