@@ -8,8 +8,10 @@ X02420 | Aadd9 | A Hard Day's Night, xAEBC#E
 4X222X | A/G# | Hey Jude
 X32010 | C | stuff 2
 X02222 | A6 | Help!
+X04220 | A6 | Sweet Caroline
 X02223 | A7 v2
 X02200 | Asus2 | Help!
+X02230 | Asus4 | Maggie May 
 X24432 | B minor | stuff 9
 XX0332 | BbAug | All My Loving [omit string 5 - stretch is too hard]
 X21202 | B7 
