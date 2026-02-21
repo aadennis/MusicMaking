@@ -1,3 +1,4 @@
+// --- DOM ELEMENTS ---
 const titleDisplay = document.getElementById("titleDisplay");
 const sectionDisplay = document.getElementById("sectionDisplay");
 const display = document.getElementById("display");
@@ -5,11 +6,16 @@ const fileInput = document.getElementById("fileInput");
 const resetButton = document.getElementById("resetButton");
 const tapArea = document.getElementById("tapArea");
 
-let revealQueue = [];
-let revealIndex = 0;
-let waitingForTap = false;
-let leadingWordsMode = true;
+// --- REVEAL ENGINE STATE ---
+let revealQueue = [];   // Flattened list of items to reveal
+let revealIndex = 0;    // Pointer into revealQueue
+let leadingWordsMode = true; // Toggle for lyric-prefix mode
 
+// ------------------------------------------------------------
+// PARSER
+// Reads metadata, sections, chord lines, and lyric lines.
+// Produces: { meta, sections, sectionsWithLines }
+// ------------------------------------------------------------
 function parseChordPro(text) {
   const lines = text.split(/\r?\n/);
 
@@ -29,7 +35,7 @@ function parseChordPro(text) {
   }
 
   function isChordLine(rawLine) {
-    // Remove leading spaces only (indentation allowed)
+    // Remove leading indentation only
     const trimmed = rawLine.replace(/^\s+/, "");
     if (trimmed.length === 0) return false;
 
@@ -53,14 +59,14 @@ function parseChordPro(text) {
 
       if (line.length === 0) continue; // allow blank line after metadata
 
-      // First non-metadata line ends metadata block
-      inMetadata = false;
+      inMetadata = false; // first real line ends metadata block
     }
 
     // --- SECTION HEADER ---
     if (line.startsWith("[") && line.endsWith("]")) {
       currentSection = line.slice(1, -1).trim();
 
+      // Skip Solo sections entirely
       skipSection = currentSection.toLowerCase() === "solo";
 
       if (!skipSection) {
@@ -71,14 +77,14 @@ function parseChordPro(text) {
       continue;
     }
 
-    // Skip Solo section entirely
     if (skipSection) continue;
 
-    // --- CHORD LINE DETECTION ---
+    // --- CHORD LINE ---
     if (currentSection && isChordLine(rawLine)) {
       const trimmed = rawLine.replace(/^\s+/, "");
       const chords = trimmed.split(/\s+/).filter(Boolean);
 
+      // Store chord line with lyric placeholder
       sectionsWithLines[currentSection].push({
         chords,
         lyric: null
@@ -87,36 +93,58 @@ function parseChordPro(text) {
       continue;
     }
 
-// --- LYRICS ---
-if (currentSection && !isChordLine(rawLine) && line.length > 0) {
-  const last = sectionsWithLines[currentSection][sectionsWithLines[currentSection].length - 1];
-  if (last && last.lyric === null) {
-    last.lyric = line;   // store the lyric line
-  }
-  continue;
-}
+    // --- LYRIC LINE ---
+    if (currentSection && line.length > 0) {
+      const last = sectionsWithLines[currentSection][sectionsWithLines[currentSection].length - 1];
+      if (last && last.lyric === null) {
+        last.lyric = line; // associate lyric with previous chord line
+      }
+      continue;
+    }
   }
 
   return { meta, sections, sectionsWithLines };
 }
 
+// ------------------------------------------------------------
+// FORMATTER
+// Produces the final display string for a chord line.
+// ------------------------------------------------------------
+function formatLine(entry) {
+  if (!leadingWordsMode || !entry.lyric) {
+    return entry.chords.join("   ");
+  }
+
+  const words = entry.lyric.split(/\s+/).slice(0, 2).join(" ");
+  return `${words} : ${entry.chords.join("   ")}`;
+}
+
+// ------------------------------------------------------------
+// REVEAL QUEUE BUILDER
+// Converts structured data into a linear reveal sequence.
+// ------------------------------------------------------------
 function prepareRevealQueue(data) {
   revealQueue = [];
 
   for (const sec of data.sections) {
     revealQueue.push({ type: "section", name: sec });
+
     for (const entry of data.sectionsWithLines[sec]) {
       revealQueue.push({ type: "line", entry });
     }
-    revealQueue.push({ type: "blank" }); // blank between sections
+
+    revealQueue.push({ type: "blank" });
   }
 
   revealIndex = 0;
 }
 
+// ------------------------------------------------------------
+// RENDERING FUNCTIONS
+// ------------------------------------------------------------
 function showNext() {
   if (revealIndex >= revealQueue.length) {
-    display.textContent = ""; // nothing left
+    display.textContent = "";
     return;
   }
 
@@ -125,6 +153,7 @@ function showNext() {
 
   if (item.type === "section") {
     sectionDisplay.textContent = item.name;
+    display.textContent = "";
     return;
   }
 
@@ -140,9 +169,7 @@ function showNext() {
 }
 
 function showPrevious() {
-  // Step back one item
   revealIndex = Math.max(0, revealIndex - 1);
-
   const item = revealQueue[revealIndex];
 
   if (item.type === "section") {
@@ -152,7 +179,7 @@ function showPrevious() {
   }
 
   if (item.type === "line") {
-    display.textContent = item.chords.join("   ");
+    display.textContent = formatLine(item.entry);
     return;
   }
 
@@ -162,6 +189,9 @@ function showPrevious() {
   }
 }
 
+// ------------------------------------------------------------
+// METADATA DISPLAY
+// ------------------------------------------------------------
 function displayMetadata(meta) {
   titleDisplay.innerHTML = "";
 
@@ -178,97 +208,50 @@ function displayMetadata(meta) {
     a.textContent = meta.artist;
     titleDisplay.appendChild(a);
   }
-
-  const info = [];
-
-//   if (meta["key-original"]) info.push(`Orig: ${meta["key-original"]}`);
-//   if (meta["key-me"]) info.push(`You: ${meta["key-me"]}`);
-//   if (meta.capo) info.push(`Capo: ${meta.capo}`);
-//   if (meta.tempo) info.push(`Tempo: ${meta.tempo}`);
-//   if (meta.scroll_speed) info.push(`Scroll: ${meta.scroll_speed}`);
-
-  if (info.length > 0) {
-    const m = document.createElement("div");
-    m.className = "songMeta";
-    m.textContent = info.join("   ");
-    titleDisplay.appendChild(m);
-  }
 }
 
-function formatLine(item) {
-  if (!leadingWordsMode) {
-    return item.chords.join("   ");
-  }
-
-  if (!item.lyric) {
-    return item.chords.join("   ");
-  }
-
-  const words = item.lyric.split(/\s+/).slice(0, 2).join(" ");
-  return `${words} : ${item.chords.join("   ")}`;
-}
-
-// INITIAL STATE
+// ------------------------------------------------------------
+// FILE LOADING
+// ------------------------------------------------------------
 tapArea.classList.add("disabled");
 
 fileInput.addEventListener("change", function () {
   const file = this.files[0];
   if (!file) return;
 
-  // Hide file input
   fileInput.style.display = "none";
-
-  // ENABLE TAP AREA NOW THAT A FILE IS LOADED
   tapArea.classList.remove("disabled");
 
   const reader = new FileReader();
   reader.onload = function (e) {
     const text = e.target.result;
     const data = parseChordPro(text);
-    if (data.meta) {
-        displayMetadata(data.meta)
-    }
-    
-    prepareRevealQueue(data);
-    console.log("REVEAL QUEUE:", revealQueue);
 
+    if (data.meta) displayMetadata(data.meta);
+
+    prepareRevealQueue(data);
     showNext();
   };
   reader.readAsText(file);
 });
 
-resetButton.addEventListener("click", () => {
-  titleDisplay.textContent = "";
-  sectionDisplay.textContent = "";
-  display.textContent = "";
-
-  fileInput.value = "";
-  fileInput.style.display = "block";
-
-  resetButton.style.display = "none";
-
-  // DISABLE TAP AREA AGAIN
-  tapArea.classList.add("disabled");
-});
-
-tapArea.addEventListener("click", () => {
-  console.log("TAP!");
-  showNext();
-});
+// ------------------------------------------------------------
+// INPUT HANDLERS
+// ------------------------------------------------------------
+tapArea.addEventListener("click", showNext);
 
 document.addEventListener("keydown", (e) => {
-  if (e.code === "Space" || e.code === "Enter" || e.code === "ArrowRight") {
-    e.preventDefault();   // stops spacebar from scrolling
-    console.log("KEY TAP:", e.code);
+  if (["Space", "Enter", "ArrowRight"].includes(e.code)) {
+    e.preventDefault();
     showNext();
   }
-});
 
-document.addEventListener("keydown", (e) => {
-  if (e.code === "ArrowLeft" || e.code === "Backspace") {
+  if (["ArrowLeft", "Backspace"].includes(e.code)) {
     e.preventDefault();
-    console.log("KEY BACK:", e.code);
     showPrevious();
   }
-});
 
+  if (e.code === "KeyL") {
+    leadingWordsMode = !leadingWordsMode;
+  }
+});
