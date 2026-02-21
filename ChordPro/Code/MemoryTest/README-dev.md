@@ -89,11 +89,12 @@ The parser returns:
     ...
   }
 }
+```
 
 5. Reveal Queue
 The reveal queue is a flattened list
 
-
+```js
 [
   { type: "section", name: "Verse 1" },
   { type: "line", entry: { chords, lyric } },
@@ -102,6 +103,8 @@ The reveal queue is a flattened list
   { type: "section", name: "Chorus" },
   ...
 ]
+```
+
 This ensures predictable stepping.
 
 6. Rendering Logic
@@ -249,5 +252,6 @@ ChordReveal is designed for musicians who want:
 - No clutter
 - No complicated formats
 - Just chords, sections, and a simple tap‑to‑advance flow
+
 
 
