@@ -166,3 +166,20 @@ tapArea.addEventListener("click", () => {
   console.log("TAP!");
   showNext();
 });
+
+document.addEventListener("keydown", (e) => {
+  if (e.code === "Space" || e.code === "Enter" || e.code === "ArrowRight") {
+    e.preventDefault();   // stops spacebar from scrolling
+    console.log("KEY TAP:", e.code);
+    showNext();
+  }
+});
+
+document.addEventListener("click", (e) => {
+  // Ignore clicks on buttons or file input
+  if (e.target === fileInput || e.target === resetButton) return;
+
+  console.log("WINDOW CLICK");
+  showNext();
+});
+
