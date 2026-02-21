@@ -154,11 +154,11 @@ function displayMetadata(meta) {
 
   const info = [];
 
-  if (meta["key-original"]) info.push(`Orig: ${meta["key-original"]}`);
-  if (meta["key-me"]) info.push(`You: ${meta["key-me"]}`);
-  if (meta.capo) info.push(`Capo: ${meta.capo}`);
-  if (meta.tempo) info.push(`Tempo: ${meta.tempo}`);
-  if (meta.scroll_speed) info.push(`Scroll: ${meta.scroll_speed}`);
+//   if (meta["key-original"]) info.push(`Orig: ${meta["key-original"]}`);
+//   if (meta["key-me"]) info.push(`You: ${meta["key-me"]}`);
+//   if (meta.capo) info.push(`Capo: ${meta.capo}`);
+//   if (meta.tempo) info.push(`Tempo: ${meta.tempo}`);
+//   if (meta.scroll_speed) info.push(`Scroll: ${meta.scroll_speed}`);
 
   if (info.length > 0) {
     const m = document.createElement("div");
