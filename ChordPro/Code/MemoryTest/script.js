@@ -1,14 +1,13 @@
 const titleDisplay = document.getElementById("titleDisplay");
+const sectionDisplay = document.getElementById("sectionDisplay");
 const display = document.getElementById("display");
 const fileInput = document.getElementById("fileInput");
 const resetButton = document.getElementById("resetButton");
+const tapArea = document.getElementById("tapArea");
 
-function showForSeconds(text, seconds) {
-  return new Promise(resolve => {
-    display.textContent = text;
-    setTimeout(resolve, seconds * 1000);
-  });
-}
+let revealQueue = [];
+let revealIndex = 0;
+let waitingForTap = false;
 
 function parseChordPro(text) {
   const lines = text.split(/\r?\n/);
@@ -17,10 +16,11 @@ function parseChordPro(text) {
   const sections = [];
   const sectionNames = ["verse", "chorus", "bridge", "intro", "outro"];
 
-  const sectionsWithChords = {};
+  const sectionsWithLines = {};
   let currentSection = null;
 
-  for (const line of lines) {
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
 
     // Title
     const titleMatch = line.match(/\{title:\s*(.+?)\s*\}/i);
@@ -38,71 +38,94 @@ function parseChordPro(text) {
         }
 
         currentSection = proper;
-        if (!sectionsWithChords[currentSection]) {
-          sectionsWithChords[currentSection] = [];
+        if (!sectionsWithLines[currentSection]) {
+          sectionsWithLines[currentSection] = [];
         }
         continue;
       }
     }
 
-    // Chords inside a section
-    if (currentSection) {
-      const chordMatches = [...line.matchAll(/\[([^\]]+)\]/g)];
-      for (const m of chordMatches) {
-        const chord = m[1].trim();
-        if (!sectionsWithChords[currentSection].includes(chord)) {
-          sectionsWithChords[currentSection].push(chord);
-        }
+    // Chord lines inside a section
+    if (currentSection && line.length > 0) {
+      const chords = [...line.matchAll(/\[([^\]]+)\]/g)].map(m => m[1].trim());
+      if (chords.length > 0) {
+        sectionsWithLines[currentSection].push(chords);
       }
     }
   }
 
-  return { title, sections, sectionsWithChords };
+  return { title, sections, sectionsWithLines };
 }
 
-async function runTest(data) {
-  if (data.title) {
-    titleDisplay.textContent = data.title;
-  }
+function prepareRevealQueue(data) {
+  revealQueue = [];
 
   for (const sec of data.sections) {
-    await showForSeconds(sec, 3);
+    revealQueue.push({ type: "section", name: sec });
+    for (const chordLine of data.sectionsWithLines[sec]) {
+      revealQueue.push({ type: "line", chords: chordLine });
+    }
+    revealQueue.push({ type: "blank" }); // blank between sections
   }
 
-  display.textContent = "";
-
-  // Show reset button after test completes
-  resetButton.style.display = "block";
-
-  console.log("Extracted chords:", data.sectionsWithChords);
+  revealIndex = 0;
 }
 
-fileInput.addEventListener("change", function() {
+function showNext() {
+  if (revealIndex >= revealQueue.length) return;
+
+  const item = revealQueue[revealIndex];
+  revealIndex++;
+
+  display.innerHTML = "";
+  sectionDisplay.textContent = "";
+
+  if (item.type === "section") {
+    sectionDisplay.textContent = item.name;
+  }
+
+  if (item.type === "line") {
+    const div = document.createElement("div");
+    div.className = "lineBox";
+    div.textContent = item.chords.join("   ");
+    display.appendChild(div);
+  }
+
+  if (item.type === "blank") {
+    display.textContent = "";
+  }
+}
+
+fileInput.addEventListener("change", function () {
   const file = this.files[0];
   if (!file) return;
 
-  // Hide the file input after selection
   fileInput.style.display = "none";
 
   const reader = new FileReader();
-  reader.onload = function(e) {
+  reader.onload = function (e) {
     const text = e.target.result;
     const data = parseChordPro(text);
-    runTest(data);
+
+    titleDisplay.textContent = data.title;
+
+    prepareRevealQueue(data);
+    showNext();
   };
   reader.readAsText(file);
 });
 
-// Reset button logic
+tapArea.addEventListener("click", () => {
+  showNext();
+});
+
 resetButton.addEventListener("click", () => {
-  // Clear displays
   titleDisplay.textContent = "";
+  sectionDisplay.textContent = "";
   display.textContent = "";
 
-  // Show file input again
   fileInput.value = "";
   fileInput.style.display = "block";
 
-  // Hide reset button
   resetButton.style.display = "none";
 });
