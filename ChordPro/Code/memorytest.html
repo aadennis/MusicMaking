@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Chord Memory Test MVP</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #111;
+      color: #eee;
+      text-align: center;
+    }
+    #display {
+      font-size: 2rem;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<input type="file" id="fileInput" accept=".txt">
+<div id="display"></div>
+
+<script>
+  const display = document.getElementById("display");
+
+  function showForSeconds(text, seconds) {
+    return new Promise(resolve => {
+      display.textContent = text;
+      setTimeout(resolve, seconds * 1000);
+    });
+  }
+
+  function parseChordPro(text) {
+    const lines = text.split(/\r?\n/);
+
+    let title = null;
+    const sections = [];
+
+    for (const line of lines) {
+      const titleMatch = line.match(/\{title:\s*(.+?)\s*\}/i);
+      if (titleMatch) title = titleMatch[1];
+
+      const sectionMatch = line.match(/\{(Verse|Chorus|Bridge|Intro|Outro)\}/i);
+      if (sectionMatch) sections.push(sectionMatch[1]);
+    }
+
+    return { title, sections };
+  }
+
+  async function runTest(data) {
+    if (data.title) {
+      await showForSeconds(`Title: ${data.title}`, 3);
+    }
+    for (const sec of data.sections) {
+      await showForSeconds(`${sec}`, 3);
+    }
+    display.textContent = "";
+  }
+
+  document.getElementById("fileInput").addEventListener("change", function() {
+    const file = this.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const text = e.target.result;
+      const data = parseChordPro(text);
+      runTest(data);
+    };
+    reader.readAsText(file);
+  });
+</script>
+
+</body>
+</html>
