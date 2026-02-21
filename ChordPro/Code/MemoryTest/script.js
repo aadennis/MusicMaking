@@ -1,5 +1,6 @@
 const titleDisplay = document.getElementById("titleDisplay");
 const display = document.getElementById("display");
+const fileInput = document.getElementById("fileInput");
 
 function showForSeconds(text, seconds) {
   return new Promise(resolve => {
@@ -15,7 +16,6 @@ function parseChordPro(text) {
   const sections = [];
   const sectionNames = ["verse", "chorus", "bridge", "intro", "outro"];
 
-  // Store chords per section
   const sectionsWithChords = {};
   let currentSection = null;
 
@@ -60,12 +60,10 @@ function parseChordPro(text) {
 }
 
 async function runTest(data) {
-  // Title stays visible
   if (data.title) {
     titleDisplay.textContent = data.title;
   }
 
-  // Cycle through sections
   for (const sec of data.sections) {
     await showForSeconds(sec, 3);
   }
@@ -74,9 +72,12 @@ async function runTest(data) {
   console.log("Extracted chords:", data.sectionsWithChords);
 }
 
-document.getElementById("fileInput").addEventListener("change", function() {
+fileInput.addEventListener("change", function() {
   const file = this.files[0];
   if (!file) return;
+
+  // Hide the file input after selection
+  fileInput.style.display = "none";
 
   const reader = new FileReader();
   reader.onload = function(e) {
@@ -86,4 +87,3 @@ document.getElementById("fileInput").addEventListener("change", function() {
   };
   reader.readAsText(file);
 });
-
