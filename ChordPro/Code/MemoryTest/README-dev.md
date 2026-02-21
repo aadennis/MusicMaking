@@ -91,8 +91,8 @@ The parser returns:
 }
 ```
 
-5. Reveal Queue
-The reveal queue is a flattened list
+## 5. Reveal Queue  
+The reveal queue is a flattened list  
 
 ```js
 [
@@ -107,7 +107,8 @@ The reveal queue is a flattened list
 
 This ensures predictable stepping.
 
-6. Rendering Logic
+## 6. Rendering Logic
+   
 Section header
 Displayed in sectionDisplay.
 Chord line
@@ -125,7 +126,7 @@ Em   A7   D   Bm
 
 
 
-7. Input Handling
+## 7. Input Handling
 
 Forward
 - Tap on tap area
@@ -139,14 +140,14 @@ Backward
 Toggle Leading Words Mode
 - Key: L
 
-8. Invariants
+## 8. Invariants
 - revealIndex always points to the next item to display.
 - sectionsWithLines[section] always contains objects { chords, lyric }.
 - Lyric lines never affect chord detection.
 - No section is ever empty unless the input file is malformed.
 - Solo sections are never added to the reveal queue.
 
-9. Extensibility
+## 9. Extensibility
 The architecture supports:
 - Auto‑transpose
 - Capo‑aware chord display
@@ -252,6 +253,7 @@ ChordReveal is designed for musicians who want:
 - No clutter
 - No complicated formats
 - Just chords, sections, and a simple tap‑to‑advance flow
+
 
 
 
