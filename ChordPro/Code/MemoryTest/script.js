@@ -10,9 +10,10 @@ let revealIndex = 0;
 let waitingForTap = false;
 
 function parseChordPro(text) {
+  let meta = {};
+  let inMetadata = true;
   const lines = text.split(/\r?\n/);
 
-  let title = null;
   const sections = [];
   const sectionsWithLines = {};
 
@@ -36,6 +37,20 @@ function parseChordPro(text) {
 
   for (const rawLine of lines) {
     const line = rawLine.trim();
+
+    // METADATA BLOCK
+    if (inMetadata) {
+        if (line.startsWith("#")) {
+        const [tag, ...rest] = line.slice(1).split(":");
+        meta[tag.trim()] = rest.join(":").trim();
+        continue;
+        }
+
+        // First non-metadata line ends the metadata block
+        if (line.length === 0) continue; // allow blank line after metadata
+        inMetadata = false;
+    }
+
 
     // SECTION HEADER
     if (line.startsWith("[") && line.endsWith("]")) {
@@ -78,7 +93,7 @@ function parseChordPro(text) {
     }
   }
 
-  return { title, sections, sectionsWithLines };
+  return { meta, sections, sectionsWithLines };
 }
 
 function prepareRevealQueue(data) {
@@ -120,6 +135,39 @@ function showNext() {
   }
 }
 
+function displayMetadata(meta) {
+  titleDisplay.innerHTML = "";
+
+  if (meta.title) {
+    const t = document.createElement("div");
+    t.className = "songTitle";
+    t.textContent = meta.title;
+    titleDisplay.appendChild(t);
+  }
+
+  if (meta.artist) {
+    const a = document.createElement("div");
+    a.className = "songArtist";
+    a.textContent = meta.artist;
+    titleDisplay.appendChild(a);
+  }
+
+  const info = [];
+
+  if (meta["key-original"]) info.push(`Orig: ${meta["key-original"]}`);
+  if (meta["key-me"]) info.push(`You: ${meta["key-me"]}`);
+  if (meta.capo) info.push(`Capo: ${meta.capo}`);
+  if (meta.tempo) info.push(`Tempo: ${meta.tempo}`);
+  if (meta.scroll_speed) info.push(`Scroll: ${meta.scroll_speed}`);
+
+  if (info.length > 0) {
+    const m = document.createElement("div");
+    m.className = "songMeta";
+    m.textContent = info.join("   ");
+    titleDisplay.appendChild(m);
+  }
+}
+
 // INITIAL STATE
 tapArea.classList.add("disabled");
 
@@ -137,8 +185,9 @@ fileInput.addEventListener("change", function () {
   reader.onload = function (e) {
     const text = e.target.result;
     const data = parseChordPro(text);
-
-    titleDisplay.textContent = data.title;
+    if (data.meta) {
+        displayMetadata(data.meta)
+    }
     
     prepareRevealQueue(data);
     console.log("REVEAL QUEUE:", revealQueue);

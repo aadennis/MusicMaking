@@ -1,3 +1,11 @@
+#title: All My Loving
+#artist: Beatles
+#key-original: C
+#key-me: C
+#capo: 0
+#tempo: 88
+#scroll_speed: 2.7
+
 [Verse 1]
            Em            A7          D           Bm
 Close your eyes and I´ll kiss you, tomorrow I´ll miss you
