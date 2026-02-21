@@ -8,13 +8,21 @@
       font-family: sans-serif;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       height: 100vh;
       background: #111;
       color: #eee;
       text-align: center;
+      padding-top: 40px;
     }
+
+    #titleDisplay {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 40px;
+    }
+
     #display {
       font-size: 2rem;
       margin-top: 20px;
@@ -23,10 +31,13 @@
 </head>
 <body>
 
-<input type="file" id="fileInput" accept=".txt">
+<input type="file" id="fileInput">
+
+<div id="titleDisplay"></div>
 <div id="display"></div>
 
 <script>
+  const titleDisplay = document.getElementById("titleDisplay");
   const display = document.getElementById("display");
 
   function showForSeconds(text, seconds) {
@@ -62,12 +73,16 @@
   }
 
   async function runTest(data) {
+    // Title stays visible
     if (data.title) {
-      await showForSeconds(`Title: ${data.title}`, 3);
+      titleDisplay.textContent = data.title;
     }
+
+    // Cycle through sections
     for (const sec of data.sections) {
-      await showForSeconds(`${sec}`, 3);
+      await showForSeconds(sec, 3);
     }
+
     display.textContent = "";
   }
 
@@ -87,3 +102,4 @@
 
 </body>
 </html>
+
