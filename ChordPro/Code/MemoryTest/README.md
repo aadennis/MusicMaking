@@ -1,11 +1,12 @@
 
 ---
 
-# 🎸 **ChordReveal — README.md**
+# 🎸 **ChordReveal**
 
-A browser‑based chord‑memory tool, that steps through a song one chord line at a time.  
+A browser‑based chord‑memory tool. It steps through a song, one chord line at a time.  
 It loads a simple `.txt` file containing sections, chord lines, and lyrics, plus optional metadata at the top.  
-The interface supports tap, click, and keyboard stepping — including a “go back” function — and offers a **Leading Words Mode** that shows the first two words of each lyric line alongside its chord line.
+The interface supports tap, click, and keyboard stepping — including a “go back” function.  
+It has a **Leading Words Mode** that shows the first two words of each lyric line alongside its chord line.
 
 ---
 
@@ -14,13 +15,13 @@ The interface supports tap, click, and keyboard stepping — including a “go b
 - Load a `.txt` song file directly from disk  
 - Optional metadata block at the top of the file  
 - Section detection (`[Verse 1]`, `[Chorus]`, etc.)  
-- Chord‑line detection with indentation tolerance  
+- Chord‑line detection - handles leading space
 - Lyric capture for “leading words” mode  
 - Step forward using tap, click, Space, Enter, or →  
 - Step backward using Backspace or ←  
 - Clean reveal queue: section → chord lines → blank → next section  
 - Solo sections automatically skipped  
-- No server required — runs entirely in the browser  
+- Runs entirely in the browser - no server
 
 ---
 
@@ -53,7 +54,7 @@ At the top of the file:
 
 ### 2. Sections
 
-Sections are declared like:
+Sections are declared thus:
 
 ```
 [Verse 1]
@@ -231,7 +232,6 @@ Runs directly in the browser.
 
 ## 🚀 Extending the Tool
 
-The architecture is intentionally modular.  
 You can easily add:
 
 - Auto‑transpose  
@@ -241,16 +241,5 @@ You can easily add:
 - Auto‑scroll based on tempo  
 - Dark mode  
 
-The parser and reveal engine are stable and ready for extension.
-
 ---
 
-If you want, I can also generate:
-
-- A **developer‑oriented** README (internal architecture)  
-- A **user‑friendly** README (for musicians)  
-- A **CHANGELOG.md**  
-- A **CONTRIBUTING.md**  
-- Inline code documentation for your JS  
-
-Just tell me which flavour you want next.
