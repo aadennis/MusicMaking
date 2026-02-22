@@ -88,6 +88,8 @@ def process_multiline_text(input_text):
         list: A list of lines in ChordPro format.
     """
     lines = [line.rstrip('\n') for line in input_text.splitlines()]
+    # Skip lines whose first non-space character is '#'
+    lines = [line for line in lines if not line.lstrip().startswith('#')]
     output_lines = []
     i = 0
 
@@ -287,7 +289,7 @@ def zip_chordpro_files(zip_name="AllChordProFiles.zip", root_folder="ChordPro_Ou
 # Example usage:
 if __name__ == "__main__":
     # Uncomment the following line to process a single song
-    process_song("LetItBe")
+    process_song("ByeByeLove")
     
     # Process all songs and zip them
     #process_all_songs()
