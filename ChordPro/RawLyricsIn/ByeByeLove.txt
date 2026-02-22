@@ -1,6 +1,5 @@
-
-Capo:
-no capo
+#title: Bye Bye Love
+#artist: Everly Brothers
 
 [Chorus]
 
