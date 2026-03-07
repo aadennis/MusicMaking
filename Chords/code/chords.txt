@@ -46,6 +46,7 @@ XX5443 | Gaug
 320001 | G7 | A Hard Day's Night
 353533 | G7 sus4 | A Hard Day's Night
 354433 | Gmaj7 | La Vie en Rose
+32400X | Gmaj7 bsn | Both Sides Now
 353453 | G13 | Can't Buy Me Love - see G6
 
 
