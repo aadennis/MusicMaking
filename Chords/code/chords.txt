@@ -20,6 +20,7 @@ XX3221 | Caug | All my loving
 X35555 | C6
 X32210 | C6 v2 | stuff 3
 335453 | Cmaj7 | Come Fly with Me
+X32000 | Cmaj7 | Come Fly with Me v2
 XX0232 | D Major | stuff 5
 XX0231 | D Minor | stuff 5
 XX0211 | Dm7 | stuff 5
