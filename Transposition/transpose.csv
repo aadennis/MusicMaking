@@ -1,0 +1,15 @@
+transposition,from_chord,to_chord
+C-D,C,D
+C-D,F,G
+C-D,Em,F#M
+C-D,G9,A9
+C-D,G7,A7
+G-F,G,F
+G-F,C,A#
+G-F,F,D#
+G-F,D,C
+G-F,Bm,Am
+G-F,Em,Dm
+G-F,C6,A#6
+G-F,D7sus4,C7sus4
+G-F,Dm7,Cm7
