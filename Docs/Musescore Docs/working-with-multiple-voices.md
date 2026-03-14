@@ -18,9 +18,7 @@ The principles of entering notes and rests are the same regardless of which voic
 
 Each voice has its own color in the UI. The note entry cursor changes color to reflect the current voice, and notes and rests (and many other items) will be highlighted in the color of their respective voice when you select them. This is useful when inputting and editing as it gives you an immediate visual indicator of the voice the music belongs to.
 
-{% hint style="info" %}
 You can change each voice's color in **Preferences -> Advanced**.
-{% endhint %}
 
 While you are in note entry mode, you can switch to a different voice by clicking one of the voice selection buttons in the top toolbar:
 
