@@ -26,9 +26,7 @@ While you are in note entry mode, you can switch to a different voice by clickin
 
 You can also use the keyboard shortcuts <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>1</kbd>–<kbd>4</kbd>.
 
-{% hint style="info" %}
 By default, only the buttons for voices 1 and 2 are shown in the toolbar. To use the others, first reveal them by clicking the <picture><source srcset="https://3455969201-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FP81HaeapLzzJGtG6DSwH%2Fuploads%2F1sMpHFntZ5DT6N4gHFjn%2Fbutton-cog-dark.svg?alt=media&#x26;token=8f887732-e876-4411-8a03-06991843bc9b" media="(prefers-color-scheme: dark)"><img src="https://3455969201-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FP81HaeapLzzJGtG6DSwH%2Fuploads%2FpNRabkhIKjFCeXGr3HfV%2Fbutton-cog-light.svg?alt=media&#x26;token=2f43f53c-b3ab-49be-8183-32bd16b73b0b" alt="" data-size="line"></picture> cog button in the toolbar and then clicking the <img src="https://3455969201-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FP81HaeapLzzJGtG6DSwH%2Fuploads%2FoyU8Vo7KfHL27PfBmj3c%2Fbutton-visibility-eye-dark.svg?alt=media&#x26;token=351974ae-29e3-47af-834e-e782881ff171" alt="" data-size="line"> eye button next to **Voice 3** and **Voice 4** in the menu.
-{% endhint %}
 
 If you select a note or rest before entering note entry mode, you will enter note entry mode in the same voice as that note or rest.
 
@@ -43,9 +41,7 @@ To move notes or rests to another voice:
 
 You can also use the shortcuts <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>1</kbd>–<kbd>4</kbd> (Win) or <kbd>Cmd</kbd>+<kbd>Alt</kbd>+<kbd>1</kbd>–<kbd>4</kbd> (Mac).
 
-{% hint style="info" %}
 You can move any number of notes, even from multiple voices at once, into a voice. If there are notes at the same position with the same rhythm they will combine into chords. If there are differing rhythms, some notes may be left in their original voice as MuseScore Studio will not be able to know what you intend.
-{% endhint %}
 
 ### Exchanging voices
 
@@ -58,9 +54,7 @@ It is often necessary to remove redundant rests in secondary voices. This can be
 * Hiding the rest, by selecting it and unchecking **Visible** in **Properties** (or using the shortcut <kbd>V</kbd>).
 * Deleting the rest, by selecting it and pressing <kbd>Del</kbd>.
 
-{% hint style="info" %}
 Voice 1 is the 'reference' voice and must remain rhythmically complete. As such, rests in voice 1 can be hidden, but not deleted.
-{% endhint %}
 
 In a single voice, rests appear in the middle of the staff, but in multiple voices, rests for voice 1 are moved up at least one space and rests for voice 2 are moved down at least one space. This offset helps to show which voice they belong to. In practice, they are usually displaced further out to avoid colliding with notation in the other voice.
 
@@ -80,9 +74,7 @@ These options affect all staves in the scores. If you want to turn rest merging 
 1. Right-click the staff and choose **Staff/Part properties** from the menu.
 2. Change **Merge matching rests** to **On** or **Off**. The default, **Auto**, will follow the score-wide setting.
 
-{% hint style="info" %}
 'Merged' rests are actually overlaid on top of each other, but they are all still there. If you want to see more than one rest in a specific place you can achieve this by moving them manually.
-{% endhint %}
 
 Rests can also be moved manually like other items. Just select a rest and press <kbd>Up</kbd> or <kbd>Down</kbd>, or change **Properties -> Appearance -> Offset**.
 
