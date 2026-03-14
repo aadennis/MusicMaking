@@ -74,5 +74,4 @@ m7#5
 
 # Instructions
 # Play this chord line twice:
-X2
-
+x2
