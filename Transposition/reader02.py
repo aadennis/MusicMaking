@@ -1,79 +1,181 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import csv
 import re
+from pathlib import Path
 from typing import Dict, Tuple
 
-# ---- configuration ----
-# Canonical pitch classes we’ll accept as roots/bass (input), with normalized output in sharps.
-_PC_SHARP = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"]
-# Map enharmonic spellings to sharp canonical forms (input normalization).
+
+# -----------------------------
+# 1) Static lookup loader (CSV)
+# -----------------------------
+# Expected CSV columns: source,offset,target
+# Example row: D,-2,C
+Lookup = Dict[Tuple[str, int], str]
+
+def load_lookup_csv(path: str | Path) -> Lookup:
+    table: Lookup = {}
+    with open(path, "r", newline="", encoding="utf-8") as f:
+        rdr = csv.DictReader(f)
+        for row in rdr:
+            src = row["source"].strip()
+            off = int(row["offset"])
+            tgt = row["target"].strip()
+            table[(src, off)] = tgt
+    # quick sanity check (12 roots × 7 offsets = 84 entries) — optional
+    if len(table) < 84:
+        raise ValueError(f"Lookup table seems incomplete: {len(table)} entries found in {path}")
+    return table
+
+
+# --------------------------------------
+# 2) Note normalization to sharp roots
+# --------------------------------------
+# We normalize input accidentals to your canonical sharp spellings,
+# so the static CSV only needs the 12 sharp roots (C, C#, ..., B).
 _ENHARMONIC_TO_SHARP = {
     "C": "C", "B#": "C",
-    "C#": "C#", "Db": "C#", "D♭": "C#", "C♯": "C#", 
+    "C#": "C#", "DB": "C#", "D♭": "C#", "C♯": "C#",
     "D": "D",
-    "D#": "D#", "Eb": "D#", "E♭": "D#", "D♯": "D#",
-    "E": "E", "Fb": "E", "F♭": "E",
+    "D#": "D#", "EB": "D#", "E♭": "D#", "D♯": "D#",
+    "E": "E", "FB": "E", "F♭": "E",
     "F": "F", "E#": "F", "E♯": "F",
-    "F#": "F#", "Gb": "F#", "G♭": "F#", "F♯": "F#",
+    "F#": "F#", "GB": "F#", "G♭": "F#", "F♯": "F#",
     "G": "G",
-    "G#": "G#", "Ab": "G#", "A♭": "G#", "G♯": "G#",
+    "G#": "G#", "AB": "G#", "A♭": "G#", "G♯": "G#",
     "A": "A",
-    "A#": "A#", "Bb": "A#", "B♭": "A#", "A♯": "A#",
-    "B": "B", "Cb": "B", "C♭": "B",
+    "A#": "A#", "BB": "A#", "B♭": "A#", "A♯": "A#",
+    "B": "B", "CB": "B", "C♭": "B",
 }
 
-# ---- generate transposition table for offsets –3..+3 ----
-# Key: (normalized_sharp, offset)  Value: transposed_sharp
-_TRANSPOSITION: Dict[Tuple[str, int], str] = {}
-_index = {pc: i for i, pc in enumerate(_PC_SHARP)}
+def _norm(letter: str, acc: str) -> str:
+    token = (letter.upper() + acc.replace("♯", "#").replace("♭", "b")).upper()
+    # convert trailing 'b' to uppercase 'B' for our dict keys (Db -> DB)
+    if token.endswith("b"):
+        token = token[:-1] + "B"
+    return _ENHARMONIC_TO_SHARP.get(token, token)
 
-for pc in _PC_SHARP:
-    i0 = _index[pc]
-    for k in range(-3, 4):  # inclusive –3..+3
-        _TRANSPOSITION[(pc, k)] = _PC_SHARP[(i0 + k) % 12]
 
-# ---- chord tokenizer: root + optional accidental, suffix (no slash), optional /bass ----
+# --------------------------------------
+# 3) Chord tokenization and transposition
+# --------------------------------------
+# Token: root + accidental, optional quality until whitespace or '/',
+# optional slash-bass of the same form.
 _CHORD = re.compile(
     r"""
-    (?P<root>[A-Ga-g])(?P<acc>[#b♯♭]?)     # root + accidental
-    (?P<qual>[^/\s]*)                      # quality/suffix (stops at slash or whitespace)
+    (?P<root>[A-Ga-g])(?P<acc>[#b♯♭]?)   # chord root + accidental
+    (?P<qual>[^/\s]*)                    # suffix/quality (m7, maj7, sus4, etc.)
     (?:/
-        (?P<bass>[A-Ga-g])(?P<bacc>[#b♯♭]?) # optional slash-bass
+        (?P<bass>[A-Ga-g])(?P<bacc>[#b♯♭]?)  # optional slash-bass
     )?
     """,
     re.VERBOSE,
 )
 
-def _norm(note_letter: str, acc: str) -> str:
-    """Normalize an input note to sharp canonical spelling (e.g., 'Db' -> 'C#')."""
-    s = (note_letter.upper() + acc.replace("♯", "#").replace("♭", "b"))
-    return _ENHARMONIC_TO_SHARP.get(s, s)  # if odd spellings appear, fall back as-is
-
-def _transpose_canonical(norm_sharp: str, k: int) -> str:
-    """Look up transposed note from the prebuilt table (k must be –3..+3)."""
-    try:
-        return _TRANSPOSITION[(norm_sharp, k)]
-    except KeyError:
-        raise ValueError(f"tone_offset {k} out of supported range –3..+3")
-
-def alter_chord(chord_line: str, tone_offset: int | str) -> str:
+def alter_chord_line(chord_line: str, k: int, lookup: Lookup) -> str:
     """
-    Transpose each chord token in 'chord_line' by tone_offset semitones, using a
-    precomputed lookup for offsets –3..+3. Whitespace/layout is preserved.
-
-    Examples:
-        alter_chord("    Dm7     C      Emaj7", -1)
-        -> "    C#m7     B      D#maj7"
+    Transpose every chord token in a chord-only line by k semitones using a static lookup.
+    Whitespace/layout is preserved; qualities are left as-is; output uses sharp spelling.
     """
-    # parse/validate offset
-    k = int(str(tone_offset).strip())
-    if k < -3 or k > 3:
-        raise ValueError("tone_offset must be within –3..+3 for the table-driven version")
+    if not (-3 <= k <= 3):
+        raise ValueError("tone_offset must be within –3..+3 for the static lookup")
+
+    def _xpose(letter: str, acc: str) -> str:
+        src = _norm(letter, acc or "")
+        try:
+            return lookup[(src, k)]
+        except KeyError as e:
+            raise KeyError(f"Missing mapping for ({src}, {k}) in the lookup") from e
 
     def _repl(m: re.Match) -> str:
-        root = _transpose_canonical(_norm(m.group("root"), m.group("acc") or ""), k)
+        root_out = _xpose(m.group("root"), m.group("acc") or "")
         qual = m.group("qual") or ""
         if m.group("bass"):
-            bass = _transpose_canonical(_norm(m.group("bass"), m.group("bacc") or ""), k)
-            return f"{root}{qual}/{bass}"
-        return f"{root}{qual}"
+            bass_out = _xpose(m.group("bass"), m.group("bacc") or "")
+            return f"{root_out}{qual}/{bass_out}"
+        return f"{root_out}{qual}"
 
     return _CHORD.sub(_repl, chord_line)
+
+
+# --------------------------------------
+# 4) Chord-line heuristic
+# --------------------------------------
+# Use your own 'is_chord_line' if you have it; otherwise a conservative default.
+def is_chord_line_default(line: str) -> bool:
+    """
+    Conservative heuristic: must contain at least one chord-like token
+    and very few alphabetic runs that look like lyrics.
+    """
+    if not line or line.strip() == "":
+        return False
+    # chord tokens we would match
+    tokens = _CHORD.findall(line)
+    if not tokens:
+        return False
+    # If there are many non-chord words (lyrics), treat as non-chord
+    # Count sequences of letters outside chord patterns:
+    plain_words = re.findall(r"\b[H-Zh-z]+\b", line)  # letters not used for chord roots
+    return len(plain_words) == 0
+
+
+# --------------------------------------
+# 5) File processing
+# --------------------------------------
+def transpose_song_file(
+    in_path: str | Path,
+    out_path: str | Path,
+    lookup_csv: str | Path,
+    semitone_offset: int = -2,
+    is_chord_line=is_chord_line_default,  # swap in your function if desired
+) -> None:
+    lookup = load_lookup_csv(lookup_csv)
+
+    in_path = Path(in_path)
+    out_path = Path(out_path)
+
+    with in_path.open("r", encoding="utf-8") as fin, out_path.open("w", encoding="utf-8", newline="") as fout:
+        for line in fin:
+            if is_chord_line(line):
+                fout.write(alter_chord_line(line, semitone_offset, lookup))
+            else:
+                fout.write(line)
+
+
+# --------------------------------------
+# 6) CLI
+# --------------------------------------
+def build_parser() -> argparse.ArgumentParser:
+    p = argparse.ArgumentParser(description="Transpose chord lines in a song file using a static CSV lookup.")
+    p.add_argument("input", nargs="?", default="AHardDaysNight.txt", help="Path to the source song text file")
+    p.add_argument("-o", "--output", default=None, help="Path to the output file (default: <input>_transposed_<k>.txt)")
+    p.add_argument("-l", "--lookup", default="transpose_lookup_hybrid.csv", help="Path to the static CSV lookup")
+    p.add_argument("-k", "--semitones", type=int, default=-2, help="Semitone offset (–3..+3); default: -2")
+    return p
+
+def main(argv: list[str] | None = None) -> int:
+    p = build_parser()
+    args = p.parse_args(argv)
+
+    in_path = Path(args.input)
+    if not args.output:
+        stem = in_path.stem
+        out_path = in_path.with_name(f"{stem}_transposed_{args.semitones}.txt")
+    else:
+        out_path = Path(args.output)
+
+    transpose_song_file(
+        in_path=in_path,
+        out_path=out_path,
+        lookup_csv=args.lookup,
+        semitone_offset=args.semitones,
+        is_chord_line=is_chord_line_default,  # replace with your own function if you like
+    )
+    print(f"Wrote: {out_path}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
