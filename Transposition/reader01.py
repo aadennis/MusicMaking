@@ -1,5 +1,17 @@
 import re
 
+# Given a chord line (a line that naively contains only chords),
+# for each chord in that line, alter the chord pitch by the
+#  value of tone_offset.
+# For example: if the current chord is Dm7, and tone_offset is (+)2
+# , then the resulting chord is Em7. If the current chord is (still)
+# Dm7, and the tone_offset is -2, then the resulting chord is Cm7.
+# Taking a whole source chord line as an example, given:
+# chord-line = "    Dm7     C      Emaj7" and tone_offset = "-1"
+# the chord_line to return to the caller is
+# chord-line = "    C#m7     B      D#maj7"
+def alter_chord(chord_line, tone_offset)
+
 def is_chord_line(line: str) -> bool:
     """
     Naive heuristic for detecting a chord line.
@@ -37,10 +49,17 @@ def get_song_lines(file):
         return f.readlines()
 
 def main(file):
+    out_file = 'test_data/outfile.txt'
     lines = get_song_lines(file)
-    for line in lines:
-        print(line)
-        print(is_chord_line(line))
+    with open(out_file, 'w') as of:
+        for line in lines:
+            print(line)
+            if (is_chord_line(line)):
+
+                of.write(f"That was a chord\n")
+                continue
+            of.write(line)
+
 
 if __name__ == "__main__":
     song_file = "test_data/AHardDaysNight.txt"
