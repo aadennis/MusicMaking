@@ -18,18 +18,25 @@ PC_SHARPS: List[str] = ["C", "C#", "D", "D#", "E", "F",
 PC_FLATS: List[str]  = ["C", "Db", "D", "Eb", "E", "F",
                         "Gb", "G", "Ab", "A", "Bb", "B"]
 
+# Optional: hybrid of sharps plus Bb (alternative output spelling)
+PC_HYBRID: List[str] = ["C", "C#", "D", "D#", "E", "F",
+                        "F#", "G", "G#", "A", "Bb", "B"]
+
 # Range of allowed offsets (inclusive)
 MIN_OFFSET, MAX_OFFSET = -3, 3
 
 # Toggle if you also want to generate flat-spelled output files
 GENERATE_FLATS = False  # set True to generate the _flats.* files as well
+GENERATE_HYBRID = True
 
 # Output file names
 CSV_SHARPS = Path("transpose_lookup.csv")
-JSON_SHARPS = Path("transpose_lookup.json")
 CSV_FLATS  = Path("transpose_lookup_flats.csv")
-JSON_FLATS = Path("transpose_lookup_flats.json")
+CSV_HYBRID  = Path("transpose_lookup_hybrid.csv")
 
+JSON_SHARPS = Path("transpose_lookup.json")
+JSON_FLATS = Path("transpose_lookup_flats.json")
+JSON_HYBRID = Path("transpose_lookup_hybrid.json")
 
 # ----------------------------------------------------------------------
 # Helpers
@@ -98,6 +105,12 @@ def main() -> None:
         write_json(flat_table, JSON_FLATS)
         print(f"Wrote {CSV_FLATS} and {JSON_FLATS}")
 
+    # Optional: hybrid-spelled outputs
+    if GENERATE_HYBRID:
+        hybrid_table = build_table(PC_HYBRID)
+        write_csv(hybrid_table, CSV_HYBRID)
+        write_json(hybrid_table, JSON_HYBRID)
+        print(f"Wrote {CSV_HYBRID} and {JSON_HYBRID}")
 
 if __name__ == "__main__":
     main()
