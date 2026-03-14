@@ -109,7 +109,7 @@ def is_chord_line_default(line: str) -> bool:
     Conservative heuristic: must contain at least one chord-like token
     and very few alphabetic runs that look like lyrics.
     """
-    if not line or line.strip() == "":
+    if not line or line.startswith('[') or line.strip() == "":
         return False
     # chord tokens we would match
     tokens = _CHORD.findall(line)
