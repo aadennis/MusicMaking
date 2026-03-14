@@ -1,0 +1,71 @@
+# Basic triad qualities
+m
+maj
+min
+dim
+aug
+
+# Suspended
+sus
+sus2
+sus4
+
+# Extensions
+7
+9
+11
+13
+
+# Major variants
+maj7
+maj9
+maj11
+maj13
+
+# Minor variants
+m7
+m9
+m11
+m13
+min7
+min9
+min11
+min13
+
+# Add chords
+add
+add2
+add4
+add9
+
+# Sixths
+6
+m6
+maj6
+
+# Alterations
+#5
+b5
+#9
+b9
+#11
+b11
+#13
+b13
+7#5
+7b5
+7#9
+7b9
+7#11
+7b11
+7#13
+7b13
+
+# Half-diminished etc.
+m7b5
+m7#5
+
+# Power/interval chords
+2
+4
+5
