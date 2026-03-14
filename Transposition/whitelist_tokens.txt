@@ -1,3 +1,5 @@
+# Tokens which are valid extensions to chord names
+
 # Basic triad qualities
 m
 maj
@@ -69,3 +71,8 @@ m7#5
 2
 4
 5
+
+# Instructions
+# Play this chord line twice:
+X2
+

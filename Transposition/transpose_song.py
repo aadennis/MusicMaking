@@ -15,6 +15,7 @@ from typing import Dict, Tuple
 # Example row: D,-2,C
 Lookup = Dict[Tuple[str, int], str]
 
+
 def load_lookup_csv(path: str | Path) -> Lookup:
     table: Lookup = {}
     with open(path, "r", newline="", encoding="utf-8") as f:
@@ -26,7 +27,9 @@ def load_lookup_csv(path: str | Path) -> Lookup:
             table[(src, off)] = tgt
     # quick sanity check (12 roots × 7 offsets = 84 entries) — optional
     if len(table) < 84:
-        raise ValueError(f"Lookup table seems incomplete: {len(table)} entries found in {path}")
+        raise ValueError(
+            f"Lookup table seems incomplete: {len(table)} entries found in {path}"
+        )
     return table
 
 
@@ -36,19 +39,42 @@ def load_lookup_csv(path: str | Path) -> Lookup:
 # We normalize input accidentals to your canonical sharp spellings,
 # so the static CSV only needs the 12 sharp roots (C, C#, ..., B).
 _ENHARMONIC_TO_SHARP = {
-    "C": "C", "B#": "C",
-    "C#": "C#", "DB": "C#", "D♭": "C#", "C♯": "C#",
+    "C": "C",
+    "B#": "C",
+    "C#": "C#",
+    "DB": "C#",
+    "D♭": "C#",
+    "C♯": "C#",
     "D": "D",
-    "D#": "D#", "EB": "D#", "E♭": "D#", "D♯": "D#",
-    "E": "E", "FB": "E", "F♭": "E",
-    "F": "F", "E#": "F", "E♯": "F",
-    "F#": "F#", "GB": "F#", "G♭": "F#", "F♯": "F#",
+    "D#": "D#",
+    "EB": "D#",
+    "E♭": "D#",
+    "D♯": "D#",
+    "E": "E",
+    "FB": "E",
+    "F♭": "E",
+    "F": "F",
+    "E#": "F",
+    "E♯": "F",
+    "F#": "F#",
+    "GB": "F#",
+    "G♭": "F#",
+    "F♯": "F#",
     "G": "G",
-    "G#": "G#", "AB": "G#", "A♭": "G#", "G♯": "G#",
+    "G#": "G#",
+    "AB": "G#",
+    "A♭": "G#",
+    "G♯": "G#",
     "A": "A",
-    "A#": "A#", "BB": "A#", "B♭": "A#", "A♯": "A#",
-    "B": "B", "CB": "B", "C♭": "B",
+    "A#": "A#",
+    "BB": "A#",
+    "B♭": "A#",
+    "A♯": "A#",
+    "B": "B",
+    "CB": "B",
+    "C♭": "B",
 }
+
 
 def _norm(letter: str, acc: str) -> str:
     token = (letter.upper() + acc.replace("♯", "#").replace("♭", "b")).upper()
@@ -73,6 +99,7 @@ _CHORD = re.compile(
     """,
     re.VERBOSE,
 )
+
 
 def alter_chord_line(chord_line: str, k: int, lookup: Lookup) -> str:
     """
@@ -101,24 +128,67 @@ def alter_chord_line(chord_line: str, k: int, lookup: Lookup) -> str:
 
 
 # --------------------------------------
-# 4) Chord-line heuristic
+# 4) Whitelist-based chord-line heuristic
 # --------------------------------------
-# Use your own 'is_chord_line' if you have it; otherwise a conservative default.
-def is_chord_line_default(line: str) -> bool:
+
+
+def load_whitelist(path: str | Path = "whitelist_tokens.txt") -> set[str]:
     """
-    Conservative heuristic: must contain at least one chord-like token
-    and very few alphabetic runs that look like lyrics.
+    Load allowed chord-quality tokens (e.g., m, sus, maj, dim).
+    Tokens are treated as prefixes: a suffix starting with any of them is valid.
+    Blank lines and comments (# ...) are ignored.
     """
-    if not line or line.startswith('[') or line.strip() == "":
+    tokens = set()
+    with open(path, "r", encoding="utf-8") as f:
+        for line in f:
+            t = line.strip()
+            if not t or t.startswith("#"):
+                continue
+            tokens.add(t)
+    return tokens
+
+
+def is_valid_chord_token(token: str, whitelist: set[str]) -> bool:
+    """
+    Determine whether a token is a chord, given the whitelist of valid quality prefixes.
+    """
+    m = _CHORD.fullmatch(token)
+    if not m:
         return False
-    # chord tokens we would match
-    tokens = _CHORD.findall(line)
+
+    qual = m.group("qual") or ""
+
+    # Pure chord roots (A, C#, Bb) → always valid
+    if qual == "":
+        return True
+
+    # Whitelist applies as "qual starts with token"
+    return any(qual.startswith(w) for w in whitelist)
+
+
+def is_chord_line(line: str, whitelist: set[str]) -> bool:
+    """
+    Line is a chord line if:
+    - it contains at least one chord token, AND
+    - every non-whitespace token is a valid chord token.
+    This avoids misdetecting lyric lines and doesn't rely on messy heuristics.
+    """
+    if not line or line.startswith("[") or line.strip() == "":
+        return False
+
+    tokens = line.strip().split()
     if not tokens:
         return False
-    # If there are many non-chord words (lyrics), treat as non-chord
-    # Count sequences of letters outside chord patterns:
-    plain_words = re.findall(r"\b[H-Zh-z]+\b", line)  # letters not used for chord roots
-    return len(plain_words) == 0
+
+    found_any = False
+    for tok in tokens:
+        if is_valid_chord_token(tok, whitelist):
+            found_any = True
+        else:
+            # Any non-chord token means it's NOT a chord-only line
+            return False
+
+    return found_any
 
 
 # --------------------------------------
@@ -129,16 +199,20 @@ def transpose_song_file(
     out_path: str | Path,
     lookup_csv: str | Path,
     semitone_offset: int = -2,
-    is_chord_line=is_chord_line_default,  # swap in your function if desired
+    whitelist_path: str | Path = "whitelist_tokens.txt",
 ) -> None:
+
     lookup = load_lookup_csv(lookup_csv)
+    whitelist = load_whitelist(whitelist_path)
 
     in_path = Path(in_path)
     out_path = Path(out_path)
 
-    with in_path.open("r", encoding="utf-8") as fin, out_path.open("w", encoding="utf-8", newline="") as fout:
+    with in_path.open("r", encoding="utf-8") as fin, out_path.open(
+        "w", encoding="utf-8", newline=""
+    ) as fout:
         for line in fin:
-            if is_chord_line(line):
+            if is_chord_line(line, whitelist):
                 fout.write(alter_chord_line(line, semitone_offset, lookup))
             else:
                 fout.write(line)
@@ -148,12 +222,36 @@ def transpose_song_file(
 # 6) CLI
 # --------------------------------------
 def build_parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(description="Transpose chord lines in a song file using a static CSV lookup.")
-    p.add_argument("input", nargs="?", default="AHardDaysNight.txt", help="Path to the source song text file")
-    p.add_argument("-o", "--output", default=None, help="Path to the output file (default: <input>_transposed_<k>.txt)")
-    p.add_argument("-l", "--lookup", default="transpose_lookup_hybrid.csv", help="Path to the static CSV lookup")
-    p.add_argument("-k", "--semitones", type=int, default=-2, help="Semitone offset (–3..+3); default: -2")
+    p = argparse.ArgumentParser(
+        description="Transpose chord lines in a song file using a static CSV lookup."
+    )
+    p.add_argument(
+        "input",
+        nargs="?",
+        default="AHardDaysNight.txt",
+        help="Path to the source song text file",
+    )
+    p.add_argument(
+        "-o",
+        "--output",
+        default=None,
+        help="Path to the output file (default: <input>_transposed_<k>.txt)",
+    )
+    p.add_argument(
+        "-l",
+        "--lookup",
+        default="transpose_lookup_hybrid.csv",
+        help="Path to the static CSV lookup",
+    )
+    p.add_argument(
+        "-k",
+        "--semitones",
+        type=int,
+        default=-2,
+        help="Semitone offset (–3..+3); default: -2",
+    )
     return p
+
 
 def main(argv: list[str] | None = None) -> int:
     p = build_parser()
@@ -171,7 +269,7 @@ def main(argv: list[str] | None = None) -> int:
         out_path=out_path,
         lookup_csv=args.lookup,
         semitone_offset=args.semitones,
-        is_chord_line=is_chord_line_default,  # replace with your own function if you like
+        whitelist_path="whitelist_tokens.txt",
     )
     print(f"Wrote: {out_path}")
     return 0
