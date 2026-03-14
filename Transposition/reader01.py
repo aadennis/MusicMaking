@@ -1,7 +1,5 @@
 import re
 
-import re
-
 def is_chord_line(line: str) -> bool:
     """
     Naive heuristic for detecting a chord line.
@@ -33,17 +31,20 @@ def is_chord_line(line: str) -> bool:
 
     # Rule 3: no token longer than 5 chars
     return all(len(tok) <= 5 for tok in tokens)
-     
+
+
 def get_song_lines(file):
-    with open(file, 'r') as f:
-            return f.readlines()
-         
+    with open(file, "r") as f:
+        return f.readlines()
+
+
 def main(file):
     lines = get_song_lines(file)
     for line in lines:
-            print(line)
-            print(is_chord_line(line))
+        print(line)
+        print(is_chord_line(line))
+
 
 if __name__ == "__main__":
-  song_file = 'test_data/AHardDaysNight.txt'
-  main(song_file)
+    song_file = "test_data/AHardDaysNight.txt"
+    main(song_file)
