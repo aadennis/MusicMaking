@@ -7,6 +7,11 @@ import re
 from pathlib import Path
 from typing import Dict, Tuple
 
+_PUNCT_TRAIL = set(",.;:!?”’\"")  # add others as needed
+_PUNCT_WRAP_LEFT = set("([{\"'“‘")
+_PUNCT_WRAP_RIGHT = set(")]}\"'”’")
+
+
 # .\test_data\MaggieMayShort.txt -l .\transpose_lookup_hybrid.csv -k -2
 
 # -----------------------------
@@ -157,7 +162,7 @@ def is_valid_chord_token(token: str, whitelist: set[str]) -> bool:
     if not m:
         return False
 
-    qual = m.group("qual") or ""
+    qual = (m.group("qual") or "").lower()
 
     # Pure chord roots (A, C#, Bb) → always valid
     if qual == "":
@@ -177,6 +182,28 @@ def load_allowed_nonchords(path="allowed_nonchord_tokens.txt"):
     return tokens
 
 
+def _strip_wrappers(s: str) -> str:
+    """Trim common wrappers/punctuation around tokens like '(x2)', 'x2:', '*x2*'."""
+    # strip outer whitespace first
+    s = s.strip()
+
+    # remove symmetric wrappers repeatedly: () [] {} quotes
+    changed = True
+    while s and changed:
+        changed = False
+        if s and s[0] in _PUNCT_WRAP_LEFT and s[-1] in _PUNCT_WRAP_RIGHT:
+            s = s[1:-1].strip()
+            changed = True
+
+    # drop trailing punctuation like ':', '.', ',', ';'
+    while s and s[-1] in _PUNCT_TRAIL:
+        s = s[:-1]
+
+    # normalize multiplication markers: '×2' → 'x2'
+    s = s.replace("×", "x")
+
+    return s
+
 def is_chord_line(line: str, whitelist: set[str], allowed_nonchords: set[str]) -> bool:
     """
     A line is a chord line if every token is either:
@@ -192,12 +219,17 @@ def is_chord_line(line: str, whitelist: set[str], allowed_nonchords: set[str]) -
 
     found_any_chord = False
 
-    for tok in tokens:
+    for raw in tokens:
+        tok = _strip_wrappers(raw)
+        # Treat '-' used as line break markers as allowed nonchord (optional)
+        if tok == "-":
+            continue 
+
         if is_valid_chord_token(tok, whitelist):
             found_any_chord = True
             continue
 
-        if tok in allowed_nonchords:
+        if tok.lower() in allowed_nonchords:
             continue
 
         # Neither a chord nor an allowed extra token → it's a lyric
