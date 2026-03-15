@@ -7,7 +7,7 @@ import re
 from pathlib import Path
 from typing import Dict, Tuple
 
-# .\test_data\MaggieMayShort.txt -l .\transpose_lookup_hybrid.csv -k -2  
+# .\test_data\MaggieMayShort.txt -l .\transpose_lookup_hybrid.csv -k -2
 
 # -----------------------------
 # 1) Static lookup loader (CSV)
@@ -166,6 +166,7 @@ def is_valid_chord_token(token: str, whitelist: set[str]) -> bool:
     # Whitelist applies as "qual starts with token"
     return any(qual.startswith(w) for w in whitelist)
 
+
 def load_allowed_nonchords(path="allowed_nonchord_tokens.txt"):
     tokens = set()
     with open(path, "r", encoding="utf-8") as f:
@@ -174,6 +175,7 @@ def load_allowed_nonchords(path="allowed_nonchord_tokens.txt"):
             if t and not t.startswith("#"):
                 tokens.add(t)
     return tokens
+
 
 def is_chord_line(line: str, whitelist: set[str], allowed_nonchords: set[str]) -> bool:
     """
@@ -204,8 +206,6 @@ def is_chord_line(line: str, whitelist: set[str], allowed_nonchords: set[str]) -
     return found_any_chord
 
 
-
-
 # --------------------------------------
 # 5) File processing
 # --------------------------------------
@@ -215,7 +215,7 @@ def transpose_song_file(
     lookup_csv: str | Path,
     semitone_offset: int = -2,
     whitelist_path: str | Path = "whitelist_tokens.txt",
-    allowed_nonchords_path: str | Path = "allowed_nonchord_tokens.txt"
+    allowed_nonchords_path: str | Path = "allowed_nonchord_tokens.txt",
 ) -> None:
 
     lookup = load_lookup_csv(lookup_csv)
@@ -287,7 +287,7 @@ def main(argv: list[str] | None = None) -> int:
         lookup_csv=args.lookup,
         semitone_offset=args.semitones,
         whitelist_path="whitelist_tokens.txt",
-        allowed_nonchords_path="allowed_nonchord_tokens.txt"
+        allowed_nonchords_path="allowed_nonchord_tokens.txt",
     )
     print(f"Wrote: {out_path}")
     return 0
