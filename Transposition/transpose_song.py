@@ -202,28 +202,8 @@ def is_chord_line(line: str, whitelist: set[str], allowed_nonchords: set[str]) -
         return False
 
     return found_any_chord
-    """
-    Line is a chord line if:
-    - it contains at least one chord token, AND
-    - every non-whitespace token is a valid chord token.
-    This avoids misdetecting lyric lines and doesn't rely on messy heuristics.
-    """
-    if not line or line.startswith("[") or line.strip() == "":
-        return False
 
-    tokens = line.strip().split()
-    if not tokens:
-        return False
 
-    found_any = False
-    for tok in tokens:
-        if is_valid_chord_token(tok, whitelist):
-            found_any = True
-        else:
-            # Any non-chord token means it's NOT a chord-only line
-            return False
-
-    return found_any
 
 
 # --------------------------------------
@@ -307,6 +287,7 @@ def main(argv: list[str] | None = None) -> int:
         lookup_csv=args.lookup,
         semitone_offset=args.semitones,
         whitelist_path="whitelist_tokens.txt",
+        allowed_nonchords_path="allowed_nonchord_tokens.txt"
     )
     print(f"Wrote: {out_path}")
     return 0
