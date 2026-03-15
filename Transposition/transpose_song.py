@@ -7,6 +7,7 @@ import re
 from pathlib import Path
 from typing import Dict, Tuple
 
+# .\test_data\MaggieMayShort.txt -l .\transpose_lookup_hybrid.csv -k -2  
 
 # -----------------------------
 # 1) Static lookup loader (CSV)
@@ -165,8 +166,42 @@ def is_valid_chord_token(token: str, whitelist: set[str]) -> bool:
     # Whitelist applies as "qual starts with token"
     return any(qual.startswith(w) for w in whitelist)
 
+def load_allowed_nonchords(path="allowed_nonchord_tokens.txt"):
+    tokens = set()
+    with open(path, "r", encoding="utf-8") as f:
+        for line in f:
+            t = line.strip()
+            if t and not t.startswith("#"):
+                tokens.add(t)
+    return tokens
 
-def is_chord_line(line: str, whitelist: set[str]) -> bool:
+def is_chord_line(line: str, whitelist: set[str], allowed_nonchords: set[str]) -> bool:
+    """
+    A line is a chord line if every token is either:
+    - a valid chord token (uses whitelist for qualities), OR
+    - an allowed non-chord token (e.g. x2, x3)
+    """
+    if not line or line.startswith("[") or line.strip() == "":
+        return False
+
+    tokens = line.strip().split()
+    if not tokens:
+        return False
+
+    found_any_chord = False
+
+    for tok in tokens:
+        if is_valid_chord_token(tok, whitelist):
+            found_any_chord = True
+            continue
+
+        if tok in allowed_nonchords:
+            continue
+
+        # Neither a chord nor an allowed extra token → it's a lyric
+        return False
+
+    return found_any_chord
     """
     Line is a chord line if:
     - it contains at least one chord token, AND
@@ -200,10 +235,12 @@ def transpose_song_file(
     lookup_csv: str | Path,
     semitone_offset: int = -2,
     whitelist_path: str | Path = "whitelist_tokens.txt",
+    allowed_nonchords_path: str | Path = "allowed_nonchord_tokens.txt"
 ) -> None:
 
     lookup = load_lookup_csv(lookup_csv)
     whitelist = load_whitelist(whitelist_path)
+    allowed_nonchords = load_allowed_nonchords(allowed_nonchords_path)
 
     in_path = Path(in_path)
     out_path = Path(out_path)
@@ -212,7 +249,7 @@ def transpose_song_file(
         "w", encoding="utf-8", newline=""
     ) as fout:
         for line in fin:
-            if is_chord_line(line, whitelist):
+            if is_chord_line(line, whitelist, allowed_nonchords):
                 fout.write(alter_chord_line(line, semitone_offset, lookup))
             else:
                 fout.write(line)
