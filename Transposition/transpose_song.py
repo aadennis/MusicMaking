@@ -13,6 +13,8 @@ _PUNCT_WRAP_RIGHT = set(")]}\"'”’")
 
 
 # .\test_data\MaggieMayShort.txt -l .\transpose_lookup_hybrid.csv -k -2
+# .\test_data\AHardDaysNight.txt -l .\transpose_lookup_hybrid.csv -k -2
+
 
 # -----------------------------
 # 1) Static lookup loader (CSV)
