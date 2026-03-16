@@ -12,8 +12,9 @@ def test_is_not_a_chord_line():
     "D Em G D (x2)",
     "D Em G D x2:",
     "D Em G D ×2",
+    "| G C | G | F | G |"
 ])
 def test_is_a_chord_line_variants(line):
     wl = {"m", "sus", "maj"}
-    nc = {"x2", "repeat"}
+    nc = {"x2", "repeat", "|"}
     assert ts.is_chord_line(line, wl, nc) is True
