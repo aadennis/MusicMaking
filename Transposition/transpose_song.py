@@ -7,14 +7,11 @@ import re
 from pathlib import Path
 from typing import Dict, Tuple
 
-_PUNCT_TRAIL = set(",.;:!?”’\"")  # add others as needed
+_PUNCT_TRAIL = set(',.;:!?”’"')  # add others as needed
 _PUNCT_WRAP_LEFT = set("([{\"'“‘")
 _PUNCT_WRAP_RIGHT = set(")]}\"'”’")
 
-
-# .\test_data\MaggieMayShort.txt -l .\transpose_lookup_hybrid.csv -k -2
-# .\test_data\AHardDaysNight.txt -l .\transpose_lookup_hybrid.csv -k -2
-
+_TEST_DATA_FOLDER = "./test_data/"
 
 # -----------------------------
 # 1) Static lookup loader (CSV)
@@ -206,6 +203,7 @@ def _strip_wrappers(s: str) -> str:
 
     return s
 
+
 def is_chord_line(line: str, whitelist: set[str], allowed_nonchords: set[str]) -> bool:
     """
     A line is a chord line if every token is either:
@@ -225,7 +223,7 @@ def is_chord_line(line: str, whitelist: set[str], allowed_nonchords: set[str]) -
         tok = _strip_wrappers(raw)
         # Treat '-' used as line break markers as allowed nonchord (optional)
         if tok == "-":
-            continue 
+            continue
 
         if is_valid_chord_token(tok, whitelist):
             found_any_chord = True
@@ -277,10 +275,16 @@ def build_parser() -> argparse.ArgumentParser:
         description="Transpose chord lines in a song file using a static CSV lookup."
     )
     p.add_argument(
-        "input",
+        "in_file",
         nargs="?",
         default="AHardDaysNight.txt",
-        help="Path to the source song text file",
+        help="Name of the source song text file",
+    )
+    p.add_argument(
+        "-f", 
+        "--folder",
+        default="test_data/",
+        help="folder for source and output files"
     )
     p.add_argument(
         "-o",
@@ -308,7 +312,7 @@ def main(argv: list[str] | None = None) -> int:
     p = build_parser()
     args = p.parse_args(argv)
 
-    in_path = Path(args.input)
+    in_path = Path(f"{args.folder}{args.in_file}")
     if not args.output:
         stem = in_path.stem
         out_path = in_path.with_name(f"{stem}_transposed_{args.semitones}.txt")
