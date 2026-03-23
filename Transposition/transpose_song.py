@@ -327,7 +327,9 @@ def main(argv: list[str] | None = None) -> int:
         whitelist_path="whitelist_tokens.txt",
         allowed_nonchords_path="allowed_nonchord_tokens.txt",
     )
-    print(f"Wrote: {out_path}")
+    print(f"Wrote:\t\t [{out_path}[]")
+    print(f"Using...\n in_path:\t\t[{in_path}] \n lookup_csv:\t\t[{args.lookup}] ")
+    print(f" semitone_offset:\t[{args.semitones}]\n whitelist_path:\t['whitelist_tokens.txt'] ")
     return 0
 
 
