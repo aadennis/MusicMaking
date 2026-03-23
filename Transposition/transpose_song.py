@@ -250,6 +250,9 @@ def transpose_song_file(
     allowed_nonchords_path: str | Path = "allowed_nonchord_tokens.txt",
 ) -> None:
 
+    print(f"Transposing using...\n in_path:\t\t[{in_path}] \n lookup_csv:\t\t[{out_path}] ")
+    print(f" semitone_offset:\t[{semitone_offset}]\n whitelist_path:\t[{whitelist_path}] ")
+   
     lookup = load_lookup_csv(lookup_csv)
     whitelist = load_whitelist(whitelist_path)
     allowed_nonchords = load_allowed_nonchords(allowed_nonchords_path)
@@ -328,8 +331,6 @@ def main(argv: list[str] | None = None) -> int:
         allowed_nonchords_path="allowed_nonchord_tokens.txt",
     )
     print(f"Wrote:\t\t [{out_path}[]")
-    print(f"Using...\n in_path:\t\t[{in_path}] \n lookup_csv:\t\t[{args.lookup}] ")
-    print(f" semitone_offset:\t[{args.semitones}]\n whitelist_path:\t['whitelist_tokens.txt'] ")
     return 0
 
 
