@@ -47,7 +47,7 @@ XX3213 | Fadd9 | A Hard Day's Night
 XX3210 | Fmaj7 | Let It Be
 XX3231 | F6 | Let It Be
 XX0003 | G/D | Why does it always rain on me
-200033 | G/F# | Why does it always rain on me
+200033 | G/F# | Why does it always rain on me - TODO - not being saved as F#
 XX5443 | Gaug
 320000 | G6 | She loves you; Can't Buy me Love - replace G13 with this, plus C Major
 320001 | G7 | A Hard Day's Night
