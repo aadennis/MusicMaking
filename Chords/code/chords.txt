@@ -1,6 +1,7 @@
 X02220 | A Major | stuff 1
 X02110 | Am(maj7)
 X02210 | A sus2 | stuff 4   
+X02230 | A sus4 | Why does it always rain on me
 X022XX | A5
 X02420 | Aadd9 | A Hard Day's Night, xAEBC#E
 0X222X | A/E | Hey Jude
@@ -17,12 +18,15 @@ XX0332 | BbAug | All My Loving [omit string 5 - stretch is too hard]
 X21202 | B7 
 X32030 | Cadd9 | A Hard Day's Night
 XX3221 | Caug | All my loving
+X2X010 | C/B | Why does it always rain on me
+3X2010 | C/G | Why does it always rain on me
 X35555 | C6
 X32210 | C6 v2 | stuff 3
 335453 | Cmaj7 version 1 | Come Fly with Me
 X32000 | Cmaj7 version 2 | Come Fly with Me v2
 XX0232 | D Major | stuff 5
 XX0231 | D Minor | stuff 5
+XX0222 | Dmaj7 | Why does it always rain on me
 XX0211 | Dm7 | stuff 5
 X57777 | D6
 X5453X | D7 v2 | A Hard Day's Night
@@ -42,6 +46,8 @@ XX3213 | Fadd9 | A Hard Day's Night
 2322XX | F#m7b5 | Can't take my eyes off you
 XX3210 | Fmaj7 | Let It Be
 XX3231 | F6 | Let It Be
+XX0003 | G/D | Why does it always rain on me
+200033 | G/F# | Why does it always rain on me
 XX5443 | Gaug
 320000 | G6 | She loves you; Can't Buy me Love - replace G13 with this, plus C Major
 320001 | G7 | A Hard Day's Night
