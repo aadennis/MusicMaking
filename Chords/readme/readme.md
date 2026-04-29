@@ -3,7 +3,8 @@
 This script ([Chords/code/generate_chord_as_svg.py](MusicMaking/Chords/code/generate_chord_as_svg.py)) generates SVG-based HTML chord diagrams for guitar from a text file containing chord definitions.
 
 Example output - note that the final output is html, not raw svg.
-![A Major Chord Diagram](A_major_html.png)  
+<img width="521" height="351" alt="image" src="https://github.com/user-attachments/assets/f02a2a5c-96c2-422c-adbd-9d85ccfe7c85" />
+
 
 The folder structure holding the diagrams
 
