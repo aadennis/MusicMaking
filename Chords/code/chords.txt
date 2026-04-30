@@ -40,6 +40,7 @@ XX0100 | E7 (dominant) v3 | fly me to the moon
 020000 | Em7 version 1 | Can't take my eyes off you
 022030 | Em7 version 2 | stuff 13
 021100 | Emajor 7
+021000 | Em Major 7 | Waterloo Sunset
 XX3211 | F* | stuff 11
 XX3213 | Fadd9 | A Hard Day's Night
 242222 | F#m7 | Can't take my eyes off you
