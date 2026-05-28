@@ -16,6 +16,7 @@ X02230 | Asus4 | Maggie May
 X24432 | B minor | stuff 9
 XX0332 | BbAug | All My Loving [omit string 5 - stretch is too hard]
 X21202 | B7 
+X22202 | B7sus4 | Wonderwall
 X32030 | Cadd9 | A Hard Day's Night
 XX3221 | Caug | All my loving
 X2X010 | C/B | Why does it always rain on me
@@ -41,6 +42,7 @@ XX0100 | E7 (dominant) v3 | fly me to the moon
 022030 | Em7 version 2 | stuff 13
 021100 | Emajor 7
 021000 | Em Major 7 | Waterloo Sunset
+002200 | Esus4 | Wonderwall
 XX3211 | F* | stuff 11
 XX3213 | Fadd9 | A Hard Day's Night
 242222 | F#m7 | Can't take my eyes off you
