@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Chord Sheet</title>
+  <style>
+    body { font-family: sans-serif; }
+    pre { font-family: monospace; }
+  </style>
+</head>
+<body>
+<div id="content"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+const md = `
+## Waterloo – ABBA (Capo 2)
+
+### Cue
+My my, at Waterloo, Napoleon did surrender
+
+### [Intro n/a]
+
+### Verse
+C D G F G  
+C D G F G Am  
+Am D7 G G7  
+
+### Chorus
+C F G C G  
+C F G C G C  
+
+### Bridge
+Am D7 G G7  
+`;
+
+document.getElementById("content").innerHTML = marked.parse(md);
+</script>
+</body>
+</html>
