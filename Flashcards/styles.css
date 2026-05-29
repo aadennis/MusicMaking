@@ -1,0 +1,49 @@
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  max-width: 980px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+.top {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.dropzone {
+  border: 2px dashed #9aa4b2;
+  border-radius: 16px;
+  padding: 18px;
+  background: #f7f9fc;
+  color: #223;
+  transition: 120ms ease;
+  user-select: none;
+}
+
+.dropzone.dragover {
+  border-color: #2563eb;
+  background: #eef4ff;
+}
+
+.hint {
+  margin: 6px 0 0;
+  color: #556;
+  font-size: 0.95rem;
+}
+
+.status {
+  color: #556;
+  font-size: 0.95rem;
+}
+
+.content {
+  margin-top: 18px;
+}
+
+.content pre,
+.content code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+}
