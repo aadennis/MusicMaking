@@ -6,9 +6,9 @@ My my, at Waterloo, Napoleon did surrender
 ### [Intro n/a]
 
 ### Verse
-C D G F G  
-C D G F G Am  
-Am D7 G G7  
+C | D | G F G  
+C | D | G F | G Am  
+Am | D7 | G G7  
 
 ### Chorus
 C F G C G  
