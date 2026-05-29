@@ -1,10 +1,21 @@
 (() => {
   const mount = document.getElementById("app") || document.body;
+  const defaultTitle = document.title || "Chord Sheet";
 
   // --- Build UI in JS ---
+  const statusEl = el("span", { className: "status", id: "status" }, [
+    "Drop a .md file below (or click to pick).",
+  ]);
+
+  const clearBtn = el(
+    "button",
+    { className: "btn", id: "clearBtn", type: "button", disabled: true },
+    ["Clear"]
+  );
+
   const top = el("div", { className: "top" }, [
     el("strong", {}, ["Chord Sheet Viewer"]),
-    el("span", { className: "status", id: "status" }, ["Drop a .md file below (or click to pick)."]),
+    el("div", { className: "actions" }, [clearBtn, statusEl]),
   ]);
 
   const filePicker = el("input", {
@@ -25,25 +36,33 @@
     },
     [
       el("div", {}, [el("strong", {}, ["Drag & drop"]), " a Markdown file here"]),
-      el("div", { className: "hint" }, ["Tip: you can also ", el("u", {}, ["click"]), " this box to choose a file."]),
+      el("div", { className: "hint" }, [
+        "Tip: you can also ",
+        el("u", {}, ["click"]),
+        " this box to choose a file.",
+      ]),
       filePicker,
     ]
   );
 
-  const content = el("div", { id: "content", className: "content" }, ["Nothing loaded yet."]);
+  const content = el("div", { id: "content", className: "content" }, [
+    "Nothing loaded yet.",
+  ]);
 
   mount.append(top, dropzone, content);
 
-  const statusEl = document.getElementById("status");
-
   const setStatus = (msg) => (statusEl.textContent = msg);
+
+  function setTitleForFile(fileName) {
+    document.title = fileName ? `${fileName} — ${defaultTitle}` : defaultTitle;
+  }
 
   function renderMarkdown(text) {
     content.innerHTML = marked.parse(text);
   }
 
   function readFileAsText(file) {
-    // FileReader reads files the user provides via file picker or drag & drop. [4](https://www.npmjs.com/package/marked)
+    // FileReader reads files provided via input selection or drag & drop. [4](https://www.npmjs.com/package/marked)
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = () => resolve(reader.result || "");
@@ -62,12 +81,27 @@
       const text = await readFileAsText(file);
       renderMarkdown(text);
       setStatus(`Rendered: ${name}`);
+      setTitleForFile(name);
+      clearBtn.disabled = false;
     } catch (err) {
       console.error(err);
       content.textContent = String(err.message || err);
       setStatus(`Error reading: ${name}`);
+      // keep Clear disabled if nothing successfully rendered
     }
   }
+
+  function clearView() {
+    // Reset UI state
+    content.textContent = "Nothing loaded yet.";
+    setStatus("Drop a .md file below (or click to pick).");
+    setTitleForFile("");
+    clearBtn.disabled = true;
+    filePicker.value = "";
+    dropzone.focus();
+  }
+
+  clearBtn.addEventListener("click", clearView);
 
   // --- Drag & Drop events ---
   ["dragenter", "dragover", "dragleave", "drop"].forEach((evt) => {
@@ -83,7 +117,9 @@
 
   dropzone.addEventListener("drop", async (e) => {
     dropzone.classList.remove("dragover");
-    const files = e.dataTransfer && e.dataTransfer.files; // DataTransfer.files [3](https://paulserban.eu/blog/post/how-to-debug-blocked-requests-local-network-access-in-chrome/)
+
+    // Dropped local files arrive via DragEvent.dataTransfer.files. [3](https://paulserban.eu/blog/post/how-to-debug-blocked-requests-local-network-access-in-chrome/)[4](https://www.npmjs.com/package/marked)
+    const files = e.dataTransfer && e.dataTransfer.files;
     if (files && files.length) {
       await handleFile(files[0]);
     } else {
@@ -91,7 +127,7 @@
     }
   });
 
-  // --- Click-to-pick fallback (nice for accessibility) ---
+  // --- Click-to-pick fallback ---
   dropzone.addEventListener("click", () => filePicker.click());
   dropzone.addEventListener("keydown", (e) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -103,6 +139,7 @@
   filePicker.addEventListener("change", async () => {
     const file = filePicker.files && filePicker.files[0];
     await handleFile(file);
+    // allow selecting same file again later
     filePicker.value = "";
   });
 
@@ -110,7 +147,7 @@
   window.addEventListener("dragover", (e) => e.preventDefault());
   window.addEventListener("drop", (e) => e.preventDefault());
 
-  // --- tiny helper to create DOM nodes ---
+  // --- helper to create DOM nodes ---
   function el(tag, props = {}, children = []) {
     const node = document.createElement(tag);
     for (const [k, v] of Object.entries(props)) {
@@ -124,4 +161,3 @@
     return node;
   }
 })();
-
