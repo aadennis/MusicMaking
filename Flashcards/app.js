@@ -37,7 +37,7 @@
     [
       el("div", {}, [el("strong", {}, ["Drag & drop"]), " a Markdown file here"]),
       el("div", { className: "hint" }, [
-        "Tip: you can also ",
+        "Or ",
         el("u", {}, ["click"]),
         " this box to choose a file.",
       ]),
