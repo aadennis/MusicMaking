@@ -15,3 +15,7 @@ F | Bb | C | Bb | C | Bb | F
 ### Chorus
 Am | Bb | F | Dm | C |   
 Am | Bb | F | Dm | C | Bb | F  
+
+### Outro
+A 
+A | A7 | D 
