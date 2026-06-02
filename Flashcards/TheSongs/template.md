@@ -1,6 +1,6 @@
 ## song - singer 
 
-### ### Capo: n/a
+### Capo: n/a
 
 ### Intro
 C | Bb | F | C
